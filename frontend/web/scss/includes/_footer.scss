@@ -1,0 +1,53 @@
+.footer{
+  background: $dark-brand;
+  padding-top: 31px;
+  &__up-btn{
+    display: flex;
+    margin: 0 auto 36px;
+  }
+  &__copy{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    margin-bottom: 80px;
+  }
+  &__protection{
+    color: $white-default;
+  }
+  &__link{
+    font-weight: 700;
+    color: $white-default;
+  }
+}
+
+@include adaptive(tablet){
+  .footer{
+    &__copy{
+      flex-direction: column-reverse;
+      margin-top: 18px;
+    }
+    &__protection{
+      &:last-child{
+        margin-bottom: 8px;
+      }
+    }
+    &__up-btn{
+      margin-bottom: 43px;
+    }
+  }
+}
+
+@include adaptive(mobile){
+  .footer{
+    &__protection{
+      font-size: 13px;
+    }
+    &__copy{
+      margin-bottom: 26px;
+    }
+    &__menu, &__copy{
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+}

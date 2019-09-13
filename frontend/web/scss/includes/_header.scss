@@ -1,0 +1,176 @@
+.header{
+  padding-top: 116px;
+  background: $main-grey;
+  padding-bottom: 150px;
+  position: relative;
+  &--main{
+    overflow-x: hidden;
+  }
+  &--dark{
+    background: $dark-brand;
+    padding-bottom: 96px;
+    .header{
+      &__main-title{
+        margin-bottom: 33px;
+      }
+      &__more-link{
+        margin-top: 200px;
+      }
+    }
+  }
+  &__main-title{
+    margin-bottom: 24px;
+  }
+  &__main-text{
+    font-size: 22px;
+    margin-bottom: 80px;
+  }
+  &__brand-btn{
+    margin-right: 25px;
+  }
+  &__more-link{
+    margin-top: 242px;
+  }
+  &__content{
+    display: flex;
+    &-main{
+      padding-top: 25px;
+      max-width: 780px;
+    }
+    &-photo{
+      position: relative;
+      padding-left: 120px;
+      &--tradein{
+        padding-left: 0;
+      }
+    }
+  }
+  &__about{
+    position: absolute;
+    left: -55px;
+  }
+  &__hww{
+    position: absolute;
+    left: 103px;
+    bottom: -96px;
+  }
+}
+
+@include adaptive(laptop){
+  .header{
+    &__about{
+      left: -155px;
+    }
+  }
+}
+
+@include adaptive(tablet){
+  .header{
+    padding-top: 58px;
+    padding-bottom: 80px;
+    &--dark{
+      .header__main-title{
+        margin-bottom: 27px;
+      }
+      .header__main-text{
+        line-height: 1.55;
+      }
+    }
+    &--noindent{
+      padding-bottom: 0;
+    }
+    &__content{
+      flex-direction: column;
+      &-main{
+        padding-top: 0;
+      }
+      &-photo{
+        padding-left: 0;
+        &--tradein{
+          margin-left: -15px;
+          margin-right: -15px;
+        }
+      }
+    }
+    &__main-title{
+      max-width: 80%;
+      margin: 0 auto 17px;
+      &--full{
+        max-width: 100%;
+      }
+    }
+    &__main-text{
+      text-align: center;
+      line-height: 1.89;
+      margin-bottom: 46px;
+      font-size: 18px;
+    }
+    &__more-link{
+      display: none;
+    }
+    &__bottom, &__btns{
+      display: flex;
+      justify-content: space-around;
+      padding: 0 53px;
+    }
+    &__btns{
+      margin-bottom: 68px;
+    }
+    &__about{
+      position: static;
+      max-width: 100%;
+      margin-bottom: 38px;
+    }
+    &__hww{
+      position: static;
+      display: block;
+      margin: -14px auto 0;
+      width: 449px;
+    }
+    &__brand-btn{
+      &--single{
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@include adaptive(mobile){
+  .header{
+    padding-top: 42px;
+    padding-bottom: 65px;
+    &--noindent{
+      padding-bottom: 0;
+    }
+    &__main-title{
+      max-width: 100%;
+      margin-bottom: 14px;
+    }
+    &__main-text{
+      margin-bottom: 28px;
+    }
+    &__bottom, &__btns{
+      flex-direction: column;
+      padding: 0;
+      align-items: center;
+    }
+    &__btns{
+      margin-bottom: 30px;
+    }
+    &__brand-btn{
+      margin-bottom: 15px;
+      margin-right: 0;
+    }
+    &__content{
+      &-photo{
+        &--tradein{
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+    }
+    &__hww{
+      max-width: 100%;
+    }
+  }
+}
