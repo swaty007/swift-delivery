@@ -1,0 +1,48 @@
+.how-it-works {
+  padding-top: 50px;
+  padding-bottom: 40px;
+  .sub-title {
+    margin-bottom: 30px;
+  }
+  &__item {
+    &-circle {
+      margin: 0 auto 30px;
+
+      position: relative;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      font-weight: $bold;
+      border-radius: 45px;
+      height: 62px;
+      width: 62px;
+      font-size: 28px;
+      color: $white;
+      background-color: $brand-green;
+      &:before,&:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 30px;
+        height: 1px;
+        background-color: fade-out($brand-blue,0.5);
+      }
+      &:before {
+        left: -63px;
+      }
+      &:after {
+        right: -63px;
+      }
+    }
+    &-text {
+      margin-bottom: 30px;
+      font-size: 20px;
+      line-height: 24px;
+    }
+    &-img {
+      margin-bottom: 40px;
+    }
+  }
+}

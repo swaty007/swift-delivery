@@ -43,10 +43,10 @@ textarea::-webkit-scrollbar-thumb {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   background-color: #bab8dc; }
 
-@include adaptive(tablet) {
+@include adaptive(md) {
 
 }
 
-@include adaptive(mobile) {
+@include adaptive(sm) {
 
 }

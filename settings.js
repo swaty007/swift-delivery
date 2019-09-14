@@ -6,7 +6,7 @@ const paths = {
   },
   styles: {
     src: themeLocation + "scss/style.scss",
-    dist: themeLocation,
+    dist: themeLocation + "css",
     watch: themeLocation + "scss/**/*.scss",
   },
   scripts: {
@@ -19,12 +19,12 @@ const paths = {
   },
   images: {
     src: [
-      themeLocation + "img/**/*.{jpg,jpeg,png,gif,svg}",
+      themeLocation + "img/**/*.{jpg,jpeg,png,gif}",
       // themeLocation + "!img/svg/*.svg",
       // themeLocation + "!img/favicon.{jpg,jpeg,png,gif}",
     ],
     dist: themeLocation + "img/",
-    watch: themeLocation + "img/**/*.{jpg,jpeg,png,gif,svg}",
+    watch: themeLocation + "img/**/*.{jpg,jpeg,png,gif}",
   },
   sprites: {
     src: themeLocation + "img/svg/*.svg",

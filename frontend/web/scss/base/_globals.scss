@@ -1,0 +1,76 @@
+.title {
+  font-size: 39px;
+  line-height: 47px;
+  font-weight: $bold;
+}
+.sub-title {
+  font-size: 29px;
+  line-height: 35px;
+  font-weight: $bold;
+}
+
+.text {
+  font-size: 19px;
+  line-height: 23px;
+  color: $text-white;
+  font-weight: $regular;
+  &--green {
+    color: $brand-green;
+  }
+  &--blue {
+    color: $brand-blue;
+  }
+  &--fade-blue {
+    color: $text-blue;
+  }
+  &--sub {
+    font-size: 16px;
+    line-height: 19px;
+  }
+}
+
+.main-btn {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 45px;
+
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  font-weight: $semi-bold;
+
+  height: 50px;
+  font-size: 16px;
+  line-height: 19px;
+  max-width: 250px;
+  &--sm {
+    height: 40px;
+    max-width: 100px;
+  }
+  &--lg {
+    height: 60px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  background-color: $brand-green;
+  box-shadow: 0px 10px 30px fade-out($brand-green, 0.65);
+  color: $white;
+  &--transparent {
+    background-color: $white;
+    box-shadow: 0px 10px 30px rgba(41, 41, 41, 0.2);
+  }
+}
+
+@include adaptive(lg) {
+
+}
+
+@include adaptive(md) {
+
+}
+
+@include adaptive(sm) {
+
+}

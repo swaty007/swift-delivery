@@ -1,17 +1,22 @@
-$black: #272646;
-$black-default: #000;
-$white-default: #fff;
+$black: #000;
+$white: #fff;
 
-$grey: #dcdced;
-$main-grey: #f0f3f5;
-$grey-light: #bfbec8;
-$black-middle: #323841;
+$brand-green: #0EC69A;
+$brand-blue: #2A2C57;
+$brand-red: #E24343;
+$brand-yellow: #F2C94C;
 
-$brand-color: #4d49be;
-$brand-light: #f0f0ff;
-$dark-brand: #272646;
-$brand-green: #70e0a3;
-$brand-red: #BE4D49;
+$text-white: fade-out($white, 0.2);
+$text-blue: fade-out($brand-blue, 0.2);
+
+$light: 300;
+$regular: 400;
+$normal: 400;
+$medium: 500;
+$semi-bold:600;
+$demi-bold: 600;
+$bold: 700;
+
 
 $telegram-color: #279bd3;
 $viber-color: #784f97;

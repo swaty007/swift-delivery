@@ -68,7 +68,9 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
-
+<?= $this->render('../components/_how-it-works');?>
+<?= $this->render('../components/_cta', ['cta'=>'signUp']);?>
+<?= $this->render('../components/_cta', ['cta'=>'help']);?>
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>

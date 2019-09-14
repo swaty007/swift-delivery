@@ -4,17 +4,17 @@
  Version: 1.0
 */
 
-@import "libs";
+//@import "libs";
 
 /* Utils */
 @import "utils/variables";
-@import "utils/mixins";
+//@import "utils/mixins";
 @import "utils/grid";
-@import "utils/extends";
 @import "utils/fonts";
 
 /* Base */
 @import "base/base";
+@import "base/globals";
 
 /* Components */
 
@@ -25,3 +25,5 @@
 @import "includes/header.scss";
 
 /* Sections */
+@import "sections/cta";
+@import "sections/how-it-works";

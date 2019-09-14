@@ -1,65 +1,32 @@
-
-$laptop-width: 1700px;
-$tablet-width: 1199px;
-$mobile-width: 640px;
+$lg-width: 1199px;
+$md-width: 991px;
+$sm-width: 767px;
 
 @mixin adaptive($size) {
-  @if $size == laptop {
-    @media (max-width: $laptop-width) {
+  @if $size == lg {
+    @media (max-width: $lg-width) {
       @content
     }
-  } @else if $size == tablet {
-    @media only screen and (max-width: $tablet-width) {
+  } @else if $size == md {
+    @media only screen and (max-width: $md-width) {
       @content
     }
-  }  @else if $size == mobile {
-    @media only screen and (max-width: $mobile-width) {
+  }  @else if $size == sm {
+    @media only screen and (max-width: $sm-width) {
       @content
     }
   }
 }
 
-.container {
-  width: 1200px;
-  margin: 0 auto;
-  padding: {
-    left: 15px;
-    right: 15px;
-    top: 0;
-    bottom: 0;
-  }
-  //border: 1px solid red;
-  &-fluid {
-    width: 100%;
-    padding: {
-      left: 52px;
-      right: 52px;
-    }
-  }
+
+@include adaptive(lg) {
+
 }
 
-@include adaptive(laptop) {
-  .container {
-    width: 1140px;
-  }
+@include adaptive(md) {
+
 }
 
-@include adaptive(tablet) {
-  .container {
-    width: 600px;
-    &-fluid{
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-  }
-}
+@include adaptive(sm) {
 
-@include adaptive(mobile) {
-  .container {
-    width: 320px;
-    &-fluid{
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-  }
 }
