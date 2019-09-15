@@ -1,0 +1,39 @@
+.spinner {
+
+}
+.ui-spinner {
+  margin: 0;
+  border: 0;
+  right: 0;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  input {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    max-width: calc(100% - 150px);
+    outline: none;
+    font-size: 21px;
+    line-height: 50px;
+    font-weight: $bold;
+    color: $text-green;
+    order: 2;
+    border: none;
+  }
+  .ui-spinner-button {
+    width: 50px;
+    height: 50px;
+    outline: none;
+    display: block;
+    &.ui-spinner-down {
+      background-image: url(../../img/icon_spinner_minus.svg);
+      order: 1;
+    }
+    &.ui-spinner-up {
+      background-image: url(../../img/icon_spinner_plus.svg);
+      order: 3;
+    }
+  }
+}

@@ -3,6 +3,10 @@ class Main {
         this.events();
     }
     events() {
+        this.fileContainer();
+        this.spinner();
+    }
+    fileContainer() {
         $(".fileContainer input[type=file]").on('change', function (e) {
             var input = this;
             if (input.files && input.files[0]) {
@@ -16,6 +20,19 @@ class Main {
                     $(".fileContainer .fileContainer__text--name").addClass('loaded');
                 };
                 reader.readAsDataURL(input.files[0]);
+            }
+        });
+    }
+    spinner () {
+        $(".spinner input").spinner({
+            min: 1,
+            max: 50,
+            start: 1,
+            change: function( event, ui ) {
+                $('label[for='+  this.id  +']').text("$"+this.value*this.dataset.price);
+            },
+            spin: function( event, ui ) {
+                $('label[for='+  this.id  +']').text("$"+this.value*this.dataset.price);
             }
         });
     }

@@ -1,0 +1,20 @@
+.default-select {
+  height: 50px;
+  line-height: 50px;
+  border-radius: 25px;
+  border: 2px solid fade-out($brand-blue,0.8);
+  color: $brand-blue;
+  font-size: 14px;
+  padding: 0 25px;
+  appearance: none;
+  background-image: url(../../img/icon_dropdown_arrow.svg);
+  background-repeat: no-repeat;
+  background-position: 96% 50%;
+  appearance: none;
+  option {
+    height: 50px;
+    line-height: 50px;
+    &:checked {}
+    &:hover {}
+  }
+}

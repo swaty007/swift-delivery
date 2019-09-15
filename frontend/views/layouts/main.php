@@ -120,9 +120,9 @@ NavBar::end();
                     <h3 class="item__title text--small text--blue">Flower</h3>
                     <p class="item__desc text--blue-opacity"></p>
                 </div>
-                <label class="checkbox__container">
-                    <input type="checkbox" class="checkbox">
-                    <span class="checkbox__mark"></span>
+                <label class="default-checkbox__container">
+                    <input type="checkbox" class="default-checkbox">
+                    <span class="default-checkbox__mark"></span>
                 </label>
             </div>
 
@@ -139,9 +139,20 @@ NavBar::end();
 </section>
 
 <div class="fileContainer">
-    <img class="fileContainer__img" src="">
+    <img class="fileContainer__img" src="" />
     <p class="fileContainer__text--select text--blue-opacity text--small">Upload new image here <?= Html::img('@web/img/icon_upload.svg', ['class' => 'fileContainer__img--icon']); ?></p>
     <input type="file" name="file" >
+</div>
+
+<select class="default-select" name="" id="">
+    <option value="">7 grams (1/4oz) sativa</option>
+    <option value="">7 grams (1/4oz) sativa</option>
+    <option value="">7 grams (1/4oz) sativa</option>
+</select>
+
+<div class="spinner">
+    <input id="item_quanitity" data-price="75" value="1" />
+    <label class="sub-text text--green" for="item_quanitity">$75.00</label>
 </div>
 
 <?= $this->render('../components/_how-it-works'); ?>

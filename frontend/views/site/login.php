@@ -17,9 +17,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
         <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+            <?php $form = ActiveForm::begin(['id' => 'login-form',
+//                'fieldConfig' => [
+//                'template' => '{label}<div class="col-sm-10">{input}</div><div class="col-sm-10">{error}</div>',
+//                'labelOptions' => ['class' => 'col-sm-2 control-label'],
+//                ],
+            ]); ?>
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+<!--            --><?//= Html::activeLabel($model, 'password') ?>
+<!--            --><?//= Html::activePasswordInput($model, 'password') ?>
+<!--            --><?//= Html::error($model, 'password') ?>
+            <?= Html::activeLabel($model, 'username', ['label' => 'name']) ?>
+            <?= Html::activeTextInput($model, 'username') ?>
+            <?= Html::error($model, 'username') ?>
+
+
+<!--                --><?//= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
 

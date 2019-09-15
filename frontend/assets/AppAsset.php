@@ -16,6 +16,7 @@ class AppAsset extends AssetBundle
         'css/style.css',
     ];
     public $js = [
+        '//code.jquery.com/ui/1.12.1/jquery-ui.js',
         'js/scripts-bundled.js',
     ];
     public $depends = [
