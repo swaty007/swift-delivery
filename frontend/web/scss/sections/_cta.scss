@@ -1,15 +1,40 @@
 .cta {
+  padding-top: 33px;
+  padding-bottom: 40px;
+  position: relative;
   &--green {
     background-color: $brand-green;
   }
-  background-color: $brand-blue;
-  padding-top: 33px;
-  padding-bottom: 40px;
+  &--blue {
+    background-color: $brand-blue;
+  }
+  &--lg {
+    padding-top: 66px;
+    padding-bottom: 58px;
+  }
   &__title {
     font-size: 24px;
     line-height: 29px;
     color: $white;
     margin-bottom: 5px;
+    &--big {
+      font-size: 43px;
+      line-height: 52px;
+    }
+  }
+  &__img {
+    margin-right: 20px;
+    &--bg {
+      margin-right:0;
+      position: absolute;
+      left:0;
+      top:0;
+      right:0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
   }
   .text {
     margin-bottom: 25px;

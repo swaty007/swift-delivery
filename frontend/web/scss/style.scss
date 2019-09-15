@@ -13,17 +13,21 @@
 @import "utils/fonts";
 
 /* Base */
+@import "base/grid";
 @import "base/base";
 @import "base/globals";
 
 /* Components */
-
+@import "components/alert";
+@import "components/item";
+@import "components/file-container";
+@import "components/checkbox";
 
 /* Icludes */
-
 @import "includes/footer.scss";
 @import "includes/header.scss";
 
 /* Sections */
 @import "sections/cta";
 @import "sections/how-it-works";
+@import "sections/roll";

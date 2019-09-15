@@ -54,7 +54,7 @@ export const watchCode = done => {
     // });
     watch(settings.paths.styles.watch, styles);
     watch(settings.paths.scripts.watch, scripts);
-    watch(settings.paths.images.watch, images);
+    // watch(settings.paths.images.watch, images);
     watch(settings.paths.sprites.watch, sprites);
     done();
 };

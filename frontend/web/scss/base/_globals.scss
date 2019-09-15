@@ -8,6 +8,12 @@
   line-height: 35px;
   font-weight: $bold;
 }
+.sub-text {
+  font-size: 21px;
+  line-height: 25px;
+  font-weight: $bold;
+}
+
 
 .text {
   font-size: 19px;
@@ -20,13 +26,34 @@
   &--blue {
     color: $brand-blue;
   }
+  &--blue-opacity {
+    color: $text-blue;
+  }
+  &--white {
+    color: $white;
+  }
+  &--white-opacity {
+    color: $text-white;
+  }
+  &--black {
+    color: $black;
+  }
   &--fade-blue {
     color: $text-blue;
   }
-  &--sub {
+  &--normal {
+    font-size: 19px;
+    line-height: 23px;
+  }
+  &--small {
     font-size: 16px;
     line-height: 19px;
   }
+}
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .main-btn {
@@ -34,6 +61,8 @@
   margin-left: auto;
   margin-right: auto;
   border-radius: 45px;
+  text-decoration: none;
+  outline: none;
 
   align-items: center;
   text-align: center;
@@ -44,19 +73,20 @@
   font-size: 16px;
   line-height: 19px;
   max-width: 250px;
+
+  background-color: $brand-green;
+  box-shadow: 0px 10px 30px fade-out($brand-green, 0.65);
+  color: $white;
   &--sm {
     height: 40px;
     max-width: 100px;
+    width: 100px;
   }
   &--lg {
     height: 60px;
     font-size: 18px;
     line-height: 22px;
   }
-
-  background-color: $brand-green;
-  box-shadow: 0px 10px 30px fade-out($brand-green, 0.65);
-  color: $white;
   &--transparent {
     background-color: $white;
     box-shadow: 0px 10px 30px rgba(41, 41, 41, 0.2);

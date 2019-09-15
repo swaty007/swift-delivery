@@ -7,10 +7,17 @@ p {
   margin: 0;
 }
 
-* {
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
 ul {
   list-style-type: none;
   padding: 0;
@@ -18,16 +25,28 @@ ul {
 }
 
 a {
-  text-decoration: none;
   color: $black;
   outline: none;
   //cursor: none;
 }
 html {
-
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 body {
+  margin: 0;
+}
 
+img {
+  vertical-align: middle;
+}
+
+.hidden {
+  display: none !important;
+}
+.text-center {
+  text-align: center;
 }
 
 textarea{

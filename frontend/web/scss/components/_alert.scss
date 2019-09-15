@@ -1,0 +1,15 @@
+.alert {
+  padding: 25px 0;
+  &--green {
+    background-color: $brand-green;
+  }
+  &--blue {
+    background-color: $brand-blue;
+  }
+  &__icon {
+    margin-right: 15px;
+  }
+  .text:not(:last-child) {
+    margin-bottom: 5px;
+  }
+}

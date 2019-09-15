@@ -1,0 +1,34 @@
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  &:checked ~ .checkbox__mark {
+    background-color: $brand-green;
+    background-image: url("../../img/icon_check.svg");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+  }
+  &__container {
+    display: block;
+    position: relative;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  &__mark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 2px solid fade-out($brand-blue,0.8);
+    width: 25px;
+    height: 25px;
+    box-sizing: border-box;
+    border-radius: 5px;
+  }
+}
