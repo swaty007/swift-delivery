@@ -1,6 +1,7 @@
 <?php
 
 use yii\db\Migration;
+use \common\models\User;
 
 class m130524_201442_init extends Migration
 {
@@ -19,8 +20,11 @@ class m130524_201442_init extends Migration
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
             'email' => $this->string()->notNull()->unique(),
+            'phone_number' => $this->string()->unique(),
+            'profile_image' => $this->string()->unique(),
 
-            'status' => $this->smallInteger()->notNull()->defaultValue(10),
+            'role' => $this->smallInteger()->notNull()->defaultValue(User::USER_ROLE_CUSTOMER),
+            'status' => $this->smallInteger()->notNull()->defaultValue(User::STATUS_ACTIVE),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);

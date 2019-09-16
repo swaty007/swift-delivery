@@ -12,6 +12,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
+    'name' => 'Swift Delivery Admin Panel',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
@@ -23,7 +24,7 @@ return [
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
-            'name' => 'advanced-backend',
+            'name' => 'mck2em2cioemco2-ab-swiftdelivery',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

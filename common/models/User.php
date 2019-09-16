@@ -16,8 +16,10 @@ use yii\web\IdentityInterface;
  * @property string $password_reset_token
  * @property string $verification_token
  * @property string $email
+ * @property string $phone_number
  * @property string $auth_key
  * @property integer $status
+ * @property integer $role
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
@@ -28,6 +30,12 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    const USER_ROLE_CUSTOMER = 1;
+    const USER_ROLE_DELIVER = 2;
+    const USER_ROLE_SUPPLIER = 3;
+    const USER_ROLE_ADMIN = 4;
+    const USER_ROLE_SUPERADMIN = 5;
+
 
     /**
      * {@inheritdoc}
@@ -37,7 +45,10 @@ class User extends ActiveRecord implements IdentityInterface
         return '{{%user}}';
     }
 
-    /**
+    static public function getAdminRolesArray() {
+        return [self::USER_ROLE_ADMIN, self::USER_ROLE_SUPERADMIN];
+    }
+        /**
      * {@inheritdoc}
      */
     public function behaviors()
