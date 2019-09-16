@@ -1,7 +1,9 @@
 <?php
 namespace backend\controllers;
 
+use common\models\Customer;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -26,7 +28,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'customers'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -75,7 +77,7 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->login(true)) {
             return $this->goBack();
         } else {
             $model->password = '';
@@ -84,6 +86,18 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionCustomers()
+    {
+        $customers = new ActiveDataProvider([
+            'query' => Customer::find(),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        return $this->render('customers', ['customers' => $customers]);
     }
 
     /**

@@ -53,9 +53,9 @@ class LoginForm extends Model
      *
      * @return bool whether the user is logged in successfully
      */
-    public function login()
+    public function login($isAdmin = false)
     {
-        if ($this->validate()) {
+        if ($this->validate() && (!$isAdmin || in_array($this->getUser()->role, User::getAdminRolesArray()))) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
         
