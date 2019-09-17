@@ -82,7 +82,7 @@ NavBar::end();
         </div>
     </div>
 </div>
-<?= $this->render('../components/_cta', ['cta' => 'delivery']); ?>
+
 <div class="container">
     <?= Breadcrumbs::widget([
         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
@@ -108,7 +108,7 @@ NavBar::end();
                     <p class="item__desc text--blue-opacity">
                         starting at <strong class="text--green text--normal">$75.00</strong>
                     </p>
-                    <a href="#" class="main-btn main-btn--sm">
+                    <a href="#" class="main-btn main-btn--sm w-100">
                         Select
                     </a>
                 </div>
@@ -138,11 +138,6 @@ NavBar::end();
     </div>
 </section>
 
-<div class="fileContainer">
-    <img class="fileContainer__img" src="" />
-    <p class="fileContainer__text--select text--blue-opacity text--small">Upload new image here <?= Html::img('@web/img/icon_upload.svg', ['class' => 'fileContainer__img--icon']); ?></p>
-    <input type="file" name="file" >
-</div>
 
 <select class="default-select" name="" id="">
     <option value="">7 grams (1/4oz) sativa</option>
@@ -155,9 +150,7 @@ NavBar::end();
     <label class="sub-text text--green" for="item_quanitity">$75.00</label>
 </div>
 
-<?= $this->render('../components/_how-it-works'); ?>
-<?= $this->render('../components/_cta', ['cta' => 'signUp']); ?>
-<?= $this->render('../components/_cta', ['cta' => 'help']); ?>
+
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>

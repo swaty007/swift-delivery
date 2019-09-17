@@ -4,7 +4,7 @@
   cursor: pointer;
   height: 0;
   width: 0;
-  &:checked ~ .checkbox__mark {
+  &:checked ~ .default-checkbox__mark {
     background-color: $brand-green;
     background-image: url("../../img/icon_check.svg");
     background-repeat: no-repeat;

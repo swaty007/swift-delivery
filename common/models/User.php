@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use phpDocumentor\Reflection\Types\Integer;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -36,6 +37,7 @@ class User extends ActiveRecord implements IdentityInterface
     const USER_ROLE_ADMIN = 4;
     const USER_ROLE_SUPERADMIN = 5;
 
+    private $password;
 
     /**
      * {@inheritdoc}
@@ -45,9 +47,22 @@ class User extends ActiveRecord implements IdentityInterface
         return '{{%user}}';
     }
 
-    static public function getAdminRolesArray() {
+    public static function getAdminRolesArray() {
         return [self::USER_ROLE_ADMIN, self::USER_ROLE_SUPERADMIN];
     }
+
+    public static function getRoleNameFromValue($role) {
+        $values = [
+            self::USER_ROLE_CUSTOMER => 'Customer',
+            self::USER_ROLE_DELIVER => 'Deliver',
+            self::USER_ROLE_SUPPLIER => 'Supplier',
+            self::USER_ROLE_ADMIN => 'Admin',
+            self::USER_ROLE_SUPERADMIN => 'Super Admin',
+        ];
+
+        return isset($values[$role]) ? $values[$role] : 'INCORRECT';
+    }
+
         /**
      * {@inheritdoc}
      */
@@ -64,7 +79,8 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
+            [['phone_number', 'username', 'password_hash'], 'required'],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
     }
@@ -186,6 +202,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function setPassword($password)
     {
+        $this->password = $password;
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 

@@ -10,9 +10,9 @@ use common\models\User;
  */
 class SignupForm extends Model
 {
-    public $username;
-    public $email;
+    public $phone_number;
     public $password;
+    public $password_repeat;
 
 
     /**
@@ -21,19 +21,17 @@ class SignupForm extends Model
     public function rules()
     {
         return [
-            ['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
-
-            ['email', 'trim'],
-            ['email', 'required'],
-            ['email', 'email'],
-            ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['phone_number', 'trim'],
+            ['phone_number', 'match', 'pattern' => '/^\+1\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/', 'message' => 'Incorrect phone number'],
+            ['phone_number', 'required'],
+            ['phone_number', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This phone number is already registered.'],
+            ['phone_number', 'string', 'min' => 2, 'max' => 255],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+
+            ['password_repeat', 'required'],
+            ['password_repeat', 'string', 'min' => 6],
         ];
     }
 
@@ -49,31 +47,18 @@ class SignupForm extends Model
         }
         
         $user = new User();
-        $user->username = $this->username;
-        $user->email = $this->email;
+        $user->username = $this->phone_number;
+        $user->phone_number = $this->phone_number;
+        $user->role = User::USER_ROLE_SUPPLIER;
         $user->setPassword($this->password);
         $user->generateAuthKey();
-        $user->generateEmailVerificationToken();
-        return $user->save() && $this->sendEmail($user);
+        $userSave = $user->save();
 
+        return $userSave;
     }
 
-    /**
-     * Sends confirmation email to user
-     * @param User $user user model to with email should be send
-     * @return bool whether the email was sent
-     */
-    protected function sendEmail($user)
+    protected function sendApproveSms($user)
     {
-        return Yii::$app
-            ->mailer
-            ->compose(
-                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
-                ['user' => $user]
-            )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-            ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
-            ->send();
+        //TODO: Twilio send sms
     }
 }

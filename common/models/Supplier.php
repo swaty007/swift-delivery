@@ -56,12 +56,12 @@ class Supplier extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'supplier_id' => 'Supplier ID',
+            'supplier_id' => 'User ID',
             'name' => 'Name',
             'logo' => 'Logo',
             'zip' => 'Zip',
             'address' => 'Address',
-            'address_2' => 'Address 2',
+            'address_2' => 'Address (Second String))',
             'description' => 'Description',
             'product_name' => 'Product Name',
             'product_image' => 'Product Image',

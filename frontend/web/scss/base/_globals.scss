@@ -66,6 +66,9 @@
   border-radius: 45px;
   text-decoration: none;
   outline: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
 
   align-items: center;
   text-align: center;
@@ -83,7 +86,6 @@
   &--sm {
     height: 40px;
     max-width: 100px;
-    width: 100px;
   }
   &--lg {
     height: 60px;
@@ -93,6 +95,38 @@
   &--transparent {
     background-color: $white;
     box-shadow: 0px 10px 30px rgba(41, 41, 41, 0.2);
+  }
+  &--blue {
+    background-color: $brand-blue;
+  }
+  &--no-shadow {
+    box-shadow: none;
+  }
+}
+
+hr {
+  border-bottom: 0;
+  border-color: fade-out($brand-blue,0.9);
+  max-width: 80%;
+  &.line {
+
+  }
+}
+.w100 {
+  width: 100%!important;
+  max-width: 100%!important;
+}
+.no-border {
+  &--top {
+    border-bottom-left-radius: 0!important;
+    border-bottom-right-radius: 0!important;
+  }
+  &--r0 {
+    border-radius: 0!important;
+  }
+  &--bottom {
+    border-top-left-radius: 0!important;
+    border-top-right-radius: 0!important;
   }
 }
 
