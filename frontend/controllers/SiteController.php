@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use frontend\models\ResendVerificationEmailForm;
+use frontend\models\SupplierForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
@@ -164,6 +165,20 @@ class SiteController extends Controller
         }
 
         return $this->render('signup', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionSignupComplete()
+    {
+        $model = new SupplierForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+            return $this->goHome();
+        }
+
+        return $this->render('../supplier/create', [
             'model' => $model,
         ]);
     }

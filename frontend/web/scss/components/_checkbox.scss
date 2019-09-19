@@ -1,15 +1,32 @@
 .default-checkbox {
   position: absolute;
-  opacity: 0;
+  //opacity: 0;
   cursor: pointer;
   height: 0;
   width: 0;
-  &:checked ~ .default-checkbox__mark {
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 2px solid fade-out($brand-blue,0.8);
+    width: 25px;
+    height: 25px;
+    box-sizing: border-box;
+    border-radius: 5px;
+  }
+  &:checked:before {
     background-color: $brand-green;
     background-image: url("../../img/icon_check.svg");
     background-repeat: no-repeat;
     background-position: 50% 50%;
   }
+  //&:checked ~ .default-checkbox__mark {
+  //  background-color: $brand-green;
+  //  background-image: url("../../img/icon_check.svg");
+  //  background-repeat: no-repeat;
+  //  background-position: 50% 50%;
+  //}
   &__container {
     display: block;
     position: relative;
