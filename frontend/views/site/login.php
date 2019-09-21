@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <!--            --><?//= Html::error($model, 'username') ?>
 
 
-                    <?= $form->field($model, 'phone_number')->label(false)->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-99-99'])->textInput(['placeholder' => '+1 (___) ___-__-__', 'class' => 'form-control no-border--top'])->label(false); ?>
+                    <?= $form->field($model, 'phone_number')->label(false)->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-99-99'])->textInput(['placeholder' => '+1 (___) ___-__-__', 'class' => 'form-control no-border--top']); ?>
 
                     <?= $form->field($model, 'password')->label(false)->passwordInput(['class'=>'form-control no-border--r0']) ?>
 

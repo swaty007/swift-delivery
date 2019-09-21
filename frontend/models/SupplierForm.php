@@ -26,6 +26,8 @@ class SupplierForm extends Model
     public $latitude;
     public $longitude;
 
+    public $web_url;
+
 
     /**
      * {@inheritdoc}
