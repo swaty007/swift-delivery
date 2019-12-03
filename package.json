@@ -52,6 +52,7 @@
     "watchify": "^3.11.0",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",
+    "workbox-build": "^4.3.1",
     "wowjs": "^1.1.3",
     "yargs": "^12.0.5"
   },
@@ -62,7 +63,8 @@
     "nouislider": "^13.1.5",
     "simple-lightbox": "^2.1.0",
     "smart-grid": "^2.1.2",
-    "tocca": "^2.0.4"
+    "tocca": "^2.0.4",
+    "workbox-webpack-plugin": "^4.3.1"
   },
   "browserify": {
     "transform": [

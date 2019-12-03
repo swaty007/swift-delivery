@@ -1,4 +1,5 @@
 const path = require("path");
+const {GenerateSW} = require('workbox-webpack-plugin');
 import settings from "./settings";
 
 module.exports = {
@@ -23,6 +24,11 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    // Other webpack plugins...
+    // new GenerateSW({
+    // })
+  ],
   mode: "development",
   // mode: "production",
 };

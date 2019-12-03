@@ -3,6 +3,7 @@
 import settings from "./settings";
 
 import {src, dest, watch, parallel, series} from "gulp";
+const gulp = require('gulp');
 import gulpif from "gulp-if";
 import browsersync from "browser-sync";
 import autoprefixer from "gulp-autoprefixer";
@@ -32,11 +33,30 @@ import clean from "gulp-clean";
 import webpack from "webpack";
 import yargs from "yargs";
 
+const workboxBuild = require('workbox-build');
+
 const argv = yargs.argv;
 const production = !!argv.production;
 
 // const smartgrid = require("smart-grid");
 const tildeImporter = require("node-sass-tilde-importer");
+
+
+gulp.task('service-worker', () => {
+    return workboxBuild.injectManifest({
+        swSrc: './frontend/web/sw.js',
+        swDest: './frontend/web/sw.js',
+        globDirectory: './frontend/web',
+        globPatterns: [
+            '**\/*.{js,css,html,png,svg}',
+            // '!assets**\/*.{js,css,html,png,svg}',
+        ]
+    }).then(({count, size, warnings}) => {
+        // Optionally, log any warnings and details.
+        warnings.forEach(console.warn);
+        console.log(`${count} files will be precached, totaling ${size} bytes.`);
+    });
+});
 
 export const server = done => {
     browsersync.init({

@@ -1,0 +1,21 @@
+{
+  "name": "Swift Delivery",
+  "short_name": "Swift Delivery",
+  "description": "Web Community Leaders landing page",
+  "lang": "en-GB",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#2A2C57",
+  "background_color": "#FFFFFF",
+  "icons": [
+    {
+      "src": "img/logo-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "img/logo.svg",
+      "sizes": "142x82"
+    }
+  ]
+}

@@ -22,6 +22,24 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <link rel="manifest" href="/frontend/web/manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                    // Регистрация успешна
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }).catch(function(err) {
+                    // Регистрация не успешна
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+    <meta name="application-name" content="Swift Delivery">
+    <meta name="msapplication-TileColor" content="#242221">
+    <meta name="msapplication-TileImage" content="/img/logo-144.png">
+<!--    <meta name="msapplication-config" content="/weblx/assets/browserconfig.xml">-->
     <?php $this->head() ?>
 </head>
 <body>
