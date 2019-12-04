@@ -1,3 +1,8 @@
 .supplier {
-
+  &__text {
+    color: $text-blue-opacity;
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: $regular;
+  }
 }

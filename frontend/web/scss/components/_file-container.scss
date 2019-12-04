@@ -5,7 +5,7 @@
   border: 1px dashed #2A2C57;
   border-radius: 3px;
   background-color: transparent;
-  margin-bottom: 60px;
+  //margin-bottom: 60px;
   &__img {
     height: 107px;
     width: 100%;
@@ -36,7 +36,7 @@
 
     }
   }
-  [type=file] {
+  [type=file],&__input {
     cursor: inherit;
     display: block;
     font-size: 0;

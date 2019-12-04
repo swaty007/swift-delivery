@@ -22,18 +22,38 @@ $this->title = 'Create supplier';
         <!--        --><? //= $form->field($model, 'password_repeat')->label(false)->passwordInput() ?>
 
         <?= $form->field($model, 'name')->textInput()->label('Company Name:'); ?>
-        <?= $form->field($model, 'zip')->textInput()->label('Zip Code:'); ?>
+
+        <div class="row flex-center">
+            <div class="col-xs-8">
+                <?= $form->field($model, 'zip')->textInput()->label('Zip Code:'); ?>
+            </div>
+            <div class="col-xs-4">
+                <p class="supplier__text">
+                    Enter zip code to
+                    check availability
+                </p>
+            </div>
+        </div>
         <?= $form->field($model, 'address')->textInput()->label('Address:'); ?>
         <?= $form->field($model, 'address_2')->textInput(['placeholder' => 'Addres Line 2 (optional)'])->label(false); ?>
         <?= $form->field($model, 'web_url')->textInput()->label('Website URL:'); ?>
 
-        <div class="fileContainer">
-            <img class="fileContainer__img" src=""/>
-            <p class="fileContainer__text--select text--blue-opacity text--small">Upload new image
-                here <?= Html::img('@web/img/icon_upload.svg', ['class' => 'fileContainer__img--icon']); ?></p>
-            <!--            <input type="file" name="file" >-->
-            <?= $form->field($model, 'logo')->fileInput()->label(false) ?>
+        <div class="form-group">
+            <label class="control-label" for="supplierform-web_url">Website URL:</label>
+            <p class="supplier__text">
+                Recommended format: Square & less than 2MB
+            </p>
+            <div class="fileContainer">
+                <img class="fileContainer__img" src=""/>
+                <p class="fileContainer__text--select text--blue-opacity text--small">Upload new image
+                    here <?= Html::img('@web/img/icon_upload.svg', ['class' => 'fileContainer__img--icon']); ?></p>
+                <!--            <input type="file" name="file" >-->
+                <?= $form->field($model, 'logo', ['options' => [
+                    'tag' => false, // Don't wrap with "form-group" div
+                ]])->fileInput(['class'=>'fileContainer__input'])->label(false) ?>
+            </div>
         </div>
+
         <h3 class="sub-text text--green text--small">
             What cannabis products do you sell?
         </h3>

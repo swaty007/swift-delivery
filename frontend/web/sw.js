@@ -13,7 +13,7 @@ const escapeChars = string => {
 
 // init workbox instance/cache
 workbox.setConfig({ debug: true });
-workbox.core.skipWaiting();
+// workbox.core.skipWaiting();
 
 // assets to prefetch before considering it "installed"
 workbox.precaching.precacheAndRoute([
@@ -89,12 +89,7 @@ workbox.routing.registerRoute(
 //     new RegExp('/site/about1'),
 //     new workbox.strategies.NetworkFirst()
 // );
-// workbox.routing.registerNavigationRoute(
-//     workbox.precaching.getCacheKeyForURL('/site/contact')
-// );
-// workbox.routing.registerNavigationRoute(
-//     workbox.precaching.getCacheKeyForURL('/site/about')
-// );
+
 // workbox.routing.registerNavigationRoute(
 //     workbox.precaching.getCacheKeyForURL('/site/about', {
 //         whitelist: [/^(?!.*\.\w{1,7}$)/]
