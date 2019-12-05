@@ -23,6 +23,7 @@ Thumbs.db
 
 # composer itself is not needed
 composer.phar
+composer.lock
 package-lock.json
 
 # Mac DS_Store Files
@@ -33,13 +34,16 @@ phpunit.phar
 # local phpunit config
 /phpunit.xml
 
+tests/_output/*
+
+# local phpunit config
+/phpunit.xml
+
 # vagrant runtime
 /.vagrant
 
 # ignore generated files
 /frontend/web/index.php
 /frontend/web/index-test.php
-/frontend/web/robots.txt
 /backend/web/index.php
 /backend/web/index-test.php
-/backend/web/robots.txt
