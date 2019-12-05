@@ -24,16 +24,86 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <link rel="manifest" href="/frontend/web/manifest.json">
     <script>
-        if ('serviceWorker' in navigator) {
+
+        function urlBase64ToUint8Array(base64String) {
+            var padding = '='.repeat((4 - base64String.length % 4) % 4);
+            var base64 = (base64String + padding)
+                .replace(/\-/g, '+')
+                .replace(/_/g, '/');
+
+            var rawData = window.atob(base64);
+            var outputArray = new Uint8Array(rawData.length);
+
+            for (var i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+            return outputArray;
+        }
+
+        if ('serviceWorker' in navigator || 'PushManager' in window) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                navigator.serviceWorker.register('/sw.js', { scope: '/' }).then(function(reg) {
                     // Регистрация успешна
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    console.log('ServiceWorker registration successful with scope: ', reg.scope);
+                    console.log(reg,'reg');
+
+                    navigator.serviceWorker.addEventListener('message', function(event) {
+                        console.log(event);
+                    });
+                    navigator.serviceWorker.addEventListener('onmessage', function(event) {
+                        console.log(event);
+                    });
+
+
+
+
+                    const subscribeOptions = {
+                        applicationServerKey: urlBase64ToUint8Array(
+                            'BLAlJkwiyef6Z9FEpOhsTMTZ2dIpDSkL35baoHnijsMttGhENQYOKRl4WbLAuU_2Pg0D1OPWdxzObdbQfQoiv-M'
+                        ),
+                        userVisibleOnly: true
+                    };
+                    // fX_Ack7iQAfM35mKy3iRyUvV4ThzWsTSwFO6RZv54tg
+
+                    reg.pushManager.subscribe(subscribeOptions)
+                        .then(function(pushSubscription) {
+                        console.log('Received PushSubscription: ', pushSubscription);
+                        console.log('Received PushSubscription: ', JSON.stringify(pushSubscription));
+                        return pushSubscription;
+                    });
+
+
                 }).catch(function(err) {
                     // Регистрация не успешна
                     console.log('ServiceWorker registration failed: ', err);
                 });
             });
+        }
+        if ('Notification' in window) {
+            if (Notification.permission === 'granted') {
+                // new Notification("Hi there!");
+                navigator.serviceWorker.getRegistration().then(function(reg) {
+                    console.log(reg,'reg Notification');
+                    var options = {
+                        body: 'Here is a notification body!',
+                        icon: 'img/icon_settings.svg',
+                        vibrate: [100, 50, 100],
+                        data: {
+                            dateOfArrival: Date.now(),
+                            primaryKey: 1
+                        },
+                        actions: [
+                            {action: 'explore', title: 'Explore this new world',
+                                icon: 'img/icon_settings.svg'},
+                            {action: 'close', title: 'Close notification',
+                                icon: 'img/icon_settings.svg'},
+                        ]
+                    };
+                    reg.showNotification('Hello world!', options);
+                });
+            } else {
+                Notification.requestPermission();
+            }
         }
     </script>
     <meta name="application-name" content="Swift Delivery">

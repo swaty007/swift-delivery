@@ -157,6 +157,7 @@ workbox.routing.registerRoute(
 
 self.addEventListener('activate', () => {
     self.clients.matchAll().then(clients => {
+        console.log(clients,'clients');
         clients.forEach(client => {
             client.postMessage({
                 type: 'versionCheck',
@@ -164,4 +165,74 @@ self.addEventListener('activate', () => {
             });
         });
     });
+});
+
+console.log(self.getLocalDir);
+
+// messaging-sw.js
+self.addEventListener('notificationclick', function(event) {
+    const target = event.notification.data.click_action || '/';
+    event.notification.close();
+    console.log(event,'notificationclick');
+    // этот код должен проверять список открытых вкладок и переключатся на открытую
+    // вкладку с ссылкой если такая есть, иначе открывает новую вкладку
+    event.waitUntil(clients.matchAll({
+        type: 'window',
+        includeUncontrolled: true
+    }).then(function(clientList) {
+        console.log(clientList,'clientList')
+        // clientList почему-то всегда пуст!?
+        for (var i = 0; i < clientList.length; i++) {
+            var client = clientList[i];
+            if (client.url == target && 'focus' in client) {
+                return client.focus();
+            }
+        }
+
+
+        // sinon s'il y a quand même une page du site ouverte on l'affiche
+        if (clientList.length && 'focus' in client) {
+            return client.focus();
+        }
+
+        // Открываем новое окно
+        if (clients.openWindow) {
+            return clients.openWindow(target);
+        }
+
+    }));
+});
+
+self.addEventListener('push', function(event) {
+    if (!(self.Notification && self.Notification.permission === 'granted')) {
+        return;
+    }
+    console.log('[Service Worker] Push Received.',event);
+    console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+
+    const title = 'Push Codelab';
+    const options = {
+        body: 'Yay it works.',
+        icon: 'img/icon_settings.svg',
+        badge: 'img/icon_settings.svg'
+    };
+
+    event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('message', function (event) {
+    var message = event.data;
+    console.log(event,'message');
+    switch (message) {
+        case 'dispatchRemoveNotifications':
+            clients.matchAll({ type: "window" }).then(function (clientList) {
+                for (var i = 0; i < clientList.length; i++) {
+                    clientList[i].postMessage('removeNotifications');
+                }
+            });
+            break;
+        default:
+            console.warn("Message '" + message + "' not handled.");
+            break;
+    }
 });
