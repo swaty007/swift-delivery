@@ -24,12 +24,28 @@ use Yii;
  */
 class Supplier extends \yii\db\ActiveRecord
 {
+    /*
+     * @var User
+     */
+    public $user;
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'supplier';
+    }
+
+    public function __construct($config = [])
+    {
+        if (!Yii::$app->user->isGuest && $this->supplier_id == Yii::$app->user->getId()) {
+            $this->user = Yii::$app->user->identity;
+        } else if(!empty($this->supplier_id)) {
+            $this->user = User::findOne($this->supplier_id);
+        }
+
+        parent::__construct($config);
     }
 
     /**

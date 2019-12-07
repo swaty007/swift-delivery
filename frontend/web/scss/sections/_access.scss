@@ -21,21 +21,34 @@
       margin-bottom: 0;
       .form-control {
         border-width: 1px;
+        border-radius: 10px;
       }
       .help-block {
         display: none;
       }
     }
   }
+  &__phone,&__password {
+    background-position: 20px 50%;
+    background-repeat: no-repeat;
+    background-size: 18px auto;
+    padding-left: 58px!important;
+  }
+  &__phone {
+    background-image: url(../../img/icon_phone.svg);
+  }
+  &__password {
+    background-image: url(../../img/icon_password.svg);
+  }
   &__form {
     margin-bottom: 120px;
     width: 300px;
     max-width: 100%;
+    .main-btn {
+      border-radius: 10px;
+    }
   }
   &__footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     position: absolute;
     bottom: 30px;
     left: 0;

@@ -6,26 +6,38 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
 
-$this->title = 'Request password reset';
+$this->title = 'Forgot your password?  No sweat.';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-request-password-reset">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out your email. A link to reset password will be sent there.</p>
+<div class="access--blue">
+    <div class="container">
+        <!--        <div class="row">-->
+        <!--            <div class="col-lg-5">-->
+        <div class="access__content">
+            <h1 class="access__logo">
+                <a href="<?=Url::toRoute(['site/index']);?>"></a>
+                <?= Html::img('@web/img/logo-on-purple.svg', ['class' => '']); ?>
+            </h1>
+            <h2 class="access__desc text text--white">
+                <?= $this->title;?>
+            </h2>
+            <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form', 'options' => ['class' => 'access__form']]); ?>
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
+            <?= $form->field($model, 'phone_number')->label(false)->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-99-99'])->textInput(['placeholder' => '+1 (___) ___-__-__', 'class' => 'form-control access__phone no-border--top']); ?>
 
-                <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Send', ['class' => 'btn btn-primary']) ?>
-                </div>
+            <div class="form-group">
+                <?= Html::submitButton('Text a reset link.', ['class' => 'main-btn main-btn--no-shadow w100 no-border--bottom']) ?>
+            </div>
 
             <?php ActiveForm::end(); ?>
+            <div class="access__footer flex-center">
+                <?= Html::a('I think I remember my password now!', ['site/login'],['class' => 'text text--small text--white']) ?>
+            </div>
         </div>
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
 </div>

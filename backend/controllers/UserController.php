@@ -6,6 +6,7 @@ use backend\models\CreateUser;
 use Yii;
 use common\models\User;
 use common\models\SearchUser;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -13,7 +14,7 @@ use yii\filters\VerbFilter;
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends Controller
+class UserController extends BaseAdminController
 {
     /**
      * {@inheritdoc}

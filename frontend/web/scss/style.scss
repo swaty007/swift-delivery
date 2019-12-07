@@ -27,8 +27,9 @@
 @import "components/spinner";
 
 /* Icludes */
-@import "includes/footer.scss";
-@import "includes/header.scss";
+@import "includes/footer";
+@import "includes/header";
+@import "includes/navbar";
 
 /* Sections */
 @import "sections/cta";
@@ -36,3 +37,4 @@
 @import "sections/roll";
 @import "sections/access";
 @import "sections/supplier";
+@import "sections/confirm-supplier";

@@ -5,7 +5,7 @@
 $this->title = 'Swift Delivery';
 ?>
 
-<?= $this->render('../components/_cta', ['cta' => 'delivery']); ?>
+<?= $this->render('../components/_cta', ['module' => 'delivery']); ?>
 <?= $this->render('../components/_how-it-works'); ?>
-<?= $this->render('../components/_cta', ['cta' => 'signUp']); ?>
-<?= $this->render('../components/_cta', ['cta' => 'help']); ?>
+<?= $this->render('../components/_cta', ['module' => 'signUp']); ?>
+<?= $this->render('../components/_cta', ['module' => 'help-green']); ?>

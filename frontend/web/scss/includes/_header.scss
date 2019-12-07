@@ -1,5 +1,12 @@
-.header{
+.header {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  &__logo {
+    text-align: center;
+    &--img {
 
+    }
+  }
 }
 
 @include adaptive(laptop){

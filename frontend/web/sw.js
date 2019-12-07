@@ -13,7 +13,7 @@ const escapeChars = string => {
 
 // init workbox instance/cache
 workbox.setConfig({ debug: true });
-// workbox.core.skipWaiting();
+workbox.core.skipWaiting();
 
 // assets to prefetch before considering it "installed"
 workbox.precaching.precacheAndRoute([

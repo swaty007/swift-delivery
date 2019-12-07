@@ -49,7 +49,7 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="#" class="main-btn">
-                    Sign Up Today
+                    Start Delivery!
                 </a>
             </div>
         </div>

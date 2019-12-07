@@ -15,9 +15,9 @@ class Main {
                 //     toastr['error']("Файл превышает размер в 2мб", '');
                 // }
                 reader.onload = function(e) {
-                    $(".fileContainer .fileContainer__img").attr('src', e.target.result).show();
-                    $(".fileContainer .fileContainer__text--select").hide();
-                    $(".fileContainer .fileContainer__text--name").addClass('loaded');
+                    $(input).siblings(".fileContainer__img").attr('src', e.target.result).show();
+                    $(input).siblings(".fileContainer__text--select").hide();
+                    $(input).siblings(".fileContainer__text--name").addClass('loaded');
                 };
                 reader.readAsDataURL(input.files[0]);
             }

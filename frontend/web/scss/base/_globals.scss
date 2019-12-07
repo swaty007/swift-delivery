@@ -52,11 +52,17 @@
     font-size: 16px;
     line-height: 19px;
   }
+  &--bold {
+    font-weight: $bold;
+  }
 }
 .flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
+  &--between {
+    justify-content: space-between;
+  }
 }
 
 .main-btn {
@@ -108,6 +114,8 @@ hr {
   border-bottom: 0;
   border-color: fade-out($brand-blue,0.9);
   max-width: 80%;
+  margin-top: 25px;
+  margin-bottom: 25px;
   &.line {
 
   }

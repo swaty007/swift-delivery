@@ -1,6 +1,7 @@
 <?php
 namespace backend\models;
 
+use common\models\User;
 use Yii;
 use yii\base\Model;
 
@@ -42,7 +43,7 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if (!$user || !$user->validatePassword($this->password)) {
+            if (!$user || $user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');
             }
         }
@@ -58,7 +59,7 @@ class LoginForm extends Model
         if ($this->validate() && (!$isAdmin || in_array($this->getUser()->role, User::getAdminRolesArray()))) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
-        
+
         return false;
     }
 

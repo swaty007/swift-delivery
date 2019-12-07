@@ -21,10 +21,12 @@ class SupplierForm extends Model
     public $product_name;
     public $product_image;
     public $description;
+    public $items;
     public $status;
     public $is_active;
     public $latitude;
     public $longitude;
+    public $terms;
 
     public $web_url;
 
@@ -43,6 +45,7 @@ class SupplierForm extends Model
             [['zip'], 'string', 'max' => 20],
             [['address', 'address_2'], 'string', 'max' => 80],
             [['description'], 'string', 'max' => 200],
+            
         ];
     }
 
@@ -53,6 +56,9 @@ class SupplierForm extends Model
      */
     public function signup()
     {
+        echo '<pre>';
+        var_dump($this);
+        exit;
         if (!$this->validate()) {
             return null;
         }

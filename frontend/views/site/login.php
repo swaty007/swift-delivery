@@ -2,9 +2,10 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
+/* @var $model frontend\models\LoginForm */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Login';
@@ -15,7 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <!--        <div class="row">-->
 <!--            <div class="col-lg-5">-->
                 <div class="access__content">
-                    <h1 class="access__logo"><?= Html::img('@web/img/logo-on-purple.svg', ['class' => '']); ?></h1>
+                    <h1 class="access__logo">
+                        <a href="<?=Url::toRoute(['site/index']);?>">
+                            <?= Html::img('@web/img/logo-on-purple.svg', ['class' => '']); ?>
+                        </a>
+                    </h1>
                     <h2 class="access__desc text text--white">
                         <?= $this->title;?>
                     </h2>
@@ -34,16 +39,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     <!--            --><?//= Html::error($model, 'username') ?>
 
 
-                    <?= $form->field($model, 'phone_number')->label(false)->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-99-99'])->textInput(['placeholder' => '+1 (___) ___-__-__', 'class' => 'form-control no-border--top']); ?>
+                    <?= $form->field($model, 'phone_number')->label(false)->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-99-99'])->textInput(['placeholder' => '+1 (___) ___-__-__', 'class' => 'form-control access__phone no-border--top']); ?>
 
-                    <?= $form->field($model, 'password')->label(false)->passwordInput(['class'=>'form-control no-border--r0']) ?>
+                    <?= $form->field($model, 'password')->label(false)->passwordInput(['class'=>'form-control no-border--r0 access__password']) ?>
 
                     <div class="form-group">
                         <?= Html::submitButton('Login', ['class' => 'main-btn main-btn--no-shadow w100 no-border--bottom', 'name' => 'login-button']) ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>
-                    <div class="access__footer flex-center">
+                    <div class="access__footer flex-center flex-center--between">
                         <?= Html::a('reset it', ['site/request-password-reset'],['class' => 'text text--small text--white']) ?>
                         <?= Html::a('Sign up', ['site/signup'],['class' => 'text text--small text--white']) ?>
                     </div>

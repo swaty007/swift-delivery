@@ -1,8 +1,44 @@
 .supplier {
+  margin-top: 50px;
   &__text {
     color: $text-blue-opacity;
     font-size: 14px;
     line-height: 17px;
     font-weight: $regular;
+    margin-bottom: 15px;
+  }
+  &__h1 {
+    margin-bottom: 25px;
+  }
+  .item__wrap {
+    margin-top: 15px;
+  }
+  &__product {
+    margin-bottom: 35px;
+  }
+  &__logo {
+    margin-bottom: 25px;
+  }
+  &__terms {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    &--text {
+      margin-left: 10px;
+      position: relative;
+      padding-right: 20px;
+    }
+    &--img {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 12px;
+    }
+  }
+  &__core {
+    margin-bottom: 20px;
+    &--text {
+      margin-bottom: 10px;
+    }
   }
 }
