@@ -45,6 +45,7 @@ AppAsset::register($this);
             ['label' => 'Dashboard', 'url' => ['/site/index']],
             ['label' => 'Customers', 'url' => ['/customer/index']],
             ['label' => 'Suppliers', 'url' => ['/supplier/index']],
+            ['label' => 'Zipcodes', 'url' => ['/zipcode/index']],
             ['label' => 'Users', 'url' => ['/user/index']],
             '<li>'
                 . Html::beginForm(['/site/logout'], 'post')

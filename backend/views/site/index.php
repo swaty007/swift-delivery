@@ -9,12 +9,15 @@ $this->title = 'My Yii Application';
         <h2>Dashboard</h2>
     </div>
     <div class="col-xs-12 col-sm-4">
-        Total Users: <?= \common\models\User::find()->count()?>
+        Total Registered Users: <?= \common\models\User::find()->count()?>
     </div>
     <div class="col-xs-12 col-sm-4">
         Total Customers: <?= \common\models\Customer::find()->count()?>
     </div>
     <div class="col-xs-12 col-sm-4">
-        Total Suppliers: <?= \common\models\Supplier::find()->count()?>
+        Total Apptoroved Suppliers: <?= \common\models\Supplier::find()->count()?>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+        Total Allowed Zipcodes: <?= \common\models\Supplier::find()->count()?>
     </div>
 </div>

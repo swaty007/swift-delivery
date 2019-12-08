@@ -3,17 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Supplier;
-use common\models\SearchSupplier;
-use yii\helpers\Url;
+use common\models\Zipcode;
+use common\models\SearchZipcode;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * SupplierController implements the CRUD actions for Supplier model.
+ * ZipcodeController implements the CRUD actions for Zipcode model.
  */
-class SupplierController extends BaseAdminController
+class ZipcodeController extends BaseAdminController
 {
     /**
      * {@inheritdoc}
@@ -31,12 +30,12 @@ class SupplierController extends BaseAdminController
     }
 
     /**
-     * Lists all User models.
+     * Lists all Zipcode models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SearchSupplier();
+        $searchModel = new SearchZipcode();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +45,7 @@ class SupplierController extends BaseAdminController
     }
 
     /**
-     * Displays a single User model.
+     * Displays a single Zipcode model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -59,7 +58,25 @@ class SupplierController extends BaseAdminController
     }
 
     /**
-     * Updates an existing User model.
+     * Creates a new Zipcode model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new Zipcode();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Updates an existing Zipcode model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -79,7 +96,7 @@ class SupplierController extends BaseAdminController
     }
 
     /**
-     * Deletes an existing User model.
+     * Deletes an existing Zipcode model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -93,19 +110,18 @@ class SupplierController extends BaseAdminController
     }
 
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the Zipcode model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Supplier the loaded model
+     * @return Zipcode the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Supplier::findOne($id)) !== null) {
+        if (($model = Zipcode::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
 }

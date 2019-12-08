@@ -53,7 +53,7 @@ class SupplierController extends BaseAuthorizedController
     }
 
     public function actionIndex() {
-        $this->render('index');
+        return $this->render('confirm-success');
     }
 
     public function actionConfirm() {

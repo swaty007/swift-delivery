@@ -14,7 +14,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'username')->textInput() ?>
     <?= $form->field($model, 'phone_number')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-99-99'])->textInput(['placeholder' => '+1 (__) __-__-__']); ?>
-    <?= $form->field($model, 'role')->textInput() ?>
+    <?= $form->field($model, 'role')->dropDownList([
+        '1' => 'Customer',
+        '2' => 'Deliver',
+        '3' => 'Supplier',
+        '4' => 'Admin',
+        '5' => 'Super Admin',
+    ]); ?>
     <?= $form->field($model, 'status')->textInput() ?>
     <?= $form->field($model, 'password')->textInput() ?>
 
