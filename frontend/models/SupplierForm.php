@@ -1,9 +1,13 @@
 <?php
 namespace frontend\models;
 
+use common\models\SupplierItemRelation;
+use common\models\Zipcode;
 use Yii;
 use yii\base\Model;
 use common\models\Supplier;
+use yii\db\Exception;
+use yii\helpers\ArrayHelper;
 
 /**
  * Signup form
@@ -20,12 +24,7 @@ class SupplierForm extends Model
     public $logo;
     public $product_name;
     public $product_image;
-    public $description;
     public $items;
-    public $status;
-    public $is_active;
-    public $latitude;
-    public $longitude;
     public $terms;
 
     public $web_url;
@@ -37,15 +36,16 @@ class SupplierForm extends Model
     public function rules()
     {
         return [
-            [['supplier_id'], 'required'],
-            [['supplier_id', 'status', 'is_active'], 'integer'],
-            [['latitude', 'longitude'], 'number'],
-            [['name', 'product_name'], 'string', 'max' => 100],
-            [['logo', 'product_image'], 'string', 'max' => 256],
-            [['zip'], 'string', 'max' => 20],
-            [['address', 'address_2'], 'string', 'max' => 80],
-            [['description'], 'string', 'max' => 200],
-            
+            [['supplier_id', 'zip', 'address', 'name', 'terms', 'product_name'], 'required'],
+            ['supplier_id', 'exist', 'targetAttribute' => 'id', 'targetClass' => 'common\models\User'],
+            ['supplier_id', 'unique', 'targetAttribute' => 'supplier_id', 'targetClass' => 'common\models\Supplier'],
+            [['name', 'product_name'], 'string', 'max' => 50, 'min' => 2],
+            [['address', 'address_2'], 'string', 'max' => 60],
+            [['items'], 'safe'],
+            [['web_url'], 'url'],
+            ['terms', 'compare', 'compareValue' => 1, 'type' => 'number', 'operator' => '==', 'message' => 'Please, accept terms of use.'],
+            [['logo', 'product_image'], 'file', 'extensions' => 'png, jpg'],
+            ['zip', 'exist', 'targetAttribute' => 'zipcode', 'targetClass' => 'common\models\Zipcode', 'message' => 'This zip is not supported.'],
         ];
     }
 
@@ -56,22 +56,67 @@ class SupplierForm extends Model
      */
     public function signup()
     {
-        echo '<pre>';
-        var_dump($this);
-        exit;
         if (!$this->validate()) {
             return null;
         }
 
-//        $user = new User();
-//        $user->username = $this->phone_number;
-//        $user->phone_number = $this->phone_number;
-//        $user->role = User::USER_ROLE_SUPPLIER;
-//        $user->setPassword($this->password);
-//        $user->generateAuthKey();
-//        $userSave = $user->save();
+        try {
+            $supplier = new Supplier();
 
-//        return $userSave;
+            $supplier->supplier_id = $this->supplier_id;
+            $supplier->name = $this->name;
+            $supplier->zip = $this->zip;
+            $supplier->address = $this->address;
+            $supplier->address_2 = $this->address_2;
+            $supplier->website = $this->web_url;
+            $supplier->product_name = $this->product_name;
+
+            if(!$this->saveImages()) {
+                throw new Exception("Error while saving file");
+            }
+
+            $this->processGiftItems($supplier);
+
+            $supplier->logo = $this->logo;
+            $supplier->product_image = $this->product_image;
+            $supplier->save();
+
+            return true;
+        } catch(\Exception $e) {
+            Supplier::deleteAll(['supplier_id' => $this->supplier_id]);
+            SupplierItemRelation::deleteAll(['supplier_id' => $this->supplier_id]);
+            return false;
+        }
     }
 
+    private function processGiftItems(Supplier $supplier) {
+        $allowedGiftItemsIds = array_keys(ArrayHelper::index(Yii::$app->params['giftItems'], 'value'));
+
+        foreach ($this->items as $giftItem) {
+            if(!in_array($giftItem, $allowedGiftItemsIds)) {
+                continue ;
+            }
+
+            $relation = new SupplierItemRelation();
+            $relation->supplier_id = $supplier->supplier_id;
+            $relation->item_id = $giftItem;
+            $relation->save();
+        }
+    }
+
+    private function saveImages() {
+        try {
+            $logoName =  'logo' . time() . $this->supplier_id . '.' . $this->logo->extension;
+            $this->logo->saveAs(Yii::$app->params['uploadsDir'] . $logoName);
+            $this->logo = $logoName;
+
+            $piName =  'pi' . time() . $this->supplier_id . '.' .$this->product_image->extension;
+            $this->product_image->saveAs(Yii::$app->params['uploadsDir'] . $piName);
+            $this->product_image = $piName;
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

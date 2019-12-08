@@ -11,7 +11,12 @@
     }
   }
   .help-block {
-
+    margin-top: 4px;
+    font-size: 14px;
+    line-height: 19px;
+    &-error {
+      color: $brand-red;
+    }
   }
   .control-label {
     font-size: 16px;
@@ -30,6 +35,8 @@
     font-size: 16px;
     width: 100%;
     transition: border-color .15s ease-in-out 0s,box-shadow .15s ease-in-out 0s;
+    -webkit-appearance: none;
+    appearance: none;
     &::placeholder {
       color: fade-out($brand-blue, 0.5);
     }

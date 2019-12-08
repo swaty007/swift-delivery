@@ -130,16 +130,10 @@ export const styles = () =>
         )
         .pipe(groupmediaqueries())
         .pipe(
-            gulpif(
-                production,
-                autoprefixer({
-                    browsers: ["last 12 versions", "> 1%", "ie 8", "ie 7"],
-                })
-            )
+            autoprefixer({
+                    browsers: ["last 12 versions", "> 1%", "ie 8", "ie 7"],})
         )
         .pipe(
-            gulpif(
-                production,
                 mincss({
                     compatibility: "ie8",
                     level: {
@@ -158,7 +152,6 @@ export const styles = () =>
                         },
                     },
                 })
-            )
         )
         .pipe(
             gulpif(

@@ -54,16 +54,13 @@ $(document).on('click',"#create_market", function(e) {
     $.ajax({
         type: "POST",
         url: "/market/create-market",
-        cache : false,
-        processData: false,
+        // cache : false,
+        // processData: false,
         dataType: 'json',
-        contentType: false,
-        data: formData,
+        // contentType: false,
+        data: $("#zip_validate").val(),
         success: function (msg) {
             console.log(msg);
-            showToastr(msg);
-            finishPjax();
-            closeModal($('#market-create'));
         }
-    })
+    });
 });

@@ -1,9 +1,15 @@
-.roll {
+.order {
   padding-top: 50px;
+  &__form {
+
+  }
   .sub-title {
     margin-bottom: 20px;
   }
   .sub-text {
     margin-bottom: 35px;
+  }
+  .item__wrap {
+    margin-bottom: 20px;
   }
 }

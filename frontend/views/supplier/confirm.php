@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 
-/* @var $model \frontend\models\SignupForm */
+/* @var $model frontend\models\SupplierForm */
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -19,7 +19,7 @@ $this->title = 'Create supplier';
         <p class="text text--small text-center text--green text--bold">Name & Location</p>
         <hr class="line">
 
-        <?php $form = ActiveForm::begin(['id' => 'form-create-supplier', 'class' => 'access__form']); ?>
+        <?php $form = ActiveForm::begin(['id' => 'form-create-supplier', 'class' => 'access__form', 'enableAjaxValidation' => true]);//, 'enableAjaxValidation' => true ?>
         <!--        --><? //= $form->field($model, 'password')->label(false)->passwordInput() ?>
         <!--        --><? //= $form->field($model, 'password_repeat')->label(false)->passwordInput() ?>
 
@@ -27,10 +27,10 @@ $this->title = 'Create supplier';
 
         <div class="row flex-center">
             <div class="col-xs-8">
-                <?= $form->field($model, 'zip')->textInput()->label('Zip Code:'); ?>
+                <?= $form->field($model, 'zip',['enableAjaxValidation' => true])->textInput(['id' => 'zip_validate'])->label('Zip Code:'); ?>
             </div>
             <div class="col-xs-4">
-                <p class="supplier__text">
+                <p id="zip_validate_status" class="supplier__text">
                     Enter zip code to
                     check availability
                 </p>
@@ -42,7 +42,7 @@ $this->title = 'Create supplier';
 
         <div class="form-group supplier__logo">
             <label class="control-label">Upload company logo:</label>
-            <p class="supplier__text">
+            <p class="supplier__text supplier__text--margin">
                 Recommended format: Square & less than 2MB
             </p>
             <div class="fileContainer">
@@ -61,34 +61,7 @@ $this->title = 'Create supplier';
         </h3>
         <br>
         <div class="item__wrap">
-            <?php $itemsArr = [
-                [
-                    'name' => 'Flower',
-                    'img' => '@web/img/icon_flower.svg',
-                    'value' => 1
-                ],
-                [
-                    'name' => 'Vape Carts',
-                    'img' => '@web/img/icon_vape.svg',
-                    'value' => 2
-                ],
-                [
-                    'name' => 'Edibles',
-                    'img' => '@web/img/icon_edibles.svg',
-                    'value' => 3
-                ],
-                [
-                    'name' => 'PreRoll',
-                    'img' => '@web/img/icon_preroll.svg',
-                    'value' => 4
-                ],
-                [
-                    'name' => 'Concentrates',
-                    'img' => '@web/img/icon_concentrates.svg',
-                    'value' => 5
-                ]
-            ];?>
-            <?php foreach ($itemsArr as $item):?>
+            <?php foreach (Yii::$app->params['giftItems'] as $item):?>
                 <div class="item">
                     <?= Html::img($item['img'], ['class' => 'item__img']); ?>
                     <div class="item__content">
@@ -96,7 +69,7 @@ $this->title = 'Create supplier';
                         <p class="item__desc text--blue-opacity"></p>
                     </div>
                     <?= $form->field($model, 'items', ['options' => ['class' => 'default-checkbox__container']])
-                        ->checkbox(['value' => $item['value'], 'uncheck' => null, 'class' => 'default-checkbox'])
+                        ->checkbox(['name'=>'SupplierForm[items][]', 'value' => $item['value'], 'uncheck' => null, 'class' => 'default-checkbox'])
                         ->label(false); ?>
                 </div>
             <?php endforeach;?>
@@ -110,7 +83,7 @@ $this->title = 'Create supplier';
         <?= $form->field($model, 'product_name')->textInput()->label('Product Name:'); ?>
         <div class="form-group supplier__product">
             <label class="control-label">Upload product image:</label>
-            <p class="supplier__text">
+            <p class="supplier__text supplier__text--margin">
                 Recommended format: Square & less than 2MB
             </p>
             <div class="fileContainer">
@@ -120,7 +93,7 @@ $this->title = 'Create supplier';
                 <!--            <input type="file" name="file" >-->
                 <?= $form->field($model, 'product_image', ['options' => [
                     'tag' => false, // Don't wrap with "form-group" div
-                ]])->fileInput(['class'=>'fileContainer__input'])->label(false) ?>
+                ]])->fileInput(['class'=>'fileContainer__input'])->label(false); ?>
             </div>
         </div>
 
@@ -132,8 +105,8 @@ $this->title = 'Create supplier';
 
         <div class="supplier__terms">
             <?= $form->field($model, 'terms', ['options' => ['class' => 'default-checkbox__container']])
-                ->checkbox(['value' => $item['value'], 'uncheck' => null, 'class' => 'default-checkbox'])
-                ->label(false); ?>
+                ->checkbox(['value' => 1, 'uncheck' => null, 'class' => 'default-checkbox'])
+                ->label(false)->error(false); ?>
             <p class="text text--small text--blue-opacity supplier__terms--text">
                 My company will follw Swift Delivery’s
                 <a href="<?=Url::toRoute(['site/index']);?>" class="text--bold">

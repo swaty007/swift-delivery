@@ -14,6 +14,7 @@ use Yii;
  * @property string $zip
  * @property string $address
  * @property string $address_2
+ * @property string $website
  * @property string $description
  * @property string $product_name
  * @property string $product_image
@@ -58,6 +59,7 @@ class Supplier extends \yii\db\ActiveRecord
             [['supplier_id', 'status', 'is_active'], 'integer'],
             [['latitude', 'longitude'], 'number'],
             [['name', 'product_name'], 'string', 'max' => 100],
+            [['website'], 'string', 'max' => 128],
             [['logo', 'product_image'], 'string', 'max' => 256],
             [['zip'], 'string', 'max' => 20],
             [['address', 'address_2'], 'string', 'max' => 80],
@@ -76,6 +78,7 @@ class Supplier extends \yii\db\ActiveRecord
             'name' => 'Name',
             'logo' => 'Logo',
             'zip' => 'Zip',
+            'website' => 'Website',
             'address' => 'Address',
             'address_2' => 'Address (Second String))',
             'description' => 'Description',

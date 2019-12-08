@@ -1,20 +1,35 @@
 <?php
-
 namespace frontend\controllers;
 
-use common\models\Supplier;
 use common\models\User;
+use frontend\models\ResendVerificationEmailForm;
 use frontend\models\SupplierForm;
+use frontend\models\VerifyEmailForm;
 use Yii;
+use yii\base\InvalidArgumentException;
 use yii\bootstrap\ActiveForm;
-use yii\filters\AccessControl;
+use yii\web\BadRequestHttpException;
+use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use frontend\models\LoginForm;
+use frontend\models\PasswordResetRequestForm;
+use frontend\models\ResetPasswordForm;
+use frontend\models\SignupForm;
+use frontend\models\ContactForm;
+
+use Minishlink\WebPush\WebPush;
+use Minishlink\WebPush\Subscription;
 use yii\web\UploadedFile;
 
-class SupplierController extends BaseAuthorizedController
+/**
+ * Site controller
+ */
+class DevController extends Controller
 {
-    public $allowedRole = User::USER_ROLE_SUPPLIER;
-
+    /**
+     * {@inheritdoc}
+     */
     public function behaviors()
     {
         return [
@@ -23,7 +38,12 @@ class SupplierController extends BaseAuthorizedController
                 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['confirm'],
+                        'actions' => ['signup'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -31,35 +51,10 @@ class SupplierController extends BaseAuthorizedController
             ],
         ];
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function actions()
-    {
-        return [];
+    public function actionOrder() {
+        return $this->render('/customer/order');
     }
-
-    public function beforeAction($action)
-    {
-        parent::beforeAction($action);
-        $actionId = Yii::$app->controller->action->id;
-
-        if (!$this->isSupplierDataFilled() && !in_array($actionId, ['confirm'])) {
-            return $this->redirect('/supplier/confirm')->send();
-        }
-
-        return true;
-    }
-
-    public function actionIndex() {
-        $this->render('index');
-    }
-
     public function actionConfirm() {
-        if($this->isSupplierDataFilled()) {
-            return $this->redirect('confirm-success');
-        }
 
         $model = new SupplierForm();
 
@@ -78,14 +73,6 @@ class SupplierController extends BaseAuthorizedController
             }
         }
 
-        return $this->render('confirm', ['model' => $model]);
-    }
-
-    public function actionConfirmSuccess() {
-        return $this->render('confirm-success');
-    }
-
-    private function isSupplierDataFilled() {
-        return (boolean)Supplier::find()->where(['supplier_id' => Yii::$app->user->getId()])->count();
+        return $this->render('/supplier/confirm',['model' => $model]);
     }
 }

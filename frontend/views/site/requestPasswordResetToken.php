@@ -9,7 +9,6 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
 $this->title = 'Forgot your password?  No sweat.';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="access--blue">

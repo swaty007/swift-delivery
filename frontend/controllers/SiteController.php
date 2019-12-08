@@ -74,7 +74,7 @@ class SiteController extends Controller
 
     public function beforeAction($action)
     {
-        if(!Yii::$app->user->isGuest && Yii::$app->controller->action->id !== 'logout') {
+        if(!Yii::$app->user->isGuest && !in_array(Yii::$app->controller->action->id, ['index','logout'])) {
             switch (Yii::$app->user->identity->role) {
                 case User::USER_ROLE_SUPPLIER:
                     $redirectUrl = '/supplier/index';

@@ -1,6 +1,6 @@
 body.show-scc-navbar {
   //@media(max-width:991px) {
-    overflow-x: hidden!important;
+    overflow: hidden!important;
   //}
   .navbar__wrap {
     .navbar__collapse{
@@ -92,7 +92,7 @@ body {
       position: fixed;
       height: auto;
       z-index: 1000;
-      overflow: scroll!important;
+      overflow: auto;
       background: transparent;
       padding: 0 25px 25px;
       top: 0;

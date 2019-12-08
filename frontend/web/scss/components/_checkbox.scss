@@ -41,6 +41,11 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    &.has-error {
+      .default-checkbox:before {
+        border-color: $brand-red;
+      }
+    }
   }
   &__mark {
     position: absolute;

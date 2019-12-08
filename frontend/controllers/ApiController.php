@@ -25,36 +25,13 @@ use Minishlink\WebPush\Subscription;
  */
 class ApiController extends Controller
 {
+    private $postData;
     /**
      * {@inheritdoc}
      */
     public function behaviors()
     {
         return [
-            /*
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
-                'rules' => [
-                    [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-            */
         ];
     }
 
@@ -69,15 +46,26 @@ class ApiController extends Controller
 
     public function beforeAction($action)
     {
+        if(Yii::$app->user->isGuest) {
+            return $this->redirect('/')->send();
+        }
+
         Yii::$app->response->format = 'json';
         Yii::$app->controller->enableCsrfValidation = false;
+        $this->postData = Yii::$app->request->post();
         
         return parent::beforeAction($action);
     }
 
-    public function actionIsZipAllowed(string $zip) {
-        $response = [];
-        $response['result'] = (boolean)Zipcode::find()->where(['zipcode' => (string)$zip])->count();
+    public function actionIsZipAllowed() {
+        if (!Yii::$app->request->isPost) {
+            return $this->sendResponse(null, 405);
+        }
+
+        $response = ['result' => (boolean)Zipcode::find()
+            ->where(['zipcode' => @(string)$this->postData['zip']])
+            ->count()];
+
         return $this->sendResponse($response);
     }
 

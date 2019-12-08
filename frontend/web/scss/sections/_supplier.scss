@@ -5,7 +5,9 @@
     font-size: 14px;
     line-height: 17px;
     font-weight: $regular;
-    margin-bottom: 15px;
+    &--margin {
+      margin-bottom: 15px;
+    }
   }
   &__h1 {
     margin-bottom: 25px;
@@ -22,7 +24,7 @@
   &__terms {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     &--text {
       margin-left: 10px;
       position: relative;
@@ -37,6 +39,7 @@
   }
   &__core {
     margin-bottom: 20px;
+    padding-left: 35px;
     &--text {
       margin-bottom: 10px;
     }

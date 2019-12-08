@@ -5,6 +5,30 @@ class Main {
     events() {
         this.fileContainer();
         this.spinner();
+        $("#zip_validate").on("change", (e) => {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/api/is-zip-allowed",
+                // cache : false,
+                // processData: false,
+                // dataType: 'json',
+                // contentType: false,
+                data: {
+                    zip: $("#zip_validate").val()
+                },
+                success: function (msg) {
+                    console.log(msg);
+                    if (msg.result) {
+                        // $("#zip_validate").closest('.form-group').removeClass('has-error').addClass('has-success');
+                        // $("#zip_validate_status").text('You write available zip code');
+                    } else {
+                        // $("#zip_validate").closest('.form-group').removeClass('has-success').addClass('has-error');
+                        // $("#zip_validate_status").text('You write unavailable zip code');
+                    }
+                }
+            });
+        });
     }
     fileContainer() {
         $(".fileContainer input[type=file]").on('change', function (e) {
