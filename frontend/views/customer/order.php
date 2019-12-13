@@ -92,9 +92,47 @@ $this->title = 'Order Form';
     </section>
 <section class="card">
     <div class="container">
-        <p class="sub-text text--green">
+        <p class="sub-text text--green text-center">
             What’s in your cart
         </p>
+        <div class="card__wrap">
+            <div class="card__item--empty">
+                <p class="text text--blue">
+                    There’s nothing in your cart yet.
+                </p>
+            </div>
+            <div class="card__item">
+                <div class="card__item--left">
+                    <p class="text--small text--blue-opacity">
+                        <strong>
+                            Flower | <span class="text--green">$200</span>
+                        </strong>
+                    </p>
+                    <p class="card__text text--blue-opacity">
+                        7 grams (1/4oz) sativa
+                    </p>
+                    <p class="card__text text--blue-opacity">
+                        <strong>
+                            Quantity: <span>1</span>
+                        </strong>
+                    </p>
+                </div>
+                <div class="card__item--right">
+                    <p class="text--small text--green">
+                        $75.00
+                    </p>
+                    <a href="#" class="card__delete">
+
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="flex-center">
+            <p class="text text--blue">
+                Find a delivery service near you.
+            </p>
+            <button class="main-btn">Start delivery request</button>
+        </div>
     </div>
 </section>
 

@@ -1,0 +1,36 @@
+.card {
+  &__wrap {
+
+  }
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &--left {
+
+    }
+    &--right {
+
+    }
+    &--empty {
+      justify-content: center;
+
+      border: 2px solid $brand-blue;
+      border-radius: 5px;
+    }
+  }
+  &__text {
+    font-size: 14px;
+    line-height: 17px;
+  }
+  &__delete {
+    display: block;
+    text-decoration: none;
+    outline: none;
+    background-image: url(../../img/icon_delete.svg);
+
+    width: 19px;
+    height: 19px;
+
+  }
+}
