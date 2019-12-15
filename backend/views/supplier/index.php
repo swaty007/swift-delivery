@@ -29,13 +29,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     'supplier_id',
                     'name',
                     'zip',
-                    'address',
-                    'address_2',
                     //'description',
                     //'product_name',
                     //'product_image',
-                    'status',
-                    'is_active',
+                    'status' => [
+                            'label' => 'Subscribe Plan',
+                        'value' => function($data) {
+                            $subscribes = \yii\helpers\ArrayHelper::getColumn(Yii::$app->params['subscribePlans'], 'name');
+                            return $subscribes[$data->status];
+                        }
+                    ],
+                    'is_active' => [
+                            'label' => 'Is Active',
+                        'value' => function($data) {
+                            $is_active = ['0' => 'No', '1' => 'Yes'];
+                            return $is_active[$data->is_active];
+                        }
+                    ],
                     //'latitude',
                     //'longitude',
                     'date_created',

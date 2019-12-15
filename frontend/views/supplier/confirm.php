@@ -61,9 +61,9 @@ $this->title = 'Create supplier';
         </h3>
         <br>
         <div class="item__wrap">
-            <?php foreach (Yii::$app->params['giftItems'] as $item):?>
+            <?php foreach ($gifts as $item):?>
                 <div class="item">
-                    <?= Html::img($item['img'], ['class' => 'item__img']); ?>
+                    <?= Html::img($item['image'], ['class' => 'item__img']); ?>
                     <div class="item__content">
                         <h3 class="item__title text--small text--blue"><?=$item['name'];?></h3>
                         <p class="item__desc text--blue-opacity"></p>

@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Product;
 use common\models\Supplier;
 use common\models\User;
 use frontend\models\SupplierForm;
@@ -77,8 +78,7 @@ class SupplierController extends BaseAuthorizedController
                 return $this->redirect('/supplier/confirm-success');
             }
         }
-
-        return $this->render('confirm', ['model' => $model]);
+        return $this->render('confirm', ['model' => $model, 'gifts' => Product::getActiveList()]);
     }
 
     public function actionConfirmSuccess() {

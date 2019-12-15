@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Product;
 use common\models\User;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\SupplierForm;
@@ -52,7 +53,7 @@ class DevController extends Controller
         ];
     }
     public function actionOrder() {
-        return $this->render('/customer/order');
+        return $this->render('/customer/order', ['gifts' => Product::getActiveList()]);
     }
     public function actionConfirm() {
 

@@ -4,7 +4,6 @@ class Main {
     }
     events() {
         this.fileContainer();
-        this.spinner();
         $("#zip_validate").on("change", (e) => {
             e.preventDefault();
             $.ajax({
@@ -44,19 +43,6 @@ class Main {
                     $(input).siblings(".fileContainer__text--name").addClass('loaded');
                 };
                 reader.readAsDataURL(input.files[0]);
-            }
-        });
-    }
-    spinner () {
-        $(".spinner input").spinner({
-            min: 1,
-            max: 50,
-            start: 1,
-            change: function( event, ui ) {
-                $('label[for='+  this.id  +']').text("$"+this.value*this.dataset.price);
-            },
-            spin: function( event, ui ) {
-                $('label[for='+  this.id  +']').text("$"+this.value*this.dataset.price);
             }
         });
     }

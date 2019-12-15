@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  min-height: unquote("calc(100vh - 87px -77px)");;
+  min-height: unquote("calc(100vh - 87px - 71px)");;
   &>* {
     width: 100%;
     display: flex;

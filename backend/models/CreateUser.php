@@ -65,7 +65,6 @@ class CreateUser extends Model
         $user = new User();
         $user->username = $this->username;
         $user->phone_number = $this->phone_number;
-        $user->status = $this->status;
         $user->role = $this->role;
         $user->setPassword($this->password);
         $user->generateAuthKey();

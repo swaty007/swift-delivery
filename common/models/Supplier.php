@@ -18,6 +18,7 @@ use Yii;
  * @property string $description
  * @property string $product_name
  * @property string $product_image
+ * @property string $subscribe_ends
  * @property int $status
  * @property int $is_active
  * @property double $latitude
@@ -64,6 +65,7 @@ class Supplier extends \yii\db\ActiveRecord
             [['zip'], 'string', 'max' => 20],
             [['address', 'address_2'], 'string', 'max' => 80],
             [['description'], 'string', 'max' => 200],
+            [['subscribe_ends'], 'safe'],
         ];
     }
 
@@ -84,7 +86,8 @@ class Supplier extends \yii\db\ActiveRecord
             'description' => 'Description',
             'product_name' => 'Product Name',
             'product_image' => 'Product Image',
-            'status' => 'Status',
+            'status' => 'Plan',
+            'subscribe_ends' => 'Subscribe Ends',
             'is_active' => 'Is Active',
             'latitude' => 'Latitude',
             'longitude' => 'Longitude',

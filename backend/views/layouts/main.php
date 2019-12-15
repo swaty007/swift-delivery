@@ -43,6 +43,8 @@ AppAsset::register($this);
 
         $menuItems = [
             ['label' => 'Dashboard', 'url' => ['/site/index']],
+            ['label' => 'Orders', 'url' => ['/order/index']],
+            ['label' => 'Products', 'url' => ['/product/index']],
             ['label' => 'Customers', 'url' => ['/customer/index']],
             ['label' => 'Suppliers', 'url' => ['/supplier/index']],
             ['label' => 'Zipcodes', 'url' => ['/zipcode/index']],

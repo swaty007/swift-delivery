@@ -6,10 +6,12 @@
 // Our modules / classes
 import Main from "./modules/Main";
 import Navbar from "./modules/Navbar";
+import Modal from "./modules/Modal";
 
 // Instantiate a new object using our modules/classes
 const main = new Main();
 const navbar = new Navbar();
+const modal = new Modal();
 
 function showToastr(msg) {
     if (msg.msg === 'ok') {

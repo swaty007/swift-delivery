@@ -1,0 +1,56 @@
+.modal {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity .3s ease;
+  &__open {
+    overflow: hidden;
+  }
+  &__wrapper {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  &__container {
+    width: 600px;
+    max-width: 90%;
+    margin: 0px auto;
+    padding: 60px 30px;
+    background-color: $white;
+    border-radius: 5px;
+    transition: all .3s ease;
+    position: relative;
+    text-align: center;
+
+  }
+  &__close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background-color: fade-out($brand-blue, 0.9);
+    width: 40px;
+    height: 40px;
+    background-image: url(../../img/icon_close_modal.svg);
+    background-size: 19px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    opacity: .5;
+    cursor: pointer;
+  }
+  &__img {
+
+  }
+  &__title {
+
+  }
+  &__header {
+
+  }
+  &__body {
+
+  }
+}

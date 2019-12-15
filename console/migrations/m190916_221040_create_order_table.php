@@ -19,7 +19,7 @@ class m190916_221040_create_order_table extends Migration
             'zip' => $this->string(20),
             'address' => $this->string(80),
             'address_2' => $this->string(80),
-            'description' => $this->string(200),
+            'description' => $this->string(600),
             'latitude' => $this->float()->defaultValue(0),
             'longitude' => $this->float()->defaultValue(0),
         ]);
