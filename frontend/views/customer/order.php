@@ -23,16 +23,23 @@ $this->title = 'Order Form';
             Select your cannabis gift:
         </p>
         <div class="item__wrap">
-            <?php foreach (Yii::$app->params['giftItems'] as $item): ?>
+            <?php foreach ($gifts as $item): ?>
                 <div class="item">
-                    <?= Html::img($item['img'], ['class' => 'item__img']); ?>
+                    <?= Html::img($item['image'], ['class' => 'item__img']); ?>
                     <div class="item__content">
                         <h3 class="item__title text--small text--blue"><?= $item['name']; ?></h3>
                         <p class="item__desc text--blue-opacity">
                             starting at <strong
-                                    class="text--green text--normal">$<?= number_format($item['price'], 2); ?></strong>
+                                    class="text--green text--normal">$<?= number_format($item['display_price'], 2); ?></strong>
                         </p>
                     </div>
+                    <?php foreach($item['productOptions'] as $option):?>
+                        product_id=<?= $option['product_id'];?><br>
+                        name=<?= $option['name'];?><br>
+                        price=<?= $option['price'];?><br>
+                        order=<?= $option['order'];?><br>
+                        is_active=<?= $option['is_active'];?><br><br>
+                    <?php endforeach;?>
                     <a href="#" class="main-btn main-btn--sm w-100"
                        data-value="<?= $item['value']; ?>"
                        data-price="<?= number_format($item['price'], 2); ?>">
