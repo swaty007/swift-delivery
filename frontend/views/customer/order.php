@@ -34,6 +34,7 @@ $this->title = 'Order Form';
                         </p>
                     </div>
                     <?php foreach($item['productOptions'] as $option):?>
+                        id=<?= $option['id'];?><br>
                         product_id=<?= $option['product_id'];?><br>
                         name=<?= $option['name'];?><br>
                         price=<?= $option['price'];?><br>
@@ -142,7 +143,7 @@ $this->title = 'Order Form';
 
 <div class="modal">
     <div class="modal__wrapper">
-        <div class="modal__container">
+        <div class="modal__container container">
             <div class="modal__close"></div>
             <div class="modal__header">
                 <img class="modal__img" src="/img/icon_flower.svg" alt="">
