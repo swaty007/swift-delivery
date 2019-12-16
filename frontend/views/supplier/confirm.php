@@ -102,29 +102,22 @@ $this->title = 'Create supplier';
             Select your monthly price plan
         </h3>
         <div class="plan__wrap">
-            <div class="plan">
-                <input type="radio" class="plan__input">
-                <div class="plan__container">
-                    <div class="plan__header">
-                        <h3 class="plan__title sub-text">Medium Plan</h3>
-                        <p class="text--green text--small">$500<span class="plan__desc text--blue-opacity">/mo</span></p>
-                    </div>
-                    <p class="plan__desc text--blue-opacity">
-                        - Up to <strong>250 deliveries</strong> a month
-                    </p>
-                </div>
-            </div>
+
         <?php foreach (Yii::$app->params['subscribePlans'] as $plan):?>
-            <div class="item">
-                <?= Html::img($plan['image'], ['class' => 'item__img']); ?>
-                <div class="item__content">
-                    <h3 class="item__title text--small text--blue"><?=$plan['name'];?></h3>
-                    <p class="item__desc text--blue-opacity"></p>
-                </div>
-                <?= $form->field($model, 'plan', ['options' => ['class' => 'default-checkbox__container']])
-                    ->radio(['name'=>'SupplierForm[plan][]', 'value' => $plan['value'], 'uncheck' => null, 'class' => 'default-checkbox'])
-                    ->label(false); ?>
-            </div>
+                <?= $form->field($model, 'plan', ['options' => ['class' => 'plan']])
+                    ->radio(['name'=>'SupplierForm[plan][]',
+                        'value' => $plan['id'],
+                        'uncheck' => null,
+                        'class' => 'plan__input',
+                        'template' => '{input}<div class="plan__container"><div class="plan__header"><h3 class="plan__title sub-text">'
+                            .$plan["name"].
+                            '</h3><p class="text--green text--small"><strong>$'
+                            .$plan['pricePerMonth'].
+                            '</strong><span class="plan__desc text--blue-opacity">/mo</span></p></div><p class="plan__desc text--blue-opacity">- Up to <strong>'
+                            .$plan['dealsPerMonth'].
+                            ' deliveries</strong> a month</p></div>',
+                    ])
+                    ->label(false)->error(false); ?>
         <?php endforeach;?>
         </div>
         <div class="supplier__terms">
@@ -133,7 +126,7 @@ $this->title = 'Create supplier';
                 ->label(false)->error(false); ?>
             <p class="text text--small text--blue-opacity supplier__terms--text">
                 My company will follw Swift Delivery’s
-                <a href="<?=Url::toRoute(['site/index']);?>" class="text--bold">
+                <a href="<?=Url::toRoute(['site/index']);?>" class="text--bold text--blue-opacity">
                     Code of Ethics
                     <?= Html::img('@web/img/icon_share_link.svg', ['class' => 'supplier__terms--img']); ?>
                 </a>

@@ -9,8 +9,9 @@
   appearance: none;
   background-image: url(../../img/icon_dropdown_arrow.svg);
   background-repeat: no-repeat;
-  background-position: 96% 50%;
-  appearance: none;
+  background-position: 94% 50%;
+  outline: none;
+  min-width: 235px;
   option {
     height: 50px;
     line-height: 50px;

@@ -193,7 +193,7 @@ AppAsset::register($this);
                     <a href="#" class="sub-title text--blue">Help Center</a>
                 </li>
                 <li class="navbar__item">
-                    <a href="#" class="sub-title text--blue">Contact</a>
+                    <a href="<?=Url::toRoute(['site/signup']);?>" class="sub-title text--blue">Contact</a>
                 </li>
                 <li class="navbar__item">
                     <hr>

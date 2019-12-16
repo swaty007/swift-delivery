@@ -1,6 +1,7 @@
 <?php
 namespace frontend\models;
 
+use common\models\Product;
 use common\models\SupplierItemRelation;
 use common\models\Zipcode;
 use Yii;
@@ -92,7 +93,7 @@ class SupplierForm extends Model
     }
 
     private function processGiftItems(Supplier $supplier) {
-        $allowedGiftItemsIds = array_keys(ArrayHelper::index(Yii::$app->params['giftItems'], 'value'));
+        $allowedGiftItemsIds = array_keys(ArrayHelper::index(Product::getActiveList(), 'value'));
 
         foreach ($this->items as $giftItem) {
             if(!in_array($giftItem, $allowedGiftItemsIds)) {

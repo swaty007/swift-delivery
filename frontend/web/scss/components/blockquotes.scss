@@ -1,0 +1,11 @@
+.blockquotes {
+  background: rgba(242, 201, 76, 0.1);
+  border: 1px solid $brand-yellow;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding: 17px 20px;
+  display: block;
+  * {
+    color: #9E8539;
+  }
+}

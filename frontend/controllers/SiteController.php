@@ -1,12 +1,15 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Product;
 use common\models\User;
+use frontend\models\OrderForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\SupplierForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\bootstrap\ActiveForm;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -181,93 +184,24 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
-    public function actionWebPush()
-    {
+    public function actionOrder() {
 
-        $notifications = [
-            [
-                'subscription' => Subscription::create([
-                    'endpoint' => 'https://fcm.googleapis.com/fcm/send/ewouRpP09SU:APA91bFY82LvrQuQ1TNlCzL9VqOhR4rBQ1ex8jfCuKrZ9DtHtugn51tYjLyTUsrNoxYSGYxE0L3Wu6OPkZQzGV1XEr5Lo6gSNSPY8nM3hnjTIMDk0MxjvM9gJ7EdKzx7sWcdWlzckXGJ', // Firefox 43+,
-                    'publicKey' => 'BLAlJkwiyef6Z9FEpOhsTMTZ2dIpDSkL35baoHnijsMttGhENQYOKRl4WbLAuU_2Pg0D1OPWdxzObdbQfQoiv-M', // base 64 encoded, should be 88 chars
-                    'authToken' => 'SvmxLDiq7gV4lQjX_InxjQ', // base 64 encoded, should be 24 chars
-                ]),
-                'payload' => 'hello !',
-            ], [
-                'subscription' => Subscription::create([
-                    'endpoint' => 'https://fcm.googleapis.com/fcm/send/ewouRpP09SU:APA91bFY82LvrQuQ1TNlCzL9VqOhR4rBQ1ex8jfCuKrZ9DtHtugn51tYjLyTUsrNoxYSGYxE0L3Wu6OPkZQzGV1XEr5Lo6gSNSPY8nM3hnjTIMDk0MxjvM9gJ7EdKzx7sWcdWlzckXGJ', // Chrome
-                ]),
-                'payload' => null,
-            ], [
-                'subscription' => Subscription::create([
-                    'endpoint' => 'https://fcm.googleapis.com/fcm/send/ewouRpP09SU:APA91bFY82LvrQuQ1TNlCzL9VqOhR4rBQ1ex8jfCuKrZ9DtHtugn51tYjLyTUsrNoxYSGYxE0L3Wu6OPkZQzGV1XEr5Lo6gSNSPY8nM3hnjTIMDk0MxjvM9gJ7EdKzx7sWcdWlzckXGJ',
-                    'publicKey' => 'BLAlJkwiyef6Z9FEpOhsTMTZ2dIpDSkL35baoHnijsMttGhENQYOKRl4WbLAuU_2Pg0D1OPWdxzObdbQfQoiv-M',
-                    'authToken' => 'SvmxLDiq7gV4lQjX_InxjQ',
-                    'contentEncoding' => 'aesgcm', // one of PushManager.supportedContentEncodings
-                ]),
-                'payload' => '{msg:"test"}',
-            ], [
-                'subscription' => Subscription::create([ // this is the structure for the working draft from october 2018 (https://www.w3.org/TR/2018/WD-push-api-20181026/)
-                    "endpoint" => "https://fcm.googleapis.com/fcm/send/ewouRpP09SU:APA91bFY82LvrQuQ1TNlCzL9VqOhR4rBQ1ex8jfCuKrZ9DtHtugn51tYjLyTUsrNoxYSGYxE0L3Wu6OPkZQzGV1XEr5Lo6gSNSPY8nM3hnjTIMDk0MxjvM9gJ7EdKzx7sWcdWlzckXGJ",
-                    "keys" => [
-                        'p256dh' => 'BG79EW1-T-iJEUG_r45v5rGqY_GVi9B0_QYUqc11y9rh-0eCApbEg3swvjWOpbAFNbHu5UTMmM4IGTbSWEsfPGA',
-                        'auth' => 'SvmxLDiq7gV4lQjX_InxjQ'
-                    ],
-                ]),
-                'payload' => '{"msg":"Hello World!"}',
-            ],
-        ];
-        $webPush = new WebPush();
+        $model = new OrderForm();
 
-        foreach ($notifications as $notification) {
-            $status = $webPush->sendNotification(
-                $notification['subscription'],
-                $notification['payload'] // optional (defaults null)
-            );
-            echo var_dump($status);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->supplier_id = null;//тут проверь
+            $model->customer_id = Yii::$app->user->getId();
+
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = 'json';
+                return ActiveForm::validate($model);
+            }
+
+            if ($model->confirm()) {
+//                return $this->redirect('/supplier/confirm-success');//тут проверь
+            }
         }
-        /**
-         * send one notification and flush directly
-         * @var \Generator<MessageSentReport> $sent
-         */
-        $sent = $webPush->sendNotification(
-            $notifications[0]['subscription'],
-            $notifications[0]['payload'], // optional (defaults null)
-            true // optional (defaults false)
-        );
-        echo var_dump($sent);die();
-        return;
-
-        $url = 'https://fcm.googleapis.com/fcm/send/fyNGiGMWk5E:APA91bG0f5Iu_b5tbhPvGqGXXaLz1mfOSINCDn_Un3CyKfZ7Tf8S8cY5gArKVN2wFKSI2t6B6bn6QDCnBStVXlTjd3b5_-D3xSPEQ6ni05yV1emdpUf_76n7bJ06o6H-GzSs_ny6H8dk';
-        $YOUR_API_KEY = 'AAAAC1fvc0U:APA91bElxlcBu-qHwQYLWhWPdnWFWm_qw49w_xQ-r9tsz5h-cNbakwjUu8zl-BWK6VP8R18t1sFCWOas3rrVLY-aqyW777ukw13uRg0rSCczIe_NiRA95PETwhA7Esht3X5KmxfEe40D'; // Server key
-        $YOUR_TOKEN_ID = 'A8_wC7OYpd3ojpJGEy82Yw'; // Client token id
-
-        $request_body = [
-            'to' => $YOUR_TOKEN_ID,
-            'notification' => [
-                'title' => 'Ералаш',
-                'body' => sprintf('Начало в %s.', date('H:i')),
-                'icon' => 'https://eralash.ru.rsz.io/sites/all/themes/eralash_v5/logo.png?width=192&height=192',
-                'click_action' => 'http://eralash.ru/',
-            ],
-        ];
-        $fields = json_encode($request_body);
-
-        $request_headers = [
-            'Content-Type: application/json',
-            'Authorization: key=' . $YOUR_API_KEY,
-        ];
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $request_headers);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        $response = curl_exec($ch);
-        curl_close($ch);
-
-        echo $response;
+        return $this->render('/customer/order', ['model' => $model, 'gifts' => Product::getActiveList()]);
     }
     /**
      * Signs user up.
@@ -280,8 +214,7 @@ class SiteController extends Controller
         $model = new SignupForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
-            return $this->goHome();
+            return $this->redirect('/supplier/index');
         }
 
         return $this->render('signup', [

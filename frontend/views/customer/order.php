@@ -14,12 +14,12 @@ $this->title = 'Order Form';
 <?= $this->render('../components/_alert', ['module' => 'available']); ?>
 
 
-<section class="order text-center">
+<section class="order">
     <div class="container">
-        <h2 class="sub-title text--blue">
+        <h2 class="sub-title text--blue text-center">
             Let’s Roll!
         </h2>
-        <p class="sub-text text--green">
+        <p class="sub-text text--green text-center m35">
             Select your cannabis gift:
         </p>
         <div class="item__wrap">
@@ -33,14 +33,14 @@ $this->title = 'Order Form';
                                     class="text--green text--normal">$<?= number_format($item['display_price'], 2); ?></strong>
                         </p>
                     </div>
-                    <?php foreach($item['productOptions'] as $option):?>
-                        id=<?= $option['id'];?><br>
-                        product_id=<?= $option['product_id'];?><br>
-                        name=<?= $option['name'];?><br>
-                        price=<?= $option['price'];?><br>
-                        order=<?= $option['order'];?><br>
-                        is_active=<?= $option['is_active'];?><br><br>
-                    <?php endforeach;?>
+                    <?php foreach ($item['productOptions'] as $option): ?>
+<!--                        id=--><?//= $option['id']; ?><!--<br>-->
+<!--                        product_id=--><?//= $option['product_id']; ?><!--<br>-->
+<!--                        name=--><?//= $option['name']; ?><!--<br>-->
+<!--                        price=--><?//= $option['price']; ?><!--<br>-->
+<!--                        order=--><?//= $option['order']; ?><!--<br>-->
+<!--                        is_active=--><?//= $option['is_active']; ?><!--<br><br>-->
+                    <?php endforeach; ?>
                     <a href="#" class="main-btn main-btn--sm w-100"
                        data-value="<?= $item['value']; ?>"
                        data-price="<?= number_format($item['price'], 2); ?>">
@@ -58,50 +58,41 @@ $this->title = 'Order Form';
             </div>
 
         </div>
-        <?php if (false): ?>
-            <?php $form = ActiveForm::begin(['id' => 'form-create-order', 'class' => 'order__form', 'enableAjaxValidation' => true]);//, 'enableAjaxValidation' => true ?>
-            <p class="sub-text text--green text--small">
-                Basic information:
-            </p>
-            <hr>
-            <?= $form->field($model, 'name')->textInput()->label('First Name:'); ?>
-            <?= $form->field($model, 'name')->textInput()->label('Phone Number:'); ?>
 
-            <p class="sub-text text--green text--small">
-                What’s your location:
-            </p>
-            <hr>
-            <div class="row flex-center">
-                <div class="col-xs-8">
-                    <?= $form->field($model, 'zip', ['enableAjaxValidation' => true])->textInput(['id' => 'zip_validate'])->label('Zip Code:'); ?>
-                </div>
-                <div class="col-xs-4">
-                    <p id="zip_validate_status" class="supplier__text">
-                        Enter zip code to
-                        check availability
-                    </p>
-                </div>
+        <?php $form = ActiveForm::begin(['id' => 'form-create-order', 'class' => 'order__form', 'enableAjaxValidation' => true]);//, 'enableAjaxValidation' => true ?>
+        <p class="sub-text text--green text--small text-center">
+            Basic information:
+        </p>
+        <hr>
+        <?= $form->field($model, 'name')->textInput()->label('First Name:'); ?>
+        <?= $form->field($model, 'phone_number')->textInput()->label('Phone Number:'); ?>
+
+        <p class="sub-text text--green text--small text-center">
+            What’s your location:
+        </p>
+        <hr>
+        <div class="row flex-center">
+            <div class="col-xs-8">
+                <?= $form->field($model, 'zip', ['enableAjaxValidation' => true])->textInput(['id' => 'zip_validate'])->label('Zip Code:'); ?>
             </div>
-
-            <?= $form->field($model, 'address')->textInput()->label('Address:'); ?>
-            <?= $form->field($model, 'address_2')->textInput(['placeholder' => 'Addres Line 2 (optional)'])->label(false); ?>
-            <?= $form->field($model, 'textarea')->textarea(['placeholder' => 'Dont ring door bell, etc.'])->label("Any additional about your location:"); ?>
-
-            <div class="form-group">
-                <?= Html::submitButton('Submit Application', ['class' => 'main-btn']) ?>
+            <div class="col-xs-4">
+                <p id="zip_validate_status" class="supplier__text">
+                    Enter zip code to
+                    check availability
+                </p>
             </div>
-            <?php ActiveForm::end(); ?>
-        <?php endif; ?>
+        </div>
 
-    </div>
-</section>
-<section class="card">
-    <div class="container">
+        <?= $form->field($model, 'address')->textInput()->label('Address:'); ?>
+        <?= $form->field($model, 'address_2')->textInput(['placeholder' => 'Addres Line 2 (optional)'])->label(false); ?>
+        <?= $form->field($model, 'description')->textarea(['placeholder' => 'Dont ring door bell, etc.'])->label("Any additional about your location:"); ?>
+
+
         <p class="sub-text text--green text-center">
             What’s in your cart
         </p>
         <div class="card__wrap">
-            <div class="card__item--empty">
+            <div class="card__item card__item--empty">
                 <p class="text text--blue">
                     There’s nothing in your cart yet.
                 </p>
@@ -124,7 +115,9 @@ $this->title = 'Order Form';
                 </div>
                 <div class="card__item--right">
                     <p class="text--small text--green">
-                        $75.00
+                        <strong>
+                            $75.00
+                        </strong>
                     </p>
                     <a href="#" class="card__delete">
 
@@ -132,12 +125,24 @@ $this->title = 'Order Form';
                 </div>
             </div>
         </div>
-        <div class="flex-center">
+        <div class="flex-center flex-center--between">
             <p class="text text--blue">
-                Find a delivery service near you.
+                <strong>
+                    Find a delivery service near you.
+                </strong>
             </p>
-            <button class="main-btn">Start delivery request</button>
+            <?= Html::submitButton('Start delivery request', ['class' => 'main-btn']) ?>
         </div>
+
+
+        <?php ActiveForm::end(); ?>
+
+
+    </div>
+</section>
+<section class="card">
+    <div class="container">
+
     </div>
 </section>
 
@@ -157,10 +162,19 @@ $this->title = 'Order Form';
                     <option value="">7 grams (1/4oz) sativa</option>
                     <option value="">7 grams (1/4oz) sativa</option>
                 </select>
+                <p class="text--small text--blue-opacity">
+                    Quanitity:
+                </p>
                 <div class="spinner">
                     <input id="item_quanitity" data-price="75" value="1"/>
                     <label class="sub-text text--green" for="item_quanitity">$75.00</label>
                 </div>
+                <blockquotes class="blockquotes">
+                    <p class="text--small">
+                        <strong>Note:</strong> product types may vary slightly between delvery services
+                    </p>
+                </blockquotes>
+                <button class="main-btn w100">Add to cart.</button>
             </div>
         </div>
     </div>

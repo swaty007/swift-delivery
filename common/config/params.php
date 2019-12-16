@@ -12,16 +12,19 @@ return [
             'name' => 'Basic',
             'pricePerMonth' => 100,
             'dealsPerMonth' => 250,
+            'id' => 1
         ],
         [
             'name' => 'Advanced',
             'pricePerMonth' => 200,
             'dealsPerMonth' => 700,
+            'id' => 2
         ],
         [
             'name' => 'Gold',
             'pricePerMonth' => 399,
             'dealsPerMonth' => 3000,
+            'id' => 3
         ],
     ],
     'giftItems' => [

@@ -2,7 +2,7 @@
 
 }
 .ui-spinner {
-  margin: 0;
+  margin: 0 0 20px;
   border: 0;
   right: 0;
   outline: none;
@@ -27,6 +27,7 @@
     height: 50px;
     outline: none;
     display: block;
+    cursor: pointer;
     &.ui-spinner-down {
       background-image: url(../../img/icon_spinner_minus.svg);
       order: 1;
