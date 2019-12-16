@@ -11,6 +11,7 @@ use Yii;
  * @property int $customer_id
  * @property int $supplier_id
  * @property string $zip
+ * @property string $name
  * @property string $address
  * @property string $address_2
  * @property string $description
@@ -41,7 +42,7 @@ class Order extends \yii\db\ActiveRecord
             [['latitude', 'longitude'], 'number'],
             [['created_at'], 'safe'],
             [['zip'], 'string', 'max' => 20],
-            [['address', 'address_2'], 'string', 'max' => 80],
+            [['address', 'address_2', 'name'], 'string', 'max' => 80],
             [['description'], 'string', 'max' => 200],
             [['weblink'], 'string', 'max' => 100],
         ];

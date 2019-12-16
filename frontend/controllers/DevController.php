@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use common\models\Product;
 use common\models\User;
+use frontend\models\OrderForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\SupplierForm;
 use frontend\models\VerifyEmailForm;
@@ -53,7 +54,23 @@ class DevController extends Controller
         ];
     }
     public function actionOrder() {
-        return $this->render('/customer/order', ['gifts' => Product::getActiveList()]);
+
+        $model = new OrderForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->supplier_id = null;//тут проверь
+            $model->customer_id = Yii::$app->user->getId();
+
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = 'json';
+                return ActiveForm::validate($model);
+            }
+
+            if ($model->confirm()) {
+//                return $this->redirect('/supplier/confirm-success');//тут проверь
+            }
+        }
+        return $this->render('/customer/order', ['model' => $model, 'gifts' => Product::getActiveList()]);
     }
     public function actionConfirm() {
 

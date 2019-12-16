@@ -10,7 +10,7 @@ switch ($module):
                     Delivery Companies
                 </h3>
                 <p class="text text--small">Find Customers Fast!</p>
-                <a href="#" class="main-btn main-btn--transparent">
+                <a href="<?=Url::toRoute(['site/signup']);?>" class="main-btn main-btn--transparent">
                 <span class="text--blue">
                     Sign Up Today
                 </span>
@@ -66,7 +66,7 @@ switch ($module):
                         <p class="text">until cannabis hits your doorstep</p>
                     </div>
                 </div>
-                <a href="#" class="main-btn main-btn--lg main-btn--transparent">
+                <a href="<?=Url::toRoute(['site/order']);?>" class="main-btn main-btn--lg main-btn--transparent">
                             <span class="text--blue">
                                 Start Delivery!
                             </span>
