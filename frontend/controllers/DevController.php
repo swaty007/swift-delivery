@@ -74,6 +74,6 @@ class DevController extends Controller
             }
         }
 
-        return $this->render('/supplier/confirm',['model' => $model]);
+        return $this->render('/supplier/confirm',['model' => $model, 'gifts' => Product::getActiveList()]);
     }
 }

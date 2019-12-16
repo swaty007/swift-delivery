@@ -1,0 +1,23 @@
+.plan {
+  &__wrap {
+
+  }
+  &__input {
+    &:checked {
+
+    }
+  }
+  &__container {
+    padding: 30px 20px 20px 75px;
+  }
+  &__header {
+
+  }
+  &__title {
+
+  }
+  &__desc {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

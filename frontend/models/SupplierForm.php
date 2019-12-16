@@ -26,6 +26,7 @@ class SupplierForm extends Model
     public $product_image;
     public $items;
     public $terms;
+    public $plan;
 
     public $web_url;
 
@@ -41,7 +42,8 @@ class SupplierForm extends Model
             ['supplier_id', 'unique', 'targetAttribute' => 'supplier_id', 'targetClass' => 'common\models\Supplier'],
             [['name', 'product_name'], 'string', 'max' => 50, 'min' => 2],
             [['address', 'address_2'], 'string', 'max' => 60],
-            [['items'], 'safe'],
+            [['items', 'plan'], 'safe'],
+            [['items', 'plan'], 'required'],
             [['web_url'], 'url'],
             ['terms', 'compare', 'compareValue' => 1, 'type' => 'number', 'operator' => '==', 'message' => 'Please, accept terms of use.'],
             [['logo', 'product_image'], 'file', 'extensions' => 'png, jpg'],

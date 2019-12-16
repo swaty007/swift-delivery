@@ -69,8 +69,8 @@ $this->title = 'Create supplier';
                         <p class="item__desc text--blue-opacity"></p>
                     </div>
                     <?= $form->field($model, 'items', ['options' => ['class' => 'default-checkbox__container']])
-                        ->checkbox(['name'=>'SupplierForm[items][]', 'value' => $item['value'], 'uncheck' => null, 'class' => 'default-checkbox'])
-                        ->label(false); ?>
+                        ->checkbox(['name'=>'SupplierForm[items][]', 'value' => $item['id'], 'uncheck' => null, 'class' => 'default-checkbox'])
+                        ->label(false)->error(false); ?>
                 </div>
             <?php endforeach;?>
         </div>
@@ -101,8 +101,32 @@ $this->title = 'Create supplier';
         <h3 class="sub-text text--green text--small text-center">
             Select your monthly price plan
         </h3>
-
-
+        <div class="plan__wrap">
+            <div class="plan">
+                <input type="radio" class="plan__input">
+                <div class="plan__container">
+                    <div class="plan__header">
+                        <h3 class="plan__title sub-text">Medium Plan</h3>
+                        <p class="text--green text--small">$500<span class="plan__desc text--blue-opacity">/mo</span></p>
+                    </div>
+                    <p class="plan__desc text--blue-opacity">
+                        - Up to <strong>250 deliveries</strong> a month
+                    </p>
+                </div>
+            </div>
+        <?php foreach (Yii::$app->params['subscribePlans'] as $plan):?>
+            <div class="item">
+                <?= Html::img($plan['image'], ['class' => 'item__img']); ?>
+                <div class="item__content">
+                    <h3 class="item__title text--small text--blue"><?=$plan['name'];?></h3>
+                    <p class="item__desc text--blue-opacity"></p>
+                </div>
+                <?= $form->field($model, 'plan', ['options' => ['class' => 'default-checkbox__container']])
+                    ->radio(['name'=>'SupplierForm[plan][]', 'value' => $plan['value'], 'uncheck' => null, 'class' => 'default-checkbox'])
+                    ->label(false); ?>
+            </div>
+        <?php endforeach;?>
+        </div>
         <div class="supplier__terms">
             <?= $form->field($model, 'terms', ['options' => ['class' => 'default-checkbox__container']])
                 ->checkbox(['value' => 1, 'uncheck' => null, 'class' => 'default-checkbox'])
