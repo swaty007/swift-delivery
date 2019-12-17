@@ -52,7 +52,7 @@ class SignupForm extends Model
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $userSave = $user->save();
-
+        Yii::$app->user->login($user, 3600 * 24 * Yii::$app->params['supplierSessionDurationDays']);
         return $userSave;
     }
 

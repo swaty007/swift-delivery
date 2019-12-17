@@ -34,16 +34,15 @@ $this->title = 'Order Form';
                         </p>
                     </div>
                     <?php foreach ($item['productOptions'] as $option): ?>
-<!--                        id=--><?//= $option['id']; ?><!--<br>-->
-<!--                        product_id=--><?//= $option['product_id']; ?><!--<br>-->
-<!--                        name=--><?//= $option['name']; ?><!--<br>-->
-<!--                        price=--><?//= $option['price']; ?><!--<br>-->
-<!--                        order=--><?//= $option['order']; ?><!--<br>-->
-<!--                        is_active=--><?//= $option['is_active']; ?><!--<br><br>-->
+                        <input type="hidden" class="item__data"
+                               data-id="<?=$option['id'];?>"
+                               data-product_id="<?= $option['product_id']; ?>"
+                               data-name="<?= $option['name']; ?>"
+                               data-price="<?= $option['price']; ?>"
+                               data-order="<?= $option['order']; ?>"
+                               data-is_active="<?= $option['is_active']; ?>">
                     <?php endforeach; ?>
-                    <a href="#" class="main-btn main-btn--sm w-100"
-                       data-value="<?= $item['value']; ?>"
-                       data-price="<?= number_format($item['price'], 2); ?>">
+                    <a href="#" class="main-btn main-btn--sm w-100 item__button">
                         Select
                     </a>
                 </div>
@@ -146,7 +145,7 @@ $this->title = 'Order Form';
     </div>
 </section>
 
-<div class="modal">
+<div class="modal" id="add_to_card">
     <div class="modal__wrapper">
         <div class="modal__container container">
             <div class="modal__close"></div>
@@ -157,7 +156,7 @@ $this->title = 'Order Form';
                 </h3>
             </div>
             <div class="modal__body">
-                <select class="default-select" name="" id="">
+                <select class="default-select" name="" id="modal_card_select">
                     <option value="">7 grams (1/4oz) sativa</option>
                     <option value="">7 grams (1/4oz) sativa</option>
                     <option value="">7 grams (1/4oz) sativa</option>
@@ -174,7 +173,7 @@ $this->title = 'Order Form';
                         <strong>Note:</strong> product types may vary slightly between delvery services
                     </p>
                 </blockquotes>
-                <button class="main-btn w100">Add to cart.</button>
+                <button id="add_to_card_btn" class="main-btn w100">Add to cart.</button>
             </div>
         </div>
     </div>

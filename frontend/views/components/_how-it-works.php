@@ -1,4 +1,5 @@
-<?php use yii\helpers\Html; ?>
+<?php use yii\helpers\Html;
+use yii\helpers\Url; ?>
 <section class="how-it-works text-center">
     <div class="container">
         <div class="row">
@@ -48,7 +49,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <a href="#" class="main-btn">
+                <a href="<?=Url::toRoute(['site/order']);?>" class="main-btn">
                     Start Delivery!
                 </a>
             </div>

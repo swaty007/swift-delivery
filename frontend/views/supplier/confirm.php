@@ -68,8 +68,10 @@ $this->title = 'Create supplier';
                         <h3 class="item__title text--small text--blue"><?=$item['name'];?></h3>
                         <p class="item__desc text--blue-opacity"></p>
                     </div>
-                    <?= $form->field($model, 'items', ['options' => ['class' => 'default-checkbox__container']])
-                        ->checkbox(['name'=>'SupplierForm[items][]', 'value' => $item['id'], 'uncheck' => null, 'class' => 'default-checkbox'])
+                    <?= $form->field($model, 'items', [
+                            'selectors' => ['input' => "input[name='SupplierForm[items][]']"],
+                        'options' => ['class' => 'default-checkbox__container']])
+                        ->checkbox(['name'=>'SupplierForm[items][]',  'value' => $item['id'], 'uncheck' => null, 'class' => 'default-checkbox'])
                         ->label(false)->error(false); ?>
                 </div>
             <?php endforeach;?>
@@ -104,7 +106,7 @@ $this->title = 'Create supplier';
         <div class="plan__wrap">
 
         <?php foreach (Yii::$app->params['subscribePlans'] as $plan):?>
-                <?= $form->field($model, 'plan', ['options' => ['class' => 'plan']])
+                <?= $form->field($model, 'plan', ['selectors' => ['input' => "input[name='SupplierForm[plan][]']"],'options' => ['class' => 'plan']])
                     ->radio(['name'=>'SupplierForm[plan][]',
                         'value' => $plan['id'],
                         'uncheck' => null,
