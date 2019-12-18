@@ -11,6 +11,7 @@ class Modal {
         $(document).on('click', '.modal__close', e => {
             let $this = $(e.currentTarget);
             $this.closest(".modal").hide('fade', 300);
+            $("body").removeClass("modal__open");
         });
 
         //select element change
@@ -33,6 +34,16 @@ class Modal {
                     product_id: optionEl.attr('data-product_id')
                 };
             console.log(data);
+
+            modalEl.addClass("modal--success");
+            setTimeout(() => {
+
+                modalEl.hide('fade', 400, () => {
+                    $("body").removeClass("modal__open");
+                    modalEl.removeClass("modal--success");
+                });
+
+            }, 600);
 
         });
 
@@ -68,6 +79,7 @@ class Modal {
                 $("#modal_card_select").append(`<option data-price="${val.price}" data-id="${val.id}" data-product_id="${val.product_id}" value="${val.id}">${val.name} $${val.price}</option>`);
             });
             modalEl.show('fade', 300);
+            $("body").addClass("modal__open");
         });
     }
 

@@ -14,6 +14,9 @@
   font-weight: $bold;
 }
 
+body {
+  padding-bottom: 71px;
+}
 
 .text {
   font-size: 19px;
@@ -135,6 +138,14 @@ hr {
   &--bottom {
     border-top-left-radius: 0!important;
     border-top-right-radius: 0!important;
+  }
+}
+.bg {
+  &--green {
+    background-color: $brand-green;
+  }
+  &--blue {
+    background-color: $brand-blue;
   }
 }
 

@@ -8,6 +8,31 @@
   background-color: rgba(0, 0, 0, 0.5);
   transition: opacity .3s ease;
   display: none;
+  &--success {
+    .modal__success {
+      opacity: 1;
+      height: 100%;
+      transition: .3s opacity;
+    }
+  }
+  &__success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: $brand-green;
+    width: 100%;
+    height: 0%;
+    &--img {
+      margin-bottom: 25px;
+    }
+  }
   &__open {
     overflow: hidden;
   }

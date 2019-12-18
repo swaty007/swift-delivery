@@ -1,0 +1,11 @@
+.on-way {
+  @include heigth100vh();
+  &__title {
+    font-size: 24px;
+    line-height: 29px;
+    margin-bottom: 10px;
+  }
+  &__text {
+    margin-bottom: 20px;
+  }
+}

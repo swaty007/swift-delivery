@@ -72,6 +72,12 @@ class DevController extends Controller
         }
         return $this->render('/customer/order', ['model' => $model, 'gifts' => Product::getActiveList()]);
     }
+    public function actionOnWay() {
+        return $this->render('/customer/onWay');
+    }
+    public function actionSearching() {
+        return $this->render('/customer/searching');
+    }
     public function actionConfirm() {
 
         $model = new SupplierForm();

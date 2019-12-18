@@ -8,7 +8,7 @@
 
 /* Utils */
 @import "utils/variables";
-//@import "utils/mixins";
+@import "utils/mixins";
 @import "utils/grid";
 @import "utils/fonts";
 
@@ -42,3 +42,5 @@
 @import "sections/access";
 @import "sections/supplier";
 @import "sections/confirm-supplier";
+@import "sections/searching";
+@import "sections/on-way";

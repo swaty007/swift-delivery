@@ -168,12 +168,18 @@ $this->title = 'Order Form';
                     <input id="item_quanitity" data-price="75" value="1"/>
                     <label class="sub-text text--green" for="item_quanitity">$75.00</label>
                 </div>
-                <blockquotes class="blockquotes">
+                <blockquotes class="blockquotes text-left">
                     <p class="text--small">
-                        <strong>Note:</strong> product types may vary slightly between delvery services
+                        <strong>Note:</strong> Product types may vary slightly between delvery services
                     </p>
                 </blockquotes>
                 <button id="add_to_card_btn" class="main-btn w100">Add to cart.</button>
+            </div>
+            <div class="modal__success">
+                <?= Html::img('@web/img/icon_add_to_cart.svg', ['class' => 'modal__success--img']); ?>
+                <p class="sub-text text--white">
+                    Added to cart!
+                </p>
             </div>
         </div>
     </div>
