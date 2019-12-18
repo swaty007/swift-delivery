@@ -60,14 +60,13 @@ use yii\helpers\Html;
 
                 <div class="card__item card__item--total">
                     <div class="card__item--left">
-                        <p class="text text--blue-opacity">
-                            <strong>Order Total</strong>
+                        <p class="text--small text--blue-opacity">
+                            <strong>Total</strong>
                         </p>
-                        <p class="text--small text--blue-opacity">Cash upon delivery</p>
 
                     </div>
                     <div class="card__item--right">
-                        <p class="text text--green">
+                        <p class="text--small text--green">
                             <strong>
                                 $75.00
                             </strong>
