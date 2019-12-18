@@ -14,7 +14,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 100px;
+    min-height: 90px;
     border-bottom: 1px solid fade-out($brand-blue,0.9);
     padding: 20px 0;
     &--left {
@@ -34,6 +34,11 @@
 
       border: 2px solid $brand-blue;
       border-radius: 5px;
+    }
+    &--total {
+      .card__item--left {
+        min-height: 50px;
+      }
     }
   }
   &__text {

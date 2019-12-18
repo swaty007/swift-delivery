@@ -88,6 +88,10 @@ class Product extends \yii\db\ActiveRecord
         $minPrice = $this->productOptions[0]['price'];
 
         if ($this->productImage) {
+            if(!empty($this->oldAttributes['image']))
+            {
+                unlink(Yii::$app->params['uploadsDir'] . $this->oldAttributes['image']);
+            }
             $pimgName =  'prodimg' . time() . $this->id . '.' . $this->productImage->extension;
             $this->productImage->saveAs(Yii::$app->params['uploadsDir'] . $pimgName);
             $this->image = $pimgName;

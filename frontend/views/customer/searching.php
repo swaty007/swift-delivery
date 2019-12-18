@@ -44,6 +44,7 @@ use yii\helpers\Html;
             <hr>
             <p class="searching__text sub-text text--green text--small text-center">Confirmed Order:</p>
             <div class="card__wrap">
+
                 <div class="card__item">
                     <div class="card__item--left">
                         <p class="text--small text--blue-opacity">
@@ -68,6 +69,24 @@ use yii\helpers\Html;
                         </p>
                     </div>
                 </div>
+
+                <div class="card__item card__item--total">
+                    <div class="card__item--left">
+                        <p class="text text--blue-opacity">
+                            <strong>Order Total</strong>
+                        </p>
+                        <p class="text--small text--blue-opacity">Cash upon delivery</p>
+
+                    </div>
+                    <div class="card__item--right">
+                        <p class="text text--green">
+                            <strong>
+                                $75.00
+                            </strong>
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

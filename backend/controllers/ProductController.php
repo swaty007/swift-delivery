@@ -111,7 +111,12 @@ class ProductController extends BaseAdminController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if(!is_null($model->image))
+        {
+            unlink(Yii::$app->params['uploadsDir'] . $model->image);
+        }
+        $model->delete();
 
         return $this->redirect(['index']);
     }

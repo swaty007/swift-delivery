@@ -91,11 +91,13 @@ $this->title = 'Order Form';
             What’s in your cart
         </p>
         <div class="card__wrap">
+
             <div class="card__item card__item--empty">
                 <p class="text text--blue">
                     There’s nothing in your cart yet.
                 </p>
             </div>
+
             <div class="card__item">
                 <div class="card__item--left">
                     <p class="text--small text--blue-opacity">
@@ -123,6 +125,24 @@ $this->title = 'Order Form';
                     </a>
                 </div>
             </div>
+
+            <div class="card__item card__item--total">
+                <div class="card__item--left">
+                    <p class="text text--blue-opacity">
+                        <strong>Order Total</strong>
+                    </p>
+                    <p class="text--small text--blue-opacity">Cash upon delivery</p>
+
+                </div>
+                <div class="card__item--right">
+                    <p class="text text--green">
+                        <strong>
+                            $75.00
+                        </strong>
+                    </p>
+                </div>
+            </div>
+
         </div>
         <div class="flex-center flex-center--between">
             <p class="text text--blue">
