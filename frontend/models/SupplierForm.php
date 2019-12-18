@@ -74,7 +74,7 @@ class SupplierForm extends Model
             $supplier->website = $this->web_url;
             $supplier->product_name = $this->product_name;
 
-            if(!$this->saveImages()) {
+            if(!$this->saveImages($supplier)) {
                 throw new Exception("Error while saving file");
             }
 
@@ -107,8 +107,16 @@ class SupplierForm extends Model
         }
     }
 
-    private function saveImages() {
+    private function saveImages(Supplier $supplier) {
         try {
+            if(!empty($supplier->oldAttributes['logo']))
+            {
+                unlink(Yii::$app->params['uploadsDir'] . $supplier->oldAttributes['logo']);
+            }
+            if(!empty($supplier->oldAttributes['product_image']))
+            {
+                unlink(Yii::$app->params['uploadsDir'] . $supplier->oldAttributes['product_image']);
+            }
             $logoName =  'logo' . time() . $this->supplier_id . '.' . $this->logo->extension;
             $this->logo->saveAs(Yii::$app->params['uploadsDir'] . $logoName);
             $this->logo = $logoName;
