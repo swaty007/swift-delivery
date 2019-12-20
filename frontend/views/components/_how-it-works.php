@@ -20,7 +20,7 @@ use yii\helpers\Url; ?>
                         <a class="text--green" href="#">Minimal Order Form</a>.
                     </p>
                     <div class="how-it-works__item-img">
-                        <?= Html::img('@web/img/hww_icon_1.svg', ['class' => '']); ?>
+                        <?php  echo Html::img('', ['class' => 'lazy', 'data-src' => Yii::getAlias('@web/img/hww_icon_1.svg')]); ?>
                     </div>
                 </div>
                 <div class="how-it-works__item">
@@ -31,7 +31,7 @@ use yii\helpers\Url; ?>
                         Enter your first name, location, and select your cannabis gift.
                     </p>
                     <div class="how-it-works__item-img">
-                        <?= Html::img('@web/img/hww_icon_2.svg', ['class' => '']); ?>
+                        <?= Html::img('', ['class' => 'lazy', 'data-src' => Yii::getAlias('@web/img/hww_icon_2.svg')]); ?>
                     </div>
                 </div>
                 <div class="how-it-works__item">
@@ -42,7 +42,7 @@ use yii\helpers\Url; ?>
                         Pay cash only, and recieve your cannabis gift in record time from the nearest delivery distributor!
                     </p>
                     <div class="how-it-works__item-img">
-                        <?= Html::img('@web/img/hww_icon_3.svg', ['class' => '']); ?>
+                        <?= Html::img('', ['class' => 'lazy','data-src' => Yii::getAlias('@web/img/hww_icon_3.svg')]); ?>
                     </div>
                 </div>
             </div>

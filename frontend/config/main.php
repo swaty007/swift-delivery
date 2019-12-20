@@ -16,7 +16,12 @@ return [
             'basePath' => __DIR__ . '/../web/assets',
             'bundles' => [
                 'yii\bootstrap\BootstrapPluginAsset' => ['js'=>[]],
-                'yii\bootstrap\BootstrapAsset' => ['css' => []]
+                'yii\bootstrap\BootstrapAsset' => ['css' => []],
+                'yii\web\JqueryAsset' => [
+                    'jsOptions' => [
+                        'defer' => 'defer'
+                    ],
+                ],
             ]
         ],
         'request' => [

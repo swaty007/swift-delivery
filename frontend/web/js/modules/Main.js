@@ -1,6 +1,9 @@
 class Main {
     constructor() {
         this.events();
+        $(function($) {
+            $("img.lazy").Lazy();
+        });
     }
     events() {
         this.fileContainer();
