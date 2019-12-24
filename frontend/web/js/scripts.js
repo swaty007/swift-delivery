@@ -7,28 +7,16 @@
 import Main from "./modules/Main";
 import Navbar from "./modules/Navbar";
 import Modal from "./modules/Modal";
+import Card from "./modules/Card";
 
 // Instantiate a new object using our modules/classes
 const main = new Main();
 const navbar = new Navbar();
 const modal = new Modal();
+const card = new Card();
 
-function showToastr(msg) {
-    if (msg.msg === 'ok') {
-        toastr['success'](msg.status, '');
-    } else if(msg.msg === 'error'){
-        toastr['error'](msg.status, '');
-    }
-}
-function finishPjax(el) {
-    if(typeof $.pjax !== 'undefined') {
-        if (el !== undefined) {
-            $.pjax.reload({container: el});
-        } else {
-            $.pjax.reload({container: '#p0'});
-        }
-    }
-}
+
+
 $(document).on('click',"#create_market", function(e) {
     e.preventDefault();
     let data = {

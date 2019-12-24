@@ -53,4 +53,8 @@ class OrderItem extends \yii\db\ActiveRecord
             'total_price' => 'Total Price',
         ];
     }
+
+    private function getProduct() {
+        return $this->hasOne(Product::class, ['id' => 'product_item_id']);
+    }
 }

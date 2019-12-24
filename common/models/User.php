@@ -93,6 +93,15 @@ class User extends ActiveRecord implements IdentityInterface
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
 
+    /**
+     * @param string $phoneNumber
+     * @return array|bool|User|ActiveRecord|null
+     */
+    public static function getCustomer(string $phoneNumber) {
+        $query = User::find()->where(['phone_number' => $phoneNumber])->andWhere(['role' => User::USER_ROLE_CUSTOMER]);
+        return $query->count() ? $query->one() : false;
+    }
+
     public function beforeSave($insert)
     {
         if (Yii::$app->user->identity->role !== User::USER_ROLE_SUPERADMIN &&

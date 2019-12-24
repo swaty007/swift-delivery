@@ -1,7 +1,9 @@
 <?php
+
 namespace frontend\controllers;
 
 use common\models\Product;
+use common\models\ProductOption;
 use common\models\User;
 use frontend\models\OrderForm;
 use frontend\models\ResendVerificationEmailForm;
@@ -53,8 +55,9 @@ class DevController extends Controller
             ],
         ];
     }
-    public function actionOrder() {
 
+    public function actionOrder()
+    {
         $model = new OrderForm();
 
         if ($model->load(Yii::$app->request->post())) {
@@ -70,15 +73,25 @@ class DevController extends Controller
 //                return $this->redirect('/supplier/confirm-success');//тут проверь
             }
         }
-        return $this->render('/customer/order', ['model' => $model, 'gifts' => Product::getActiveList()]);
+        return $this->render('/customer/order', [
+            'model' => $model,
+            'gifts' => Product::getActiveList(),
+            'cart' => $this->getCart()
+        ]);
     }
-    public function actionOnWay() {
+
+    public function actionOnWay()
+    {
         return $this->render('/customer/onWay');
     }
-    public function actionSearching() {
+
+    public function actionSearching()
+    {
         return $this->render('/customer/searching');
     }
-    public function actionConfirm() {
+
+    public function actionConfirm()
+    {
 
         $model = new SupplierForm();
 
@@ -97,6 +110,11 @@ class DevController extends Controller
             }
         }
 
-        return $this->render('/supplier/confirm',['model' => $model, 'gifts' => Product::getActiveList()]);
+        return $this->render('/supplier/confirm', [
+            'model' => $model,
+            'gifts' => Product::getActiveList(),
+        ]);
     }
+
+
 }

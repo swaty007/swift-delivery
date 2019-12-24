@@ -31,16 +31,54 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     'id',
-                    'customer_id',
-                    'supplier_id',
+                    'customer_id' => [
+                        'format' => 'raw',
+                        'label' => 'Customer',
+                        'value' => function ($data) {
+                                $customer = '';
+                                $customer .= $data['customer']['username'] . '<br>' . $data['customer']['phone_number'];
+                                return $customer;
+                            }
+                    ],
+                    'supplier_id' => [
+                        'format' => 'raw',
+                        'label' => 'Supplier',
+                        'value' => function ($data) {
+                                $supplier = '';
+                                $supplier .= $data['supplier']['name'] . ' ( <a href="' .
+                                     \yii\helpers\Url::toRoute('/supplier/update/?id=') .
+                                    $data['supplier']['id'] . '">' . $data['supplier']['id'] . '</a> ) ';
+                                return $supplier;
+                            }
+                    ],
                     'zip',
                     'address',
-                    //'address_2',
+                    'address_2' => [
+                            'format' => 'raw',
+                            'value' => function ($data) {
+                                $products = \common\models\OrderItem::findAll(['order_id' => $data['id']]);
+                                $data = '';
+                                $total = 0;
+
+                                foreach ($products as $product) {
+                                    $data.= $product->description . ' ' . $product->item_price . '$' . ' x' . $product->count . '<br>';
+                                    $total+=$product->total_price;
+                                }
+
+                                $data.= 'Total: '.$total.'$';
+
+                                return $data;
+                            }
+                    ],
                     //'description',
-                    //'latitude',
                     //'longitude',
                     //'weblink',
-                    //'status',
+                   'status' => [
+                     'value' => function ($data) {
+                        return \common\models\Order::findOne($data['id'])->getStatusDescription();
+                     },
+                     'label' => 'Status'
+                   ],
                     //'created_at',
 
                     ['class' => 'yii\grid\ActionColumn'],

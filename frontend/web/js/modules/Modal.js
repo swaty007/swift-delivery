@@ -22,31 +22,6 @@ class Modal {
             $('label[for=item_quanitity]').text("$" + ($('#item_quanitity').val() * price).toFixed(2));
         });
 
-        //add to card click
-        $(document).on("click", "#add_to_card_btn", e => {
-            let $this = $(e.currentTarget),
-                modalEl = $this.closest('.modal'),
-                optionEl = $("#modal_card_select :selected"),
-                spinnerEl = $("#item_quanitity"),
-                data = {
-                    count: spinnerEl.val(),
-                    id: optionEl.attr('data-id'),
-                    product_id: optionEl.attr('data-product_id')
-                };
-            console.log(data);
-
-            modalEl.addClass("modal--success");
-            setTimeout(() => {
-
-                modalEl.hide('fade', 400, () => {
-                    $("body").removeClass("modal__open");
-                    modalEl.removeClass("modal--success");
-                });
-
-            }, 600);
-
-        });
-
         //item list button click and open modal with data
         $(document).on('click', '.item .item__button', e => {
             e.preventDefault();

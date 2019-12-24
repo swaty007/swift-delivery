@@ -13,7 +13,6 @@ $this->title = 'Order Form';
 ?>
 <?= $this->render('../components/_alert', ['module' => 'available']); ?>
 
-
 <section class="order">
     <div class="container">
         <h2 class="sub-title text--blue text-center">
@@ -64,7 +63,9 @@ $this->title = 'Order Form';
         </p>
         <hr>
         <?= $form->field($model, 'name')->textInput()->label('First Name:'); ?>
-        <?= $form->field($model, 'phone_number')->textInput()->label('Phone Number:'); ?>
+<!--        --><?//= $form->field($model, 'phone_number')->textInput()->label('Phone Number:'); ?>
+        <?= $form->field($model, 'phone_number')->label('Phone Number:')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-99-99'])->textInput(['placeholder' => '+1 (___) ___-__-__', 'class' => 'access__phone form-control']); ?>
+
 
         <p class="sub-text text--green text--small text-center">
             What’s your location:
@@ -90,42 +91,52 @@ $this->title = 'Order Form';
         <p class="sub-text text--green text-center">
             What’s in your cart
         </p>
-        <div class="card__wrap">
 
+            <?php \yii\widgets\Pjax::begin(['id'=>'card_pjax',
+                'options' => [
+                    'class' => 'card__wrap',
+                ]]); ?>
+
+        <?php
+        $totalOrder = 0;
+        if (empty($cart)):?>
             <div class="card__item card__item--empty">
                 <p class="text text--blue">
                     There’s nothing in your cart yet.
                 </p>
             </div>
+        <?php else:?>
+        <?php foreach ($cart as $item):
+                $priceItem = $item['price']*$item['count'];
+        $totalOrder += $priceItem; ?>
+                <div class="card__item">
+                    <div class="card__item--left">
+                        <p class="text--small text--blue-opacity">
+                            <strong>
+                                <?=$item['product']['name'];?> | <span class="text--green">$<?=$item['price']?></span>
+                            </strong>
+                        </p>
+                        <p class="card__text text--blue-opacity">
+                            <?=$item['name']?>
+                        </p>
+                        <p class="card__text text--blue-opacity">
+                            <strong>
+                                Quantity: <span><?=$item['count']?></span>
+                            </strong>
+                        </p>
+                    </div>
+                    <div class="card__item--right">
+                        <p class="text--small text--green">
+                            <strong>
+                                $<?=number_format($priceItem, 2)?>
+                            </strong>
+                        </p>
+                        <a href="#" class="card__delete" data-id="<?=$item['id']?>">
 
-            <div class="card__item">
-                <div class="card__item--left">
-                    <p class="text--small text--blue-opacity">
-                        <strong>
-                            Flower | <span class="text--green">$200</span>
-                        </strong>
-                    </p>
-                    <p class="card__text text--blue-opacity">
-                        7 grams (1/4oz) sativa
-                    </p>
-                    <p class="card__text text--blue-opacity">
-                        <strong>
-                            Quantity: <span>1</span>
-                        </strong>
-                    </p>
+                        </a>
+                    </div>
                 </div>
-                <div class="card__item--right">
-                    <p class="text--small text--green">
-                        <strong>
-                            $75.00
-                        </strong>
-                    </p>
-                    <a href="#" class="card__delete">
-
-                    </a>
-                </div>
-            </div>
-
+        <?php endforeach;?>
             <div class="card__item card__item--total">
                 <div class="card__item--left">
                     <p class="text text--blue-opacity">
@@ -137,13 +148,16 @@ $this->title = 'Order Form';
                 <div class="card__item--right">
                     <p class="text text--green">
                         <strong>
-                            $75.00
+                            $<?=number_format($totalOrder,2)?>
                         </strong>
                     </p>
                 </div>
             </div>
+        <?endif;?>
 
-        </div>
+            <?php \yii\widgets\Pjax::end(); ?>
+
+
         <div class="flex-center flex-center--between">
             <p class="text text--blue">
                 <strong>
@@ -159,13 +173,27 @@ $this->title = 'Order Form';
 
     </div>
 </section>
-<section class="card">
-    <div class="container">
-
+<?php \yii\widgets\Pjax::begin(['id'=>'card_pjax_info',
+            'options' => [
+                'class' => 'card__info',
+            ]]); ?>
+<?php if (!empty($cart)):?>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
+            <div class="card__info--items">
+                <p class="text text--white text--bold">View cart (<?= count($cart);?>)</p>
+                <div class="flex-center">
+                    <p class="card__info--margin text text--white text--bold">Total:</p>
+                    <p class="text text--white text--bold">$<?=number_format($totalOrder,2)?></p>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
-
-<div class="modal" id="add_to_card">
+</div>
+    <?endif;?>
+<?php \yii\widgets\Pjax::end(); ?>
+<div class="modal modal--full-screen" id="add_to_card">
     <div class="modal__wrapper">
         <div class="modal__container container">
             <div class="modal__close"></div>

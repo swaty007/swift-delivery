@@ -55,7 +55,7 @@ class ProductOption extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOptions()
+    public function getProduct()
     {
         return $this->hasOne(Product::class, ['id' => 'product_id']);
     }

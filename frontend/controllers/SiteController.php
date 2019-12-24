@@ -1,7 +1,9 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Order;
 use common\models\Product;
+use common\models\ProductOption;
 use common\models\User;
 use frontend\models\OrderForm;
 use frontend\models\ResendVerificationEmailForm;
@@ -77,7 +79,11 @@ class SiteController extends Controller
 
     public function beforeAction($action)
     {
-        if(!Yii::$app->user->isGuest && !in_array(Yii::$app->controller->action->id, ['index','logout'])) {
+        $allowedPages = [
+            'index', 'logout', 'order', 'order-status'
+        ];
+
+        if(!Yii::$app->user->isGuest && !in_array(Yii::$app->controller->action->id, $allowedPages)) {
             switch (Yii::$app->user->identity->role) {
                 case User::USER_ROLE_SUPPLIER:
                     $redirectUrl = '/supplier/index';
@@ -184,24 +190,33 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
-    public function actionOrder() {
 
+    public function actionOrder() {
         $model = new OrderForm();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->supplier_id = null;//тут проверь
-            $model->customer_id = Yii::$app->user->getId();
-
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = 'json';
                 return ActiveForm::validate($model);
             }
 
-            if ($model->confirm()) {
-//                return $this->redirect('/supplier/confirm-success');//тут проверь
+            if ($model->createOrder()) {
+                return $this->redirect('/site/order-status/?l=' . $model->instance->weblink);
             }
         }
-        return $this->render('/customer/order', ['model' => $model, 'gifts' => Product::getActiveList()]);
+        return $this->render('/customer/order', ['model' => $model, 'gifts' => Product::getActiveList(), 'cart' => $this->getCart()]);
+    }
+
+    public function actionOrderStatus($l) {
+        if (!($order = Order::find()->where(['weblink' => $l])->with('orderItems')->one())) {
+            return $this->redirect('/site/index');
+        }
+
+//        foreach ($order->getOrderItems() as $item) {
+//
+//        }
+
+        return $this->render('/customer/order-status', ['order' => $order]);
     }
     /**
      * Signs user up.
@@ -212,6 +227,7 @@ class SiteController extends Controller
     {
         $this->layout = 'access';
         $model = new SignupForm();
+        $model->role = 3;
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             return $this->redirect('/supplier/index');
@@ -231,8 +247,9 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        return $this->render('../supplier/confirm', [
+        return $this->render('/supplier/confirm', [
             'model' => $model,
+            'gifts' => Product::getActiveList(),
         ]);
     }
 
@@ -332,5 +349,29 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    // TODO: Implement Session model and remove it there
+    static public function getCart() {
+        if(!Yii::$app->session->isActive) {
+            Yii::$app->session->open();
+        }
+
+        $rawCart = json_decode(Yii::$app->session->get('cart', '{}'), true);
+        $products = ProductOption::find()
+            ->with('product')
+            ->where(['IN', 'id', array_keys($rawCart)])
+            ->orderBy('price')
+            ->asArray()
+            ->all();
+
+        $cart = [];
+
+        foreach ($products as $key => $product) {
+            $cart[$key] = $product;
+            $cart[$key]['count'] = $rawCart[(int)$product['id']];
+        }
+
+        return $cart;
     }
 }

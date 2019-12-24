@@ -178,14 +178,41 @@ AppAsset::register($this);
 <nav id="navbar_sd" class="navbar__wrap">
     <div class="container navbar__container">
         <div class="navbar__header">
-            <button id="menu_btn" class="collapsed navbar__btn">
-                <span class="navbar__btn--line"></span>
-                <span class="navbar__btn--line"></span>
-                <span class="navbar__btn--line"></span>
+            <button id="menu_btn" class="collapsed navbar__burger">
+                <span class="navbar__burger--line"></span>
+                <span class="navbar__burger--line"></span>
+                <span class="navbar__burger--line"></span>
             </button>
-            <a class="navbar__brand" href="/">
-                <?= Html::img('@web/img/logo.svg', ['class' => '']); ?>
-            </a>
+           <?php if(
+                   Yii::$app->controller->id === 'site' &&
+                   ( Yii::$app->controller->action->id === 'order' || Yii::$app->controller->action->id === 'order-status' )):?>
+           <div class="navbar__step <?= Yii::$app->controller->action->id === 'order' ? 'navbar__step--active' : '';?>">
+               <div class="navbar__step--number">
+                   1 <?= $step_n; ?>
+               </div>
+               <div class="navbar__step--text">
+                   Enter Information
+               </div>
+           </div>
+           <div class="navbar__step--arrow">
+               <?= Html::img('@web/img/icon_arrow_right.svg', ['class' => '']); ?>
+           </div>
+           <div class="navbar__step <?= Yii::$app->controller->action->id === 'order-status' ? 'navbar__step--active' : '';?>">
+               <div class="navbar__step--number">
+                   2
+               </div>
+               <div class="navbar__step--text">
+                   Confirmation
+               </div>
+           </div>
+            <?php else:?>
+               <a href="<?=Url::toRoute(['site/order']);?>" class="navbar__btn navbar__btn--red">
+                   Start Delivery
+               </a>
+            <?php endif;?>
+<!--            <a class="navbar__brand" href="/">-->
+<!--                --><?//= Html::img('@web/img/logo.svg', ['class' => '']); ?>
+<!--            </a>-->
         </div>
         <div id="navbar_collapse" class="navbar__collapse">
             <ul class="navbar__menu">

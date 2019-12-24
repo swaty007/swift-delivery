@@ -17,27 +17,24 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'customer_id') ?>
-
     <?= $form->field($model, 'supplier_id') ?>
 
     <?= $form->field($model, 'zip') ?>
 
-    <?= $form->field($model, 'address') ?>
+    <?= $form->field($model, 'status')->dropDownList(
+        [
+            \common\models\Order::ORDER_STATUS_NEW => 'Waiting for supplier',
+            \common\models\Order::ORDER_STATUS_IN_PROGRESS => 'Making delivery',
+            \common\models\Order::ORDER_STATUS_DELIVER_NEAR_PLACE => 'Deliver near place',
+            \common\models\Order::ORDER_STATUS_DELIVER_AT_PLACE => 'Deliver at place',
+            \common\models\Order::ORDER_STATUS_COMPLETE => 'Complete',
+            \common\models\Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER => 'Canceled by supplier',
+            \common\models\Order::ORDER_STATUS_CANCELLED_BY_DELIVER => 'Canceled by deliver',
+            \common\models\Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER => 'Canceled by customer',
+            \common\models\Order::ORDER_STATUS_CANCELLED => 'Canceled'
+        ]
+    ); ?>
 
-    <?php // echo $form->field($model, 'address_2') ?>
-
-    <?php // echo $form->field($model, 'description') ?>
-
-    <?php // echo $form->field($model, 'latitude') ?>
-
-    <?php // echo $form->field($model, 'longitude') ?>
-
-    <?php // echo $form->field($model, 'weblink') ?>
-
-    <?php // echo $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

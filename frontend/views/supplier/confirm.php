@@ -107,7 +107,7 @@ $this->title = 'Create supplier';
 
         <?php foreach (Yii::$app->params['subscribePlans'] as $plan):?>
                 <?= $form->field($model, 'plan', ['selectors' => ['input' => "input[name='SupplierForm[plan][]']"],'options' => ['class' => 'plan']])
-                    ->radio(['name'=>'SupplierForm[plan][]',
+                    ->radio(['name'=>'SupplierForm[plan]',
                         'value' => $plan['id'],
                         'uncheck' => null,
                         'class' => 'plan__input',
@@ -134,6 +134,7 @@ $this->title = 'Create supplier';
                 </a>
             </p>
         </div>
+        <!--
         <div class="supplier__core">
             <p class="text text--small text--blue-opacity supplier__core--text">
                 - Core value 1
@@ -145,7 +146,7 @@ $this->title = 'Create supplier';
                 - Core value 3
             </p>
         </div>
-
+        -->
         <div class="form-group">
             <?= Html::submitButton('Submit Application', ['class' => 'main-btn']) ?>
         </div>

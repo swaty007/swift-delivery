@@ -1,8 +1,13 @@
 <?php
+
 namespace frontend\models;
 
 use common\models\OrderItem;
 use common\models\Order;
+use common\models\Product;
+use common\models\ProductOption;
+use common\models\User;
+use frontend\controllers\SiteController;
 use Yii;
 use yii\base\Model;
 use yii\db\Exception;
@@ -11,11 +16,8 @@ use yii\helpers\ArrayHelper;
 /**
  * Signup form
  */
-
 class OrderForm extends Model
 {
-    public $supplier_id;
-    public $customer_id;
     public $name;
     public $phone_number;
 
@@ -23,11 +25,11 @@ class OrderForm extends Model
     public $address;
     public $address_2;
     public $description;
-    public $items;
 
-    public $web_url;//тут проверь
-    public $weblink;//тут проверь
-
+    /**
+     * @var Order
+     */
+    public $instance;
 
     /**
      * {@inheritdoc}
@@ -35,70 +37,92 @@ class OrderForm extends Model
     public function rules()
     {
         return [
-//            [['supplier_id', 'zip', 'address', 'name', 'terms', 'product_name'], 'required'],
-//            ['supplier_id', 'exist', 'targetAttribute' => 'id', 'targetClass' => 'common\models\User'],
-//            ['supplier_id', 'unique', 'targetAttribute' => 'supplier_id', 'targetClass' => 'common\models\Supplier'],
-//            [['name', 'product_name'], 'string', 'max' => 50, 'min' => 2],
-//            [['address', 'address_2'], 'string', 'max' => 60],
-//            [['items', 'plan'], 'safe'],
-//            [['items', 'plan'], 'required'],
-//            [['web_url'], 'url'],
-//            ['terms', 'compare', 'compareValue' => 1, 'type' => 'number', 'operator' => '==', 'message' => 'Please, accept terms of use.'],
-//            [['logo', 'product_image'], 'file', 'extensions' => 'png, jpg'],
-//            ['zip', 'exist', 'targetAttribute' => 'zipcode', 'targetClass' => 'common\models\Zipcode', 'message' => 'This zip is not supported.'],
+            [['phone_number', 'name', 'zip', 'address'], 'required'],
+            ['phone_number', 'trim'],
+            ['phone_number', 'match', 'pattern' => '/^\+1\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/', 'message' => 'Incorrect phone number'],
+            [['name'], 'string', 'max' => 50, 'min' => 2],
+            [['address', 'address_2'], 'string', 'max' => 80],
+            [['description'], 'string', 'max' => 200],
+            ['zip', 'string'],
+            // TODO: ask if we need this
+            ////  ['zip', 'exist', 'targetAttribute' => 'zipcode', 'targetClass' => 'common\models\Zipcode', 'message' => 'This zip is not supported.'],
         ];
     }
 
     /**
-     * Signs user up.
-     *
-     * @return bool whether the creating new account was successful and email was sent
+     * @return bool|Order|null
      */
-    public function confirm()
+    public function createOrder()
     {
         if (!$this->validate()) {
             return null;
         }
 
         try {
-            $order = new Order();
+            if (!($customer = User::getCustomer($this->phone_number))) {
+                $customer = new User();
+                $customer->phone_number = $this->phone_number;
+                $customer->status = 0;
+                $customer->username = $this->name;
+                $customer->role = User::USER_ROLE_CUSTOMER;
+                $customer->setPassword('');
 
-            $order->supplier_id = $this->supplier_id;
-            $order->customer_id = $this->customer_id;
-            $order->name = $this->name;//добавь в базу ордер нейм, проверки добавил макс 80 символов
+                if (!$customer->save()) {
+                    $this->printAndExit($customer->errors);
+                }
+            }
+
+            $order = new Order();
+            $order->description = $this->description;
+            $order->customer_id = $customer->id;
             $order->zip = $this->zip;
             $order->address = $this->address;
             $order->address_2 = $this->address_2;
-            $order->weblink = $this->weblink;//тут проверь
+            $order->status = Order::ORDER_STATUS_NEW;
 
-            $order->save();
+            do {
+                $order->weblink = Yii::$app->security->generateRandomString(16);
+            } while (Order::find()->where(['weblink' => $order->weblink])->count());
+
+            if (!$order->save()) {
+                $this->printAndExit($order->errors);
+            }
+
             $this->processOrderItems($order);
 
+            $this->instance = $order;
             return true;
-        } catch(\Exception $e) {
-//            Order::deleteAll(['order_id' => $this->supplier_id]); //тут проверь
-//            OrderItem::deleteAll(['order_id' => $this->supplier_id]);//тут проверь
+        } catch (\Exception $e) {
+            User::deleteAll(['phone_number' => $this->phone_number]);
+
             return false;
         }
     }
 
-    private function processOrderItems(Order $order) {
-        $allowedOrderItemsIds = array_keys(ArrayHelper::index(Yii::$app->params['subscribePlans'], 'value'));//тут проверь
+    private function processOrderItems(Order $order)
+    {
+        $cart = SiteController::getCart();
 
-        foreach ($this->items as $orderItem) {
-            if(!in_array($orderItem, $allowedOrderItemsIds)) {
-                continue ;
+        foreach ($cart as $item) {
+            $option = new OrderItem();
+            $option->order_id = $order->id;
+            $option->count = $item['count'];
+            $option->description = $item['name'];
+            $option->item_price = $item['price'];
+            $option->product_item_id = ProductOption::findOne(['id' => $item['id']])->product_id;
+            $option->total_price = $item['price'] * $item['count'];
+            if (!$option->save()) {
+                $this->printAndExit($option->errors);
             }
-
-            $relation = new OrderItem();
-            $relation->order_id = 0;//$order->null;
-            $relation->product_item_id = 0;//$order->null;
-            $relation->count = 0;//$order->null;
-            $relation->description = 0;//$order->null;
-            $relation->item_price = 0;//$order->null;
-            $relation->total_price = 0;//$order->null;
-            $relation->save();
         }
+
+        Yii::$app->session->set('cart', '{}');
+        return true;
     }
 
+    private function printAndExit($d) {
+        echo '<pre>';
+        var_dump($d);
+        exit;
+    }
 }

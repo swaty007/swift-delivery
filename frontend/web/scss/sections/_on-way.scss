@@ -7,5 +7,17 @@
   }
   &__text {
     margin-bottom: 20px;
+    &--small {
+      font-size: 13px;
+      line-height: 16px;
+      margin-top: 10px;
+    }
+  }
+  &__img {
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  .card__item--total .card__item--left {
+    min-height: 25px;
   }
 }

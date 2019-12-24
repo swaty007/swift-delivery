@@ -19,7 +19,7 @@ return [
                 'yii\bootstrap\BootstrapAsset' => ['css' => []],
                 'yii\web\JqueryAsset' => [
                     'jsOptions' => [
-                        'defer' => 'defer'
+//                        'defer' => 'defer'
                     ],
                 ],
             ]

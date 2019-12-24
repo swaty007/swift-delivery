@@ -41,7 +41,9 @@ class SearchOrder extends Order
      */
     public function search($params)
     {
-        $query = Order::find();
+        $query = Order::find()
+        ->with('customer')
+        ->with('supplier');
 
         // add conditions that should always apply here
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\models;
 
 use common\models\Product;
@@ -13,7 +14,6 @@ use yii\helpers\ArrayHelper;
 /**
  * Signup form
  */
-
 class SupplierForm extends Model
 {
     public $supplier_id;
@@ -43,7 +43,8 @@ class SupplierForm extends Model
             ['supplier_id', 'unique', 'targetAttribute' => 'supplier_id', 'targetClass' => 'common\models\Supplier'],
             [['name', 'product_name'], 'string', 'max' => 50, 'min' => 2],
             [['address', 'address_2'], 'string', 'max' => 60],
-            [['items', 'plan'], 'safe'],
+            ['plan', 'integer', 'min' => 1, 'max' => 3],
+            [['items'], 'safe'],
             [['items', 'plan'], 'required'],
             [['web_url'], 'url'],
             ['terms', 'compare', 'compareValue' => 1, 'type' => 'number', 'operator' => '==', 'message' => 'Please, accept terms of use.'],
@@ -74,7 +75,7 @@ class SupplierForm extends Model
             $supplier->website = $this->web_url;
             $supplier->product_name = $this->product_name;
 
-            if(!$this->saveImages($supplier)) {
+            if (!$this->saveImages($supplier)) {
                 throw new Exception("Error while saving file");
             }
 
@@ -85,19 +86,20 @@ class SupplierForm extends Model
             $supplier->save();
 
             return true;
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             Supplier::deleteAll(['supplier_id' => $this->supplier_id]);
             SupplierItemRelation::deleteAll(['supplier_id' => $this->supplier_id]);
             return false;
         }
     }
 
-    private function processGiftItems(Supplier $supplier) {
+    private function processGiftItems(Supplier $supplier)
+    {
         $allowedGiftItemsIds = array_keys(ArrayHelper::index(Product::getActiveList(), 'value'));
 
         foreach ($this->items as $giftItem) {
-            if(!in_array($giftItem, $allowedGiftItemsIds)) {
-                continue ;
+            if (!in_array($giftItem, $allowedGiftItemsIds)) {
+                continue;
             }
 
             $relation = new SupplierItemRelation();
@@ -107,23 +109,28 @@ class SupplierForm extends Model
         }
     }
 
-    private function saveImages(Supplier $supplier) {
+    private function saveImages(Supplier $supplier)
+    {
         try {
-            if(!empty($supplier->oldAttributes['logo']))
-            {
+            if (!empty($supplier->oldAttributes['logo'])) {
                 unlink(Yii::$app->params['uploadsDir'] . $supplier->oldAttributes['logo']);
             }
-            if(!empty($supplier->oldAttributes['product_image']))
-            {
+
+            if (!empty($supplier->oldAttributes['product_image'])) {
                 unlink(Yii::$app->params['uploadsDir'] . $supplier->oldAttributes['product_image']);
             }
-            $logoName =  'logo' . time() . $this->supplier_id . '.' . $this->logo->extension;
-            $this->logo->saveAs(Yii::$app->params['uploadsDir'] . $logoName);
-            $this->logo = $logoName;
 
-            $piName =  'pi' . time() . $this->supplier_id . '.' .$this->product_image->extension;
-            $this->product_image->saveAs(Yii::$app->params['uploadsDir'] . $piName);
-            $this->product_image = $piName;
+            if (!is_null($this->logo)) {
+                $logoName = 'logo' . time() . $this->supplier_id . '.' . $this->logo->extension;
+                $this->logo->saveAs(Yii::$app->params['uploadsDir'] . $logoName);
+                $this->logo = $logoName;
+            }
+
+            if (!is_null($this->product_image)) {
+                $piName = 'pi' . time() . $this->supplier_id . '.' . $this->product_image->extension;
+                $this->product_image->saveAs(Yii::$app->params['uploadsDir'] . $piName);
+                $this->product_image = $piName;
+            }
 
             return true;
         } catch (\Exception $e) {

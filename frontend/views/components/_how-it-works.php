@@ -17,7 +17,7 @@ use yii\helpers\Url; ?>
                     </div>
                     <p class="how-it-works__item-text text--blue">
                         Start your order by completing the
-                        <a class="text--green" href="#">Minimal Order Form</a>.
+                        <a class="text--green" href="<?=Url::toRoute(['site/order']);?>">Minimal Order Form</a>.
                     </p>
                     <div class="how-it-works__item-img">
                         <?php  echo Html::img('', ['class' => 'lazy', 'data-src' => Yii::getAlias('@web/img/hww_icon_1.svg')]); ?>

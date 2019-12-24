@@ -13,6 +13,7 @@ class SignupForm extends Model
     public $phone_number;
     public $password;
     public $password_repeat;
+    public $role;
 
     /**
      * {@inheritdoc}
@@ -23,9 +24,10 @@ class SignupForm extends Model
             ['phone_number', 'trim'],
             ['phone_number', 'match', 'pattern' => '/^\+1\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/', 'message' => 'Incorrect phone number'],
             ['phone_number', 'required'],
-            ['phone_number', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This phone number is already registered.'],
+            [['phone_number', 'role'] , 'unique', 'targetClass' => '\common\models\User', 'targetAttribute' => ['phone_number', 'role'],'message' => 'This phone number is already registered.'],
             ['phone_number', 'string', 'min' => 2, 'max' => 255],
 
+            ['role', 'required'],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
 
