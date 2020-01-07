@@ -99,9 +99,9 @@ use yii\helpers\Html;
                     <strong>Along with your cannabis gift
                         you’ll recieve:</strong>
                 </p>
-            <?= Html::img('@web/img/uploads/image.png', ['class' => 'on-way__img']); ?>
+            <?= Html::img($order->supplier->getImageUrl(), ['class' => 'on-way__img']); ?>
                 <p class="text--small text--blue-opacity">
-                    <strong>1 Rainbow Grinder</strong>
+                    <strong>1 <?=$order->supplier->product_name?></strong>
                 </p>
 
             <p class="on-way__text--small text--blue-opacity text-left">

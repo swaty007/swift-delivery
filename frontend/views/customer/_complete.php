@@ -1,0 +1,75 @@
+<?php
+
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
+
+?>
+<div class="order-complete">
+
+    <div class="container text-center">
+        <h1 class="text--green sub-title">
+            <?= $order->getStatusText(); ?>
+        </h1>
+        <hr>
+        <p class="text text--blue-opacity order-complete__sub-title">
+            How was Calvin, your delivery person?
+        </p>
+        <?php $form = ActiveForm::begin(['id' => 'form-rate', 'enableAjaxValidation' => true, 'options' => ['class' => 'order__form']]); ?>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="order-complete__form-group">
+                    <?= $form->field($model, 'friendly', ['options' => ['class' => 'default-checkbox__container default-checkbox__container--label']])
+                        ->checkbox(['name' => 'SupplierForm[items][]',
+                            'uncheck' => null,
+                            'class' => 'default-checkbox',
+                            'template' => "<div class='checkbox'>{input}{label}</div>"])
+                        ->label('Friendly')->error(false); ?>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="order-complete__form-group">
+                    <?= $form->field($model, 'fulfilled', ['options' => ['class' => 'default-checkbox__container default-checkbox__container--label']])
+                        ->checkbox(['name' => 'SupplierForm[items][]',
+                            'uncheck' => null,
+                            'class' => 'default-checkbox',
+                            'template' => "<div class='checkbox'>{input}{label}</div>"])
+                        ->label('Fulfilled order')->error(false); ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="order-complete__form-group">
+                    <?= $form->field($model, 'onTime', ['options' => ['class' => 'default-checkbox__container default-checkbox__container--label']])
+                        ->checkbox(['name' => 'SupplierForm[items][]',
+                            'uncheck' => null,
+                            'class' => 'default-checkbox',
+                            'template' => "<div class='checkbox'>{input}{label}</div>"])
+                        ->label('On time')->error(false); ?>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="order-complete__form-group">
+                    <?= $form->field($model, 'again', ['options' => ['class' => 'default-checkbox__container default-checkbox__container--label']])
+                        ->checkbox(['name' => 'SupplierForm[items][]',
+                            'uncheck' => null,
+                            'class' => 'default-checkbox',
+                            'template' => "<div class='checkbox'>{input}{label}</div>"])
+                        ->label('Would use again')->error(false); ?>
+                </div>
+            </div>
+        </div>
+        <p class="text text--blue-opacity order-complete__sub-text">
+            Rate your experience.
+        </p>
+        <div class="stars">
+            <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+            <?= Html::img('@web/img/icon_star_empty.svg', ['class' => '']); ?>
+        </div>
+        <?= $form->field($model, 'comment', ['options' => ['class' => 'text-center form-group']])->textarea(['placeholder' => ''])->label("Additional Comments:"); ?>
+
+        <?= Html::submitButton('Send Review', ['class' => 'main-btn']) ?>
+        <?php ActiveForm::end(); ?>
+    </div>
+
+</div>

@@ -16,6 +16,9 @@
     &--blue {
       background-color: $brand-blue;
     }
+    &--white {
+      background-color: transparent;
+    }
   }
   &__sub-title {
     margin-bottom: 10px;

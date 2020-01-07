@@ -19,7 +19,7 @@ $this->title = 'Create supplier';
         <p class="text text--small text-center text--green text--bold">Name & Location</p>
         <hr class="line">
 
-        <?php $form = ActiveForm::begin(['id' => 'form-create-supplier', 'class' => 'access__form', 'enableAjaxValidation' => true]);//, 'enableAjaxValidation' => true ?>
+        <?php $form = ActiveForm::begin(['id' => 'form-create-supplier', 'enableAjaxValidation' => true]);//, 'enableAjaxValidation' => true ?>
         <!--        --><? //= $form->field($model, 'password')->label(false)->passwordInput() ?>
         <!--        --><? //= $form->field($model, 'password_repeat')->label(false)->passwordInput() ?>
 

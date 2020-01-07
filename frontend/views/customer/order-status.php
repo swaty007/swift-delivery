@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-
 ?>
 
 <?php \yii\widgets\Pjax::begin(['id' => 'order_status',
@@ -10,8 +9,10 @@ use yii\helpers\Html;
         'tag' => 'section'
     ]]); ?>
 
-<?php if ($order->status == 0) {
+<?php if ($order->status == \common\models\Order::ORDER_STATUS_NEW) {
     echo $this->render('../customer/_searching', ['order' => $order]);
+} elseif($order->status == \common\models\Order::ORDER_STATUS_COMPLETE) {
+    echo $this->render('../customer/_complete', ['order' => $order, 'model' => $model]);
 } else {
     echo $this->render('../customer/_onWay', ['order' => $order]);
 };?>

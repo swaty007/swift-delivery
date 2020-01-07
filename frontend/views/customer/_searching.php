@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 ?>
 
@@ -14,18 +15,12 @@ use yii\helpers\Html;
             <p class="text confirm-supplier__text">
                 This may take several minutes. We will send you a text when your order is confirmed.
             </p>
-            <?= Html::img('@web/img/spinner.svg', ['class' => 'confirm-supplier__img searching__img']); ?>
-            <div class="searching__loader"></div>
-            <div id="circularG">
-                <div id="circularG_1" class="circularG"></div>
-                <div id="circularG_2" class="circularG"></div>
-                <div id="circularG_3" class="circularG"></div>
-                <div id="circularG_4" class="circularG"></div>
-                <div id="circularG_5" class="circularG"></div>
-                <div id="circularG_6" class="circularG"></div>
-                <div id="circularG_7" class="circularG"></div>
-                <div id="circularG_8" class="circularG"></div>
-            </div>
+
+           <div class="row">
+               <div class="col-md-12">
+                   <div class="searching__loader"></div>
+               </div>
+           </div>
 
         </div>
     </div>
@@ -100,6 +95,15 @@ use yii\helpers\Html;
                         </p>
                     </div>
                 </div>
+
+                <div class="card__item card__item--cancel">
+                    <a href="<?=Url::toRoute(['site/cancel-order','l' => $order->weblink]);?>" class="card__text text--blue">
+                        <strong>
+                            Cancel Order
+                        </strong>
+                    </a>
+                </div>
+
 
             </div>
 

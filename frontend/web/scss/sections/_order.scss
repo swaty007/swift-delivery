@@ -21,4 +21,28 @@
     margin-left: unset;
     margin-right: unset;
   }
+
+
+  &-complete {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    @include heigth100vh();
+    &__sub-title {
+      margin-top: 55px;
+      margin-bottom: 25px;
+    }
+    &__sub-text {
+      margin-top: 20px;
+
+    }
+    &__form-group {
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      margin-bottom: 25px;
+      &--text {
+        margin-left: 10px;
+      }
+    }
+  }
 }

@@ -6,6 +6,7 @@ use common\models\Product;
 use common\models\ProductOption;
 use common\models\User;
 use frontend\models\OrderForm;
+use frontend\models\RatingForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\SupplierForm;
 use frontend\models\VerifyEmailForm;
@@ -208,15 +209,18 @@ class SiteController extends Controller
     }
 
     public function actionOrderStatus($l) {
-        if (!($order = Order::find()->where(['weblink' => $l])->with('orderItems')->one())) {
+        if (!($order = Order::find()->where(['weblink' => $l])->with('orderItems')->with('supplier')->one())) {
             return $this->redirect('/site/index');
         }
 
 //        foreach ($order->getOrderItems() as $item) {
 //
 //        }
+        $model = new RatingForm();
+        return $this->render('/customer/order-status', ['order' => $order, 'model' => $model]);
+    }
+    public function actionCancelOrder($l) {
 
-        return $this->render('/customer/order-status', ['order' => $order]);
     }
     /**
      * Signs user up.

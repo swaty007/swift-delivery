@@ -7,6 +7,7 @@ return [
     'user.passwordResetTokenExpire' => 3600,
     'uploadsDir' => Yii::getAlias('@frontend') . '/web/img/uploads/',
     'webProjectUrl' => 'http://swift-delivery.infinitum.tech',
+    'webUploadsDir' => '/img/uploads/',
     'subscribePlans' => [
         [
             'name' => 'Basic',

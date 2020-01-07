@@ -12,12 +12,10 @@ body.show-scc-navbar {
         visibility: visible;
       //}
       &:before {
-        width: 3000px;
-        height: 3000px;
         width: 300vmax;
         height: 300vmax;
-        bottom: -1500px;
-        right: -1500px;
+        bottom: -150vmin;
+        right: -150vmin;
       }
     }
   }

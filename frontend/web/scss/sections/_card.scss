@@ -52,6 +52,10 @@
       border: 2px solid $brand-blue;
       border-radius: 5px;
     }
+    &--cancel {
+      border-bottom: 0;
+      min-height: 0;
+    }
     &--total {
       .card__item--left {
         min-height: 50px;

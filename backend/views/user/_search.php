@@ -6,6 +6,13 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\SearchUser */
 /* @var $form yii\widgets\ActiveForm */
+$roleList = [
+    '1' => 'Customer',
+    '2' => 'Deliver',
+    '3' => 'Supplier',
+    '4' => 'Admin',
+    '5' => 'Super Admin',
+];
 ?>
 
 <div class="user-search">
@@ -21,9 +28,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'phone_number') ?>
 
-    <?= $form->field($model, 'role') ?>
+    <?= $form->field($model, 'role')->dropDownList($roleList); ?>
 
-    <?= $form->field($model, 'status') ?>
+    <?= $form->field($model, 'status')->dropDownList(
+        [
+            0 => 'Deactivated',
+            10 => 'Active',
+        ]
+    ) ?>
 
 
     <div class="form-group">

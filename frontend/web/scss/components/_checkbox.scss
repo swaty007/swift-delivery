@@ -17,11 +17,16 @@
     box-sizing: border-box;
     border-radius: 5px;
   }
-  &:checked:before {
-    background-color: $brand-green;
-    background-image: url("../../img/icon_check.svg");
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
+  &:checked{
+    &~label {
+      color: $brand-green;
+    }
+    &:before {
+      background-color: $brand-green;
+      background-image: url("../../img/icon_check.svg");
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+    }
   }
   //&:checked ~ .default-checkbox__mark {
   //  background-color: $brand-green;
@@ -45,6 +50,18 @@
     &.has-error {
       .default-checkbox:before {
         border-color: $brand-red;
+      }
+    }
+    &--label {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      label {
+        margin-left: 25px;
+        font-size: 16px;
+        line-height: 19px;
+        color: $text-blue;
+        cursor: pointer;
       }
     }
   }

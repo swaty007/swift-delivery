@@ -66,6 +66,9 @@ body {
   &--between {
     justify-content: space-between;
   }
+  &--start {
+    justify-content: start;
+  }
 }
 
 .main-btn {

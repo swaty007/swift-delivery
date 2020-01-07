@@ -93,4 +93,15 @@ class Supplier extends \yii\db\ActiveRecord
             'longitude' => 'Longitude',
         ];
     }
+
+    /**
+     * @return string|null
+     */
+    public function getImageUrl() {
+        if (empty($this->product_image)) {
+            return null;
+        }
+
+        return Yii::$app->params['webUploadsDir'] . $this->product_image;
+    }
 }

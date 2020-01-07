@@ -57,7 +57,7 @@ $this->title = 'Order Form';
 
         </div>
 
-        <?php $form = ActiveForm::begin(['id' => 'form-create-order', 'class' => 'order__form', 'enableAjaxValidation' => true]);//, 'enableAjaxValidation' => true ?>
+        <?php $form = ActiveForm::begin(['id' => 'form-create-order', 'enableAjaxValidation' => true, 'options' => ['class' => 'order__form'] ]);//, 'enableAjaxValidation' => true ?>
         <p class="sub-text text--green text--small text-center">
             Basic information:
         </p>
