@@ -115,6 +115,4 @@ class DevController extends Controller
             'gifts' => Product::getActiveList(),
         ]);
     }
-
-
 }

@@ -226,7 +226,7 @@ AppAsset::register($this);
                     <hr>
                 </li>
                 <li class="navbar__item  navbar__item--btn">
-                    <a href="#" class="main-btn">
+                    <a href="<?=Url::toRoute(['site/order']);?>" class="main-btn">
                         Start Delivery!
                     </a>
                 </li>
@@ -239,6 +239,11 @@ AppAsset::register($this);
                         <a href="<?= Url::toRoute(['site/login']);?>" class="text text--small text--blue-opacity">Delivery Service Login</a>
                     </li>
                 <?php else:?>
+                    <li class="navbar__item  navbar__item--btn">
+                        <a href="<?=Url::toRoute(['supplier/index']);?>" class="main-btn main-btn--blue">
+                            Supplier dashboard
+                        </a>
+                    </li>
                     <li class="navbar__item">
                         <?= Html::a('Logout', ['site/logout'], ['data' => ['method' => 'post'], 'class' => 'text text--small text--blue-opacity']) ?>
                     </li>

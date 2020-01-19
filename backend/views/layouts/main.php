@@ -48,6 +48,7 @@ AppAsset::register($this);
             ['label' => 'Customers', 'url' => ['/customer/index']],
             ['label' => 'Suppliers', 'url' => ['/supplier/index']],
             ['label' => 'Zipcodes', 'url' => ['/zipcode/index']],
+            ['label' => 'Info Pages', 'url' => ['/info-page/index']],
             ['label' => 'Users', 'url' => ['/user/index']],
             '<li>'
                 . Html::beginForm(['/site/logout'], 'post')

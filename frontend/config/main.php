@@ -53,6 +53,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/info/<url>' => 'site/show-info-page'
             ],
         ],
     ],

@@ -18,6 +18,7 @@ use Yii;
  * @property string $description
  * @property string $product_name
  * @property string $product_image
+ * @property string $default_deliver_name
  * @property string $subscribe_ends
  * @property int $status
  * @property int $is_active
@@ -59,7 +60,7 @@ class Supplier extends \yii\db\ActiveRecord
             [['supplier_id'], 'required'],
             [['supplier_id', 'status', 'is_active'], 'integer'],
             [['latitude', 'longitude'], 'number'],
-            [['name', 'product_name'], 'string', 'max' => 100],
+            [['name', 'product_name', 'default_deliver_name'], 'string', 'max' => 100],
             [['website'], 'string', 'max' => 128],
             [['logo', 'product_image'], 'string', 'max' => 256],
             [['zip'], 'string', 'max' => 20],
@@ -87,6 +88,7 @@ class Supplier extends \yii\db\ActiveRecord
             'product_name' => 'Product Name',
             'product_image' => 'Product Image',
             'status' => 'Plan',
+            'default_deliver_name' => 'Default Deliver Name',
             'subscribe_ends' => 'Subscribe Ends',
             'is_active' => 'Is Active',
             'latitude' => 'Latitude',

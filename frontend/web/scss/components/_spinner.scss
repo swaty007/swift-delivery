@@ -21,6 +21,7 @@
     color: $text-green;
     order: 2;
     border: none;
+    pointer-events: none;
   }
   .ui-spinner-button {
     width: 50px;

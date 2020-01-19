@@ -14,6 +14,7 @@ use Yii;
  * @property string $name
  * @property string $address
  * @property string $address_2
+ * @property string $deliver_name
  * @property string $description
  * @property double $latitude
  * @property double $longitude
@@ -74,7 +75,7 @@ class Order extends \yii\db\ActiveRecord
             [['zip'], 'string', 'max' => 20],
             [['address', 'address_2'], 'string', 'max' => 80],
             [['description'], 'string', 'max' => 200],
-            [['weblink'], 'string', 'max' => 100],
+            [['weblink', 'deliver_name'], 'string', 'max' => 100],
         ];
     }
 
@@ -122,6 +123,13 @@ class Order extends \yii\db\ActiveRecord
         return $dummy->getStatusDescription();
     }
 
+    public function getOrderTotal() {
+        return OrderItem::find()
+            ->select('SUM(total_price) as total_price')
+            ->where(['order_id' => $this->id])
+            ->one()->total_price;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -139,6 +147,7 @@ class Order extends \yii\db\ActiveRecord
             'longitude' => 'Longitude',
             'weblink' => 'Weblink',
             'status' => 'Status',
+            'deliver_name' => 'Deliver name',
             'created_at' => 'Created At',
         ];
     }

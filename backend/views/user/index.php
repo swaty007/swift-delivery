@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="user-index">
 
@@ -54,7 +55,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $data;
                             }
                     ],
-                    'status',
+                    'status' => [
+                            'label' => 'Status',
+                        'value' => function ($data) {
+                            switch ($data['status']) {
+                                case 0:
+                                    return 'Deactivated';
+                                    break;
+                                case 10:
+                                    return 'Active';
+                                    break;
+                            }
+                        }
+                    ],
                     'created_at:datetime',
                     //'updated_at',
                     //'verification_token',

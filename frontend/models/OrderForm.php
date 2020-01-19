@@ -55,6 +55,8 @@ class OrderForm extends Model
     public function createOrder()
     {
         if (!$this->validate()) {
+            var_dump($this->errors);
+            exit;
             return null;
         }
 
@@ -63,7 +65,7 @@ class OrderForm extends Model
                 $customer = new User();
                 $customer->phone_number = $this->phone_number;
                 $customer->status = 0;
-                $customer->username = $this->name;
+                $customer->username = $this->phone_number;
                 $customer->role = User::USER_ROLE_CUSTOMER;
                 $customer->setPassword('');
 
@@ -93,8 +95,12 @@ class OrderForm extends Model
             $this->instance = $order;
             return true;
         } catch (\Exception $e) {
-            User::deleteAll(['phone_number' => $this->phone_number]);
+            //User::deleteAll(['phone_number' => $this->phone_number]);
 
+
+            var_dump($this->errors);
+            var_dump($e);
+            exit;
             return false;
         }
     }

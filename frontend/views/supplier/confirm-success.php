@@ -15,8 +15,8 @@ $this->title = 'Congratulations!';
                 Congratulations!
             </h1>
             <p class="text confirm-supplier__text">
-                We will call you once you’re all ready to go.
-                This will probably take a few days.
+                Your application successfully received<br>
+                Your admin will contact you and activate the account
             </p>
             <?= Html::img('@web/img/icon_congratulation.svg', ['class' => 'confirm-supplier__img']); ?>
         </div>

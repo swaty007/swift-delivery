@@ -1,9 +1,12 @@
 <?php
+
 namespace frontend\controllers;
 
+use common\models\InfoPage;
 use common\models\Order;
 use common\models\Product;
 use common\models\ProductOption;
+use common\models\Twilio;
 use common\models\User;
 use frontend\models\OrderForm;
 use frontend\models\RatingForm;
@@ -84,7 +87,7 @@ class SiteController extends Controller
             'index', 'logout', 'order', 'order-status'
         ];
 
-        if(!Yii::$app->user->isGuest && !in_array(Yii::$app->controller->action->id, $allowedPages)) {
+        if (!Yii::$app->user->isGuest && !in_array(Yii::$app->controller->action->id, $allowedPages)) {
             switch (Yii::$app->user->identity->role) {
                 case User::USER_ROLE_SUPPLIER:
                     $redirectUrl = '/supplier/index';
@@ -95,7 +98,7 @@ class SiteController extends Controller
 
             }
 
-            if(!is_null($redirectUrl)) {
+            if (!is_null($redirectUrl)) {
 
                 return $this->redirect($redirectUrl)->send();
             }
@@ -139,7 +142,8 @@ class SiteController extends Controller
         }
     }
 
-    public function actionRedirectAfterLogin() {
+    public function actionRedirectAfterLogin()
+    {
         return $this->redirect('/');
     }
 
@@ -183,32 +187,41 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionConfirmSuccess() {
+    public function actionConfirmSuccess()
+    {
 
         return $this->render('../supplier/confirm-success');
     }
+
     public function actionAbout()
     {
         return $this->render('about');
     }
 
-    public function actionOrder() {
+    public function actionOrder()
+    {
         $model = new OrderForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post())) {
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = 'json';
                 return ActiveForm::validate($model);
             }
 
             if ($model->createOrder()) {
+                $twilioService = Yii::$app->Yii2Twilio->initTwilio();
+
+
+
+
                 return $this->redirect('/site/order-status/?l=' . $model->instance->weblink);
             }
         }
         return $this->render('/customer/order', ['model' => $model, 'gifts' => Product::getActiveList(), 'cart' => $this->getCart()]);
     }
 
-    public function actionOrderStatus($l) {
+    public function actionOrderStatus($l)
+    {
         if (!($order = Order::find()->where(['weblink' => $l])->with('orderItems')->with('supplier')->one())) {
             return $this->redirect('/site/index');
         }
@@ -219,9 +232,12 @@ class SiteController extends Controller
         $model = new RatingForm();
         return $this->render('/customer/order-status', ['order' => $order, 'model' => $model]);
     }
-    public function actionCancelOrder($l) {
+
+    public function actionCancelOrder($l)
+    {
 
     }
+
     /**
      * Signs user up.
      *
@@ -312,8 +328,8 @@ class SiteController extends Controller
      * Verify email address
      *
      * @param string $token
-     * @throws BadRequestHttpException
      * @return yii\web\Response
+     * @throws BadRequestHttpException
      */
     public function actionVerifyEmail($token)
     {
@@ -355,9 +371,10 @@ class SiteController extends Controller
         ]);
     }
 
-    // TODO: Implement Session model and remove it there
-    static public function getCart() {
-        if(!Yii::$app->session->isActive) {
+    // TODO: Implement Session model and move it there
+    static public function getCart()
+    {
+        if (!Yii::$app->session->isActive) {
             Yii::$app->session->open();
         }
 
@@ -377,5 +394,18 @@ class SiteController extends Controller
         }
 
         return $cart;
+    }
+
+    public function actionTestTwilio($phone) {
+        Twilio::sendSms($phone, "Twilio works?");
+    }
+
+    public function actionShowInfoPage($url)
+    {
+        if (($page = InfoPage::findOne(['url' => $url, 'is_active' => 1]))) {
+            return $this->render('info-page', ['page' => $page]);
+        }
+
+        return $this->redirect('/');
     }
 }

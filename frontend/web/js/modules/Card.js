@@ -7,6 +7,13 @@ class Card {
     }
 
     events() {
+        $("#form-create-order").on('submit', e => {
+            let emptyCardBlock = $("#order_card");
+            if (emptyCardBlock.length !== 0) {
+                e.preventDefault();
+                emptyCardBlock.addClass('card__item--error');
+            }
+        });
         //add to card click
         $(document).on("click", "#add_to_card_btn", e => {
             e.preventDefault();

@@ -5,7 +5,8 @@ class Modal {
     }
 
     events() {
-        this.spinner();
+        this.spinnerInit();
+        this.ordersInit();
 
         //close modal
         $(document).on('click', '.modal__close', e => {
@@ -14,6 +15,11 @@ class Modal {
             $("body").removeClass("modal__open");
         });
 
+
+
+
+    }
+    ordersInit () {
         //select element change
         $(document).on('change', '#modal_card_select', e => {
             let $this = $(e.currentTarget),
@@ -57,8 +63,7 @@ class Modal {
             $("body").addClass("modal__open");
         });
     }
-
-    spinner() {
+    spinnerInit() {
         $(".spinner input").spinner({
             min: 1,
             max: 50,

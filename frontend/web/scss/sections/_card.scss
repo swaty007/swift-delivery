@@ -52,6 +52,12 @@
       border: 2px solid $brand-blue;
       border-radius: 5px;
     }
+    &--error {
+      border-color: $brand-red;
+      .text {
+        color: $brand-red;
+      }
+    }
     &--cancel {
       border-bottom: 0;
       min-height: 0;

@@ -5,7 +5,7 @@ use yii\helpers\Html;
 ?>
 
 <div class="bg--green on-way">
-    <div class=" confirm-supplier__container text-center">
+    <div class="confirm-supplier__container text-center">
         <div class="container">
             <h1 class="text--white title confirm-supplier__title">
                 <?= $order->getStatusText(); ?>

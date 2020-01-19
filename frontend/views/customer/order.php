@@ -100,7 +100,7 @@ $this->title = 'Order Form';
         <?php
         $totalOrder = 0;
         if (empty($cart)):?>
-            <div class="card__item card__item--empty">
+            <div id="order_card" class="card__item card__item--empty">
                 <p class="text text--blue">
                     There’s nothing in your cart yet.
                 </p>

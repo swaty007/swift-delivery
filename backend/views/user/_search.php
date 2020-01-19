@@ -7,6 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\SearchUser */
 /* @var $form yii\widgets\ActiveForm */
 $roleList = [
+    null => 'Any',
     '1' => 'Customer',
     '2' => 'Deliver',
     '3' => 'Supplier',
@@ -32,6 +33,7 @@ $roleList = [
 
     <?= $form->field($model, 'status')->dropDownList(
         [
+            null => 'Any',
             0 => 'Deactivated',
             10 => 'Active',
         ]

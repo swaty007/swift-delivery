@@ -15,7 +15,7 @@
 }
 
 body {
-
+  font-family: $font-family;
 }
 
 .text {
@@ -110,6 +110,7 @@ body {
   }
   &--blue {
     background-color: $brand-blue;
+    box-shadow: none;
   }
   &--no-shadow {
     box-shadow: none;

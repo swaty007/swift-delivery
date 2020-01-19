@@ -69,7 +69,7 @@ class SupplierController extends BaseAuthorizedController
         return $this->render('need-activation');
     }
 
-    public function actionIndex($takeOrder = 0, $cancelSupplier = 0, $cancelDeliver = 0) {
+    public function actionIndex($takeOrder = 0, $cancelSupplier = 0, $cancelDeliver = 0, $complete = 0) {
         if ($takeOrder) {
             $this->takeOrder($takeOrder);
             $this->redirect('index');
@@ -82,6 +82,11 @@ class SupplierController extends BaseAuthorizedController
 
         if ($cancelDeliver) {
             $this->cancelOrder($cancelDeliver, Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER);
+            $this->redirect('index');
+        }
+
+        if ($complete) {
+            $this->complete($complete);
             $this->redirect('index');
         }
 
@@ -126,6 +131,18 @@ class SupplierController extends BaseAuthorizedController
             'inProgress' => $inProgress,
             'finished' => $finished,
         ]);
+    }
+
+    function getNeedleArray($source, $keys = []) {
+        $result = [];
+
+        foreach ($keys as $key) {
+            if (is_array($source[$key]) && count($source[$key])){
+                $result[$key] = $source[$key][0];
+            }
+        }
+
+        return $result;
     }
 
     public function actionConfirm() {
@@ -176,6 +193,20 @@ class SupplierController extends BaseAuthorizedController
         $supplier = $this->getSupplierModel();
         $order->supplier_id = $supplier->id;
         $order->status = Order::ORDER_STATUS_IN_PROGRESS;
+        return $order->save();
+    }
+
+
+    private function complete($id) {
+        if (!($order = Order::findOne($id))) {
+            return false;
+        }
+
+        if($order->status !== Order::ORDER_STATUS_IN_PROGRESS) {
+            return false;
+        }
+
+        $order->status = Order::ORDER_STATUS_COMPLETE;
         return $order->save();
     }
 
