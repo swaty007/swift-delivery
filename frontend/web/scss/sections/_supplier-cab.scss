@@ -1,16 +1,33 @@
 .supplier-cab {
   &__menu {
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   &__username {
 
   }
+  &__text {
+    font-size: 14px;
+    line-height: 17px;
+  }
   &__monthly {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    &--text {
+      font-size: 29px;
+      line-height: 35px;
+    }
     &--left {
-
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     &--right {
-
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
   &__table {

@@ -51,6 +51,10 @@ body {
     font-size: 19px;
     line-height: 23px;
   }
+  &--large {
+    font-size: 21px;
+    line-height: 25px
+  }
   &--small {
     font-size: 16px;
     line-height: 19px;
@@ -114,6 +118,13 @@ body {
   }
   &--no-shadow {
     box-shadow: none;
+  }
+  &--settings {
+    background-image: url(../../img/icon_settings.svg);
+    margin-left: 0;
+    margin-right: 0;
+    background-position: 20px 50%;
+    background-repeat: no-repeat;
   }
 }
 
