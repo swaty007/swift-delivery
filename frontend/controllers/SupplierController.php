@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\GoogleMaps;
 use common\models\Order;
 use common\models\Product;
 use common\models\Supplier;
@@ -93,6 +94,7 @@ class SupplierController extends BaseAuthorizedController
         $allowedToDeliver = Order::find()
             ->with('orderItems')
             ->with('customer')
+            ->with('supplier')
             ->where(['status' => Order::ORDER_STATUS_NEW])
             ->asArray()
             ->all();
@@ -100,6 +102,7 @@ class SupplierController extends BaseAuthorizedController
         $inProgress = Order::find()
             ->with('orderItems')
             ->with('customer')
+            ->with('supplier')
             ->where(['IN', 'status',
             [
                 Order::ORDER_STATUS_IN_PROGRESS,
@@ -113,6 +116,7 @@ class SupplierController extends BaseAuthorizedController
         $finished = Order::find()
             ->with('orderItems')
             ->with('customer')
+            ->with('supplier')
             ->where(['IN', 'status',
             [
                 Order::ORDER_STATUS_COMPLETE,
@@ -130,6 +134,9 @@ class SupplierController extends BaseAuthorizedController
             'allowed' => $allowedToDeliver,
             'inProgress' => $inProgress,
             'finished' => $finished,
+            'earnings' => Order::find()->where(['supplier_id' => $this->supplierModel->id])->andWhere(['status' => Order::ORDER_STATUS_COMPLETE])->count(),
+            'accepted' => Order::find()->where(['supplier_id' => $this->supplierModel->id])->count(),
+            'mounthlyEarnings' => 2500
         ]);
     }
 
@@ -190,7 +197,42 @@ class SupplierController extends BaseAuthorizedController
             return false;
         }
 
+        $gm = new GoogleMaps();
+
         $supplier = $this->getSupplierModel();
+        $supplierLatlng = $gm->getLatLng($supplier->address . ' ' . $supplier->address_2);
+        $customerLatlng = $gm->getLatLng($order->address . ' ' . $order->address_2);
+        $distance = $gm->getDistanceMatrix($supplierLatlng, $customerLatlng);
+
+        if($distance['success'] == true) {
+            $order->delivery_duration = date('h:iA', strtotime($distance['duration'])) . ' | ' . $distance['duration'];
+        }
+
+        $order->supplier_id = $supplier->id;
+        $order->status = Order::ORDER_STATUS_IN_PROGRESS;
+        return $order->save();
+    }
+
+    public function actionCalculateDelivery($id) {
+        if (!($order = Order::findOne($id))) {
+            return false;
+        }
+
+        if($order->status !== Order::ORDER_STATUS_NEW) {
+            return false;
+        }
+
+        $gm = new GoogleMaps();
+
+        $supplier = $this->getSupplierModel();
+        $supplierLatlng = $gm->getLatLng($supplier->address . ' ' . $supplier->address_2);
+        $customerLatlng = $gm->getLatLng($order->address . ' ' . $order->address_2);
+        $distance = $gm->getDistanceMatrix($supplierLatlng, $customerLatlng);
+
+        if($distance['success'] == true) {
+            $order->delivery_duration = date('h:iA', strtotime($distance['duration'])) . ' | ' . $distance['duration'];
+        }
+
         $order->supplier_id = $supplier->id;
         $order->status = Order::ORDER_STATUS_IN_PROGRESS;
         return $order->save();

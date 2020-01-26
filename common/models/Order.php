@@ -21,6 +21,7 @@ use Yii;
  * @property string $weblink
  * @property int $status
  * @property string $created_at
+ * @property string $delivery_duration
  */
 class Order extends \yii\db\ActiveRecord
 {
@@ -75,7 +76,7 @@ class Order extends \yii\db\ActiveRecord
             [['zip'], 'string', 'max' => 20],
             [['address', 'address_2'], 'string', 'max' => 80],
             [['description'], 'string', 'max' => 200],
-            [['weblink', 'deliver_name'], 'string', 'max' => 100],
+            [['weblink', 'deliver_name', 'delivery_duration'], 'string', 'max' => 100],
         ];
     }
 
@@ -149,6 +150,7 @@ class Order extends \yii\db\ActiveRecord
             'status' => 'Status',
             'deliver_name' => 'Deliver name',
             'created_at' => 'Created At',
+            'delivery_duration' => 'Delivery Duration',
         ];
     }
 }

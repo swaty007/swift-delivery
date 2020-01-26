@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use common\models\GoogleMaps;
 use common\models\OrderItem;
 use common\models\Order;
 use common\models\Product;
@@ -55,8 +56,15 @@ class OrderForm extends Model
     public function createOrder()
     {
         if (!$this->validate()) {
-            var_dump($this->errors);
-            exit;
+            return null;
+        }
+
+        $gm = new GoogleMaps();
+
+        $apiResult = $gm->getLatLng($this->address . ' ' . $this->address_2);
+
+        if($apiResult['success'] == false) {
+            $this->addError('address', $apiResult['message']);
             return null;
         }
 
@@ -65,7 +73,7 @@ class OrderForm extends Model
                 $customer = new User();
                 $customer->phone_number = $this->phone_number;
                 $customer->status = 0;
-                $customer->username = $this->phone_number;
+                $customer->username = $this->name . ' customer' . time();
                 $customer->role = User::USER_ROLE_CUSTOMER;
                 $customer->setPassword('');
 
@@ -82,6 +90,7 @@ class OrderForm extends Model
             $order->address_2 = $this->address_2;
             $order->status = Order::ORDER_STATUS_NEW;
 
+
             do {
                 $order->weblink = Yii::$app->security->generateRandomString(16);
             } while (Order::find()->where(['weblink' => $order->weblink])->count());
@@ -97,10 +106,6 @@ class OrderForm extends Model
         } catch (\Exception $e) {
             //User::deleteAll(['phone_number' => $this->phone_number]);
 
-
-            var_dump($this->errors);
-            var_dump($e);
-            exit;
             return false;
         }
     }

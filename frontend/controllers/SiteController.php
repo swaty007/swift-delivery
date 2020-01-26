@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use common\models\AddressLatlng;
+use common\models\GoogleMaps;
 use common\models\InfoPage;
 use common\models\Order;
 use common\models\Product;
@@ -399,6 +401,17 @@ class SiteController extends Controller
     public function actionTestTwilio($phone) {
         Twilio::sendSms($phone, "Twilio works?");
     }
+
+    public function actionGetLatLng($address) {
+        $gm = new GoogleMaps();
+        var_dump($gm->getLatLng($address));
+    }
+
+    public function actionGetDistance() {
+        $gm = new GoogleMaps();
+        var_dump($gm->getDistanceMatrix(AddressLatlng::findOne(['id' => 1]), AddressLatlng::findOne(['id' => 2])));
+    }
+
 
     public function actionShowInfoPage($url)
     {

@@ -46,9 +46,7 @@ use yii\helpers\Url;
             </p>
             <div class="card__wrap">
                 <?php
-                $totalOrder = 0;
                 foreach ($order->orderItems as $item):
-                    $totalOrder += $item->total_price;
                     //var_dump($item->productItem);
                     ?>
 
@@ -90,7 +88,7 @@ use yii\helpers\Url;
                     <div class="card__item--right">
                         <p class="text text--green">
                             <strong>
-                                $<?= number_format($totalOrder, 2); ?>
+                                $<?= number_format($order->total, 2); ?>
                             </strong>
                         </p>
                     </div>

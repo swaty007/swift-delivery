@@ -1,7 +1,7 @@
 .supplier-cab {
   &__menu {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
   }
   &__username {
@@ -10,6 +10,10 @@
   &__text {
     font-size: 14px;
     line-height: 17px;
+  }
+  &__line {
+    width: 1px;
+    background-color: fade-out($brand-blue,0.9);
   }
   &__monthly {
     display: flex;
@@ -21,16 +25,60 @@
     }
     &--left {
       display: flex;
-      flex-direction: column;
+      //flex-direction: column;
       align-items: center;
+      &>:first-child {
+        margin-right: 10px;
+      }
     }
     &--right {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-end;
+      justify-content: center;
     }
   }
   &__table {
-
+    width: 100%;
+    text-align: left;
+    border: 1px solid fade-out($brand-blue,0.9);
+    padding: 0 30px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    th {
+      line-height: 50px;
+    }
+    tr:not(.supplier-cab__table--content) {
+      td {
+        border-top: 1px solid fade-out($brand-blue,0.9);
+        line-height: 50px;
+      }
+    }
+    &-content {
+      background-color: fade-out($brand-blue,0.9);
+      padding: 20px;
+      display: none;
+      &--title {
+        margin-bottom: 10px;
+      }
+    }
+  }
+  .stars {
+    margin-top: 5px;
+    margin-bottom: 0;
+    img {
+      width: 15px;
+    }
+  }
+  .card {
+    &__wrap {
+      background-color: $white;
+      border-radius: 10px;
+      margin: 8px 20px 15px;
+      padding: 0 20px;
+    }
+    &__item {
+      min-height: 50px;
+    }
   }
 }

@@ -55,12 +55,19 @@ body {
     font-size: 21px;
     line-height: 25px
   }
+  &--xs {
+    font-size: 14px;
+    line-height: 17px;
+  }
   &--small {
     font-size: 16px;
     line-height: 19px;
   }
   &--bold {
     font-weight: $bold;
+  }
+  &--regular {
+    font-weight: 400;
   }
 }
 .flex-center {
@@ -99,6 +106,10 @@ body {
   background-color: $brand-green;
   box-shadow: 0px 10px 30px fade-out($brand-green, 0.65);
   color: $white;
+  &--xs {
+    height: 30px;
+    max-width: 150px;
+  }
   &--sm {
     height: 40px;
     max-width: 100px;
@@ -136,6 +147,9 @@ hr {
   margin-bottom: 25px;
   &.line {
 
+  }
+  &.full {
+    max-width: 100%;
   }
 }
 .w100 {

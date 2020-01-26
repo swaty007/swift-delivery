@@ -7,6 +7,7 @@ class Modal {
     events() {
         this.spinnerInit();
         this.ordersInit();
+        this.takeOrder();
 
         //close modal
         $(document).on('click', '.modal__close', e => {
@@ -15,9 +16,19 @@ class Modal {
             $("body").removeClass("modal__open");
         });
 
+    }
+    takeOrder () {
+        $(document).on('click', '[data-direction=take-order]', e => {
+            e.preventDefault();
+            let $this = $(e.currentTarget),
+                modalEl = $("#take_order"),
+                order_id = $this.attr('data-order-id'),
+                inputId = $('#modal_take_order_id');
 
-
-
+            inputId.val(order_id)
+            modalEl.show('fade', 300);
+            $("body").addClass("modal__open");
+        });
     }
     ordersInit () {
         //select element change

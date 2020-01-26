@@ -8,6 +8,7 @@ return [
     'uploadsDir' => Yii::getAlias('@frontend') . '/web/img/uploads/',
     'webProjectUrl' => 'http://swift-delivery.infinitum.tech',
     'webUploadsDir' => '/img/uploads/',
+    'googleMapsApiKey' => 'AIzaSyAPc-Tmoxe8loUBzd2d9osUSIxbEurzWSg',
     'subscribePlans' => [
         [
             'name' => 'Basic',

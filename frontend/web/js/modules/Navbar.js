@@ -14,7 +14,7 @@ class Navbar {
                 setTimeout(function () {
                     $('#navbar_collapse').show();
                     block = 0;
-                },300)
+                },300);
             });
         });
     }

@@ -9,23 +9,24 @@ $this->title = 'Supplier cabinet';
 ?>
 <section class="supplier-cab">
 
-
+    <hr class="full">
     <div class="container">
-
         <div class="supplier-cab__menu">
             <div class="supplier-cab__username">
                 <p class="text--large"><strong>Hi,</strong> Green Label DC!</p>
-               <div class="stars">
-                   <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
-                   <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
-                   <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
-                   <?= Html::img('@web/img/icon_star_empty.svg', ['class' => '']); ?>
-                   <?= Html::img('@web/img/icon_star_empty.svg', ['class' => '']); ?>
-               </div>
+                <div class="stars">
+                    <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+                    <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+                    <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+                    <?= Html::img('@web/img/icon_star_empty.svg', ['class' => '']); ?>
+                    <?= Html::img('@web/img/icon_star_empty.svg', ['class' => '']); ?>
+                </div>
             </div>
             <a href="#" class="main-btn main-btn--settings">Settings</a>
         </div>
-        <br>
+    </div>
+    <hr class="full">
+    <div class="container">
         <div class="supplier-cab__monthly">
             <div class="supplier-cab__monthly--left">
                 <p class="supplier-cab__text text--blue-opacity">
@@ -33,178 +34,361 @@ $this->title = 'Supplier cabinet';
                     Earnings:
                 </p>
                 <h4 class="supplier-cab__monthly--text text--green">
-                    $8,500
+                    $<?= number_format($mounthlyEarnings) ?>
                 </h4>
             </div>
+            <div class="supplier-cab__line"></div>
             <div class="supplier-cab__monthly--right">
-                <p class="supplier-cab__text text--blue-opacity">Accepted: <strong class="text--green">8</strong></p>
-                <p class="supplier-cab__text text--blue-opacity">Earnings: <strong class="text--green">20</strong></p>
+                <p class="supplier-cab__text text--blue-opacity">Accepted: <strong class="text--green"><?= $accepted ?></strong></p>
+                <p class="supplier-cab__text text--blue-opacity">Earnings: <strong class="text--green"><?= $earnings; ?></strong></p>
             </div>
         </div>
-        <br>
-        <h2 class="text--blue text">
+    </div>
+    <hr class="full">
+    <div class="container">
+
+        <h2 class="text--blue text text--bold">
             Order History:
         </h2>
         <table class="supplier-cab__table">
             <tr>
-                <th>Status</th>
-                <th>Address / Zip</th>
-                <th>Customer</th>
-                <th>Gifts</th>
+                <th>Date:</th>
+                <th>Total:</th>
+                <th></th>
             </tr>
             <?php foreach ($finished as $item): ?>
                 <tr>
                     <td>
-                        <?= \common\models\Order::getStatusTextFromStatus($item['status']) ?>
+                        <?= $item['created_at']; ?>
                     </td>
                     <td>
-                        <?= $item['address'] ?>
-                        <?php if ($item['address_2']): ?>
-                            <?= $item['address_2'] ?>
-                        <?php endif; ?>
-                        /
-                        <b><?= $item['zip'] ?></b>
+                        <?= $item['total']; ?>
                     </td>
                     <td>
-                        <?= $item['customer']['username'] ?>
-                        <br>
-                        <?= $item['customer']['phone_number'] ?>
+                        <button class="btn-sm main-btn main-btn--xs" data-direction="show-more-orders">
+                            Show more
+                        </button>
                     </td>
-                    <td>
-                        <?php $orderTotal = 0; ?>
-                        <?php foreach ($item['orderItems'] as $key => $gift): ?>
-                            <?= $gift['description'] ?> - <?= $gift['item_price'] ?> <b>x<?= $gift['count'] ?></b><br>
-                            <?php $orderTotal += $gift['total_price']; ?>
-                        <?php endforeach; ?>
+                </tr>
+                <tr class="supplier-cab__table--content">
+                    <td colspan="3">
+                        <div class="supplier-cab__table-content">
 
-                        Order Total - <?= $orderTotal ?>
+<!--                            --><?//= $item['customer']['username'] ?>
+<!--                            --><?//=$item['supplier']['name']?>
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Company: <span class="text--regular"><?=$item['supplier']['name']?></span>
+                            </h4>
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Order #: <span class="text--regular"><?= $item['id'] ?></span>
+                            </h4>
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Delivering to:
+                                <span class="text--regular">
+                                <?= $item['address'] ?>
+                                    <?php if ($item['address_2']): ?>
+                                        <?= $item['address_2'] ?>
+                                    <?php endif; ?>
+                                / <?= $item['zip'] ?>
+                            </span>
+                            </h4>
+                            <h4 class="text--xs">
+                                Gift Order
+                            </h4>
+                            <div class="card__wrap">
+                                <?php foreach ($item['orderItems'] as $key => $gift): ?>
+                                    <div class="card__item">
+                                        <div class="card__item--left">
+                                            <p class="text--xs text--blue-opacity">
+                                                <strong>
+                                                    Flower | <span class="text--green">$<?= $gift['item_price'] ?></span>
+                                                </strong>
+                                            </p>
+                                            <p class="card__text text--blue-opacity">
+                                                <?= $gift['description'] ?>
+                                            </p>
+                                            <p class="card__text text--blue-opacity">
+                                                <strong>
+                                                    Quantity: <span><?= $gift['count'] ?></span>
+                                                </strong>
+                                            </p>
+                                        </div>
+                                        <div class="card__item--right">
+                                            <p class="text--xs text--green">
+                                                <strong>
+                                                    $<?= number_format($gift['total_price'], 2); ?>
+                                                </strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                                <div class="card__item card__item--total">
+                                    <div class="card__item--left">
+                                        <p class="text--small text--blue-opacity">
+                                            <strong>Total</strong>
+                                        </p>
+                                    </div>
+                                    <div class="card__item--right">
+                                        <p class="text--small text--green">
+                                            <strong>
+                                                $<?= number_format($item['total'], 2); ?>
+                                            </strong>
+                                        </p>
+                                    </div>
+                                </div>
+                                <p class="text--xs text--blue-opacity">
+                                    <strong>Total</strong>
+                                </p>
+                                <p class="text--xs text--blue-opacity">
+                                    Rainbow Grinder:<?=$item['supplier']['product_name']?>
+                                </p>
+                                <?= Html::img(Yii::$app->params['webUploadsDir'].$item['supplier']['product_image'], ['class' => 'on-way__img']); ?>
+                            </div>
+
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Delivery Status: <span class="text--regular"><?= \common\models\Order::getStatusTextFromStatus($item['status']) ?></span>
+                            </h4>
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Delivery Review:
+                            </h4>
+                        </div>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </table>
 
 
-
-
-
-
-
-
-
-
-
-        <p class="text text--blue">
+        <h2 class="text--blue text text--bold">
             Allowed Orders
-        </p>
+        </h2>
 
-        <table class="table table-striped table-responsive-lg" style="background: white; width: 100%">
+<!--        <pre>--><?php //var_dump($inProgress)?><!--</pre>-->
+        <table class="supplier-cab__table">
+            <thead>
             <tr>
-                <th>Address / Zip</th>
-                <th>Customer</th>
-                <th>Gifts</th>
+                <th>Date:</th>
+                <th>Total:</th>
                 <th></th>
             </tr>
+            </thead>
+            <tbody>
             <?php foreach ($allowed as $item): ?>
                 <tr>
                     <td>
-                        <?= $item['address'] ?>
-                        <?php if ($item['address_2']): ?>
-                            <?= $item['address_2'] ?>
-                        <?php endif; ?>
-                        /
-                        <b><?= $item['zip'] ?></b>
+                        <?= $item['created_at']; ?>
                     </td>
                     <td>
-                        <?= $item['customer']['username'] ?>
-                        <br>
-                        <?= $item['customer']['phone_number'] ?>
+                        <?= $item['total']; ?>
                     </td>
                     <td>
-                        <?php $orderTotal = 0; ?>
-                        <?php foreach ($item['orderItems'] as $key => $gift): ?>
-                            <?= $gift['description'] ?> - <?= $gift['item_price'] ?> <b>x<?= $gift['count'] ?></b><br>
-                            <?php $orderTotal += $gift['total_price']; ?>
-                        <?php endforeach; ?>
-
-                        Order Total - <?= $orderTotal ?>
-                    </td>
-                    <td>
-                        <a href="?takeOrder=<?= $item['id'] ?>">
-                            <div class="btn btn-default btn-sm" style="cursor: pointer">Take</div>
+                        <a href="?takeOrder=<?= $item['id'] ?>" class="btn-sm main-btn main-btn--xs" data-direction="take-order" data-order-id="<?= $item['id'] ?>">
+                            Take
                         </a>
                     </td>
                 </tr>
-            <?php endforeach; ?>
-        </table>
-        <p class="text text--blue">
-            Orders In Progress
-        </p>
+            <tr class="supplier-cab__table--content">
+                <td colspan="3">
+                    <div class="supplier-cab__table-content">
 
-        <table class="table table-striped table-responsive-lg" style="background: white; width: 100%">
+<!--                        --><?//= $item['customer']['username'] ?>
+<!--                        --><?//=$item['supplier']['name']?>
+                        <h4 class="supplier-cab__table-content--title text--xs">
+                            Company: <span class="text--regular"><?=$item['supplier']['name']?></span>
+                        </h4>
+                        <h4 class="supplier-cab__table-content--title text--xs">
+                            Order #: <span class="text--regular"><?= $item['id'] ?></span>
+                        </h4>
+                        <h4 class="supplier-cab__table-content--title text--xs">
+                            Delivering to:
+                            <span class="text--regular">
+                                <?= $item['address'] ?>
+                                <?php if ($item['address_2']): ?>
+                                    <?= $item['address_2'] ?>
+                                <?php endif; ?>
+                                / <?= $item['zip'] ?>
+                            </span>
+                        </h4>
+                        <h4 class="text--xs">
+                            Gift Order
+                        </h4>
+                        <div class="card__wrap">
+                            <?php foreach ($item['orderItems'] as $key => $gift): ?>
+                            <div class="card__item">
+                                <div class="card__item--left">
+                                    <p class="text--xs text--blue-opacity">
+                                        <strong>
+                                            Flower | <span class="text--green">$<?= $gift['item_price'] ?></span>
+                                        </strong>
+                                    </p>
+                                    <p class="card__text text--blue-opacity">
+                                        <?= $gift['description'] ?>
+                                    </p>
+                                    <p class="card__text text--blue-opacity">
+                                        <strong>
+                                            Quantity: <span><?= $gift['count'] ?></span>
+                                        </strong>
+                                    </p>
+                                </div>
+                                <div class="card__item--right">
+                                    <p class="text--xs text--green">
+                                        <strong>
+                                            $<?= number_format($gift['total_price'], 2); ?>
+                                        </strong>
+                                    </p>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                            <div class="card__item card__item--total">
+                                <div class="card__item--left">
+                                    <p class="text--small text--blue-opacity">
+                                        <strong>Total</strong>
+                                    </p>
+                                </div>
+                                <div class="card__item--right">
+                                    <p class="text--small text--green">
+                                        <strong>
+                                            $<?= number_format($item['total'], 2); ?>
+                                        </strong>
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="text--xs text--blue-opacity">
+                                <strong>Total</strong>
+                            </p>
+                            <p class="text--xs text--blue-opacity">
+                                Rainbow Grinder:<?=$item['supplier']['product_name']?>
+                            </p>
+                            <?= Html::img(Yii::$app->params['webUploadsDir'].$item['supplier']['product_image'], ['class' => 'on-way__img']); ?>
+                        </div>
+
+                        <h4 class="supplier-cab__table-content--title text--xs">
+                            Delivery Status: <span class="text--regular"><?= \common\models\Order::getStatusTextFromStatus($item['status']) ?></span>
+                        </h4>
+                        <h4 class="supplier-cab__table-content--title text--xs">
+                            Delivery Review:
+                        </h4>
+                    </div>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+        <h2 class="text--blue text text--bold">
+            Orders In Progress
+        </h2>
+
+        <table class="supplier-cab__table">
             <tr>
-                <th>Status</th>
-                <th>Address / Zip</th>
-                <th>Customer</th>
-                <th>Gifts</th>
+                <th>Date:</th>
+                <th>Total:</th>
                 <th></th>
             </tr>
             <?php foreach ($inProgress as $item): ?>
                 <tr>
                     <td>
-                        <?= \common\models\Order::getStatusTextFromStatus($item['status']) ?>
+                        <?= $item['created_at']; ?>
                     </td>
                     <td>
-                        <?= $item['address'] ?>
-                        <?php if ($item['address_2']): ?>
-                            <?= $item['address_2'] ?>
-                        <?php endif; ?>
-                        /
-                        <b><?= $item['zip'] ?></b>
+                        <?= $item['total']; ?>
                     </td>
                     <td>
-                        <?= $item['customer']['username'] ?>
-                        <br>
-                        <?= $item['customer']['phone_number'] ?>
+                        <button class="btn-sm main-btn main-btn--xs" data-direction="show-more-orders">
+                            Show More
+                        </button>
                     </td>
-                    <td>
-                        <?php $orderTotal = 0; ?>
-                        <?php foreach ($item['orderItems'] as $key => $gift): ?>
-                            <?= $gift['description'] ?> - <?= $gift['item_price'] ?> <b>x<?= $gift['count'] ?></b><br>
-                            <?php $orderTotal += $gift['total_price']; ?>
-                        <?php endforeach; ?>
+                </tr>
+                <tr class="supplier-cab__table--content">
+                    <td colspan="3">
+                        <div class="supplier-cab__table-content">
 
-                        Order Total - <?= $orderTotal ?>
-                    </td>
-                    <td>
-                        <a href="?complete=<?= $item['id'] ?>">
-                            <div class="btn btn-default btn-sm" style="cursor: pointer">Complete</div>
-                        </a>
-                        <a href="?cancelSupplier=<?= $item['id'] ?>">
-                            <div class="btn btn-default btn-sm" style="cursor: pointer">Cancel by deliver</div>
-                        </a>
-                        <a href="?cancelDeliver=<?= $item['id'] ?>">
-                            <div class="btn btn-default btn-sm" style="cursor: pointer">Cancel by supplier</div>
-                        </a>
+<!--                            --><?//= $item['customer']['username'] ?>
+<!--                            --><?//=$item['supplier']['name']?>
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Company: <span class="text--regular"><?=$item['supplier']['name']?></span>
+                            </h4>
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Order #: <span class="text--regular"><?= $item['id'] ?></span>
+                            </h4>
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Delivering to:
+                                <span class="text--regular">
+                                <?= $item['address'] ?>
+                                    <?php if ($item['address_2']): ?>
+                                        <?= $item['address_2'] ?>
+                                    <?php endif; ?>
+                                / <?= $item['zip'] ?>
+                            </span>
+                            </h4>
+                            <h4 class="text--xs">
+                                Gift Order
+                            </h4>
+                            <div class="card__wrap">
+                                <?php foreach ($item['orderItems'] as $key => $gift): ?>
+                                    <div class="card__item">
+                                        <div class="card__item--left">
+                                            <p class="text--xs text--blue-opacity">
+                                                <strong>
+                                                    Flower | <span class="text--green">$<?= $gift['item_price'] ?></span>
+                                                </strong>
+                                            </p>
+                                            <p class="card__text text--blue-opacity">
+                                                <?= $gift['description'] ?>
+                                            </p>
+                                            <p class="card__text text--blue-opacity">
+                                                <strong>
+                                                    Quantity: <span><?= $gift['count'] ?></span>
+                                                </strong>
+                                            </p>
+                                        </div>
+                                        <div class="card__item--right">
+                                            <p class="text--xs text--green">
+                                                <strong>
+                                                    $<?= number_format($gift['total_price'], 2); ?>
+                                                </strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                                <div class="card__item card__item--total">
+                                    <div class="card__item--left">
+                                        <p class="text--small text--blue-opacity">
+                                            <strong>Total</strong>
+                                        </p>
+                                    </div>
+                                    <div class="card__item--right">
+                                        <p class="text--small text--green">
+                                            <strong>
+                                                $<?= number_format($item['total'], 2); ?>
+                                            </strong>
+                                        </p>
+                                    </div>
+                                </div>
+                                <p class="text--xs text--blue-opacity">
+                                    <strong>Total</strong>
+                                </p>
+                                <p class="text--xs text--blue-opacity">
+                                    Rainbow Grinder:<?=$item['supplier']['product_name']?>
+                                </p>
+                                <?= Html::img(Yii::$app->params['webUploadsDir'].$item['supplier']['product_image'], ['class' => 'on-way__img']); ?>
+                            </div>
+
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Delivery Status: <span class="text--regular"><?= \common\models\Order::getStatusTextFromStatus($item['status']) ?></span>
+                            </h4>
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Delivery Review:
+                            </h4>
+                        </div>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </table>
 
 
-
-
-
-
-
-
-
-
-
     </div>
 
 
-
-    <?php \yii\widgets\Pjax::begin(['id' => 'supplier_table_1',
+    <?php \yii\widgets\Pjax::begin(['id' => 'supplier_tables',
         'options' => [
             'class' => '',
             'tag' => 'div'
@@ -214,7 +398,7 @@ $this->title = 'Supplier cabinet';
     <script>
         setTimeout(function () {
             if (typeof $.pjax !== 'undefined') {
-                $.pjax.reload({container: "#supplier_table_1"});
+                $.pjax.reload({container: "#supplier_tables"});
             }
         }, 5000);
     </script>
@@ -222,3 +406,50 @@ $this->title = 'Supplier cabinet';
 
 </section>
 
+<div class="modal modal--full-screen" id="take_order">
+    <div class="modal__wrapper">
+        <div class="modal__container container">
+            <div class="modal__close"></div>
+            <div class="modal__header">
+                <input type="hidden" id="modal_take_order_id">
+                <h3 class="modal__title text--small text--blue">
+                    What’s your ETA?
+                </h3>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-xs-8">
+                            <select class="default-select" name="" id="modal_take_order_select">
+                                <option value="min">minutes</option>
+                                <option value="hours">hours</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal__body">
+                <h3 class="modal__title text--small text--blue">
+                    Who’s delivering?
+                </h3>
+                <div class="form-group">
+                    <input type="text" class="form-control">
+                </div>
+
+                <p class="text--small text--blue-opacity">
+                    ETA:
+                </p>
+                <button id="take_order_btn" class="main-btn w100">Accept Delivery!</button>
+            </div>
+            <div class="modal__success">
+                <?= Html::img('@web/img/icon_accept_delivery.svg', ['class' => 'modal__success--img']); ?>
+                <p class="sub-text text--white">
+                    Delivery Accepted!
+                    <br>
+                    <span class="text--small text--white-opacity">Away you go!</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

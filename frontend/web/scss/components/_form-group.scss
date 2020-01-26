@@ -28,7 +28,7 @@
   .form-control {
     border: 2px solid fade-out($brand-blue, 0.8);
     padding: 0 25px;
-    line-height: 50px;
+    line-height: 46px;
     outline: none;
     border-radius: 30px;
     color: $brand-blue;
@@ -37,6 +37,7 @@
     transition: border-color .15s ease-in-out 0s,box-shadow .15s ease-in-out 0s;
     -webkit-appearance: none;
     appearance: none;
+    cursor: pointer;
     &::placeholder {
       color: fade-out($brand-blue, 0.5);
     }

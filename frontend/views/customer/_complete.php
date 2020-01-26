@@ -19,7 +19,7 @@ use yii\helpers\Html;
             <div class="col-sm-6">
                 <div class="order-complete__form-group">
                     <?= $form->field($model, 'friendly', ['options' => ['class' => 'default-checkbox__container default-checkbox__container--label']])
-                        ->checkbox(['name' => 'SupplierForm[items][]',
+                        ->checkbox([
                             'uncheck' => null,
                             'class' => 'default-checkbox',
                             'template' => "<div class='checkbox'>{input}{label}</div>"])
@@ -29,7 +29,7 @@ use yii\helpers\Html;
             <div class="col-sm-6">
                 <div class="order-complete__form-group">
                     <?= $form->field($model, 'fulfilled', ['options' => ['class' => 'default-checkbox__container default-checkbox__container--label']])
-                        ->checkbox(['name' => 'SupplierForm[items][]',
+                        ->checkbox([
                             'uncheck' => null,
                             'class' => 'default-checkbox',
                             'template' => "<div class='checkbox'>{input}{label}</div>"])
@@ -41,7 +41,7 @@ use yii\helpers\Html;
             <div class="col-sm-6">
                 <div class="order-complete__form-group">
                     <?= $form->field($model, 'onTime', ['options' => ['class' => 'default-checkbox__container default-checkbox__container--label']])
-                        ->checkbox(['name' => 'SupplierForm[items][]',
+                        ->checkbox([
                             'uncheck' => null,
                             'class' => 'default-checkbox',
                             'template' => "<div class='checkbox'>{input}{label}</div>"])
@@ -51,7 +51,7 @@ use yii\helpers\Html;
             <div class="col-sm-6">
                 <div class="order-complete__form-group">
                     <?= $form->field($model, 'again', ['options' => ['class' => 'default-checkbox__container default-checkbox__container--label']])
-                        ->checkbox(['name' => 'SupplierForm[items][]',
+                        ->checkbox([
                             'uncheck' => null,
                             'class' => 'default-checkbox',
                             'template' => "<div class='checkbox'>{input}{label}</div>"])

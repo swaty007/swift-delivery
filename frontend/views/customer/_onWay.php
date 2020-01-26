@@ -20,7 +20,7 @@ use yii\helpers\Html;
                 Estimated delivery time:
             </h2>
             <p class="sub-title text--white">
-                5:47pm | 15 minutes
+                <?=$order->delivery_duration;?>
             </p>
 
 
@@ -39,9 +39,7 @@ use yii\helpers\Html;
             </p>
             <div class="card__wrap">
                 <?php
-                $totalOrder = 0;
                 foreach ($order->orderItems as $item):
-                    $totalOrder += $item->total_price;
                     //var_dump($item->productItem);
                     ?>
 
@@ -49,7 +47,7 @@ use yii\helpers\Html;
                         <div class="card__item--left">
                             <p class="text--small text--blue-opacity">
                                 <strong>
-                                    Flower<?=$item->item_price;?> | <span class="text--green">$<?= $item->item_price; ?></span>
+                                   Flower <?=$item->item_price;?> | <span class="text--green">$<?= $item->item_price; ?></span>
                                 </strong>
                             </p>
                             <p class="card__text text--blue-opacity">
@@ -81,7 +79,7 @@ use yii\helpers\Html;
                     <div class="card__item--right">
                         <p class="text--small text--green">
                             <strong>
-                                $<?= number_format($totalOrder, 2); ?>
+                                $<?= number_format($order->total, 2); ?>
                             </strong>
                         </p>
                     </div>
