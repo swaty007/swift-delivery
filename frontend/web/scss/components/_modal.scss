@@ -8,6 +8,11 @@
   background-color: rgba(0, 0, 0, 0.5);
   transition: opacity .3s ease;
   display: none;
+  &--order {
+    .modal__title {
+      margin-bottom: 20px;
+    }
+  }
   &--full-screen {
     @media(max-width:768px) {
       z-index: 99999;

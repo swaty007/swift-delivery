@@ -62,14 +62,17 @@ use yii\helpers\Html;
         <p class="text text--blue-opacity order-complete__sub-text">
             Rate your experience.
         </p>
-        <div class="stars">
-            <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
-            <?= Html::img('@web/img/icon_star_empty.svg', ['class' => '']); ?>
+        <?= $form->field($model, 'stars')->hiddenInput(['id' => 'stars_form']); ?>
+        <div class="stars" id="start_select">
+            <div class="stars__block"></div>
+            <div class="stars__block"></div>
+            <div class="stars__block"></div>
+            <div class="stars__block"></div>
+            <div class="stars__block"></div>
         </div>
         <?= $form->field($model, 'comment', ['options' => ['class' => 'text-center form-group']])->textarea(['placeholder' => ''])->label("Additional Comments:"); ?>
+    </div>
 
         <?= Html::submitButton('Send Review', ['class' => 'main-btn']) ?>
         <?php ActiveForm::end(); ?>
-    </div>
-
 </div>

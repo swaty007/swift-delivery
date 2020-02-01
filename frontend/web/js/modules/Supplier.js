@@ -12,17 +12,19 @@ class Supplier {
             e.preventDefault();
             let $this = $(e.currentTarget),
                 modalEl = $this.closest('.modal'),
-                optionEl = $("#modal_take_order_select :selected"),
-                orderIdEl = $("#modal_take_order_id"),
+                inputId = $('#modal_take_order_id'),
+                inputTimeSelect = $('#modal_take_order_time'),
+                inputTimeVal = $('#modal_take_order_time_val'),
+                orderName = $("#modal_take_order_name"),
                 data = {
-                    id: optionEl.attr('data-id'),
-                    count: orderIdEl.val(),
-                    // product_id: optionEl.attr('data-product_id'),
+                    id: inputId.val(),
+                    deliverName: orderName.val(),
+                    deliveryTime: inputTimeSelect.val() === 'min' ? Number(inputTimeVal.val()) : Number(inputTimeVal.val()) * 60,
                 };
             console.log(data);
             $.ajax({
                 type: "POST",
-                url: "/api/add-to-cart",
+                url: "/supplier/take-order",
                 cache : false,
                 data: data,
                 success: function (msg) {

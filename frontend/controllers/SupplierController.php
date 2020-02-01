@@ -188,8 +188,8 @@ class SupplierController extends BaseAuthorizedController
         return Supplier::findOne(['supplier_id' => Yii::$app->user->getId()]);
     }
 
-    private function takeOrder($id) {
-        if (!($order = Order::findOne($id))) {
+    private function takeOrder() {
+        if (!($order = Order::findOne(['id' => Yii::$app->request->post('id')]))) {
             return false;
         }
 
@@ -197,23 +197,19 @@ class SupplierController extends BaseAuthorizedController
             return false;
         }
 
-        $gm = new GoogleMaps();
-
         $supplier = $this->getSupplierModel();
-        $supplierLatlng = $gm->getLatLng($supplier->address . ' ' . $supplier->address_2);
-        $customerLatlng = $gm->getLatLng($order->address . ' ' . $order->address_2);
-        $distance = $gm->getDistanceMatrix($supplierLatlng, $customerLatlng);
 
-        if($distance['success'] == true) {
-            $order->delivery_duration = date('h:iA', strtotime($distance['duration'])) . ' | ' . $distance['duration'];
-        }
-
+        $duration = Yii::$app->request->post(['deliveryTime']). ' mins';
+        $order->deliver_name = Yii::$app->request->post('deliverName');
+        $order->delivery_duration = date('h:iA', strtotime($duration)) . ' | ' . $duration;
         $order->supplier_id = $supplier->id;
         $order->status = Order::ORDER_STATUS_IN_PROGRESS;
         return $order->save();
     }
 
     public function actionCalculateDelivery($id) {
+        Yii::$app->response->format = 'json';
+
         if (!($order = Order::findOne($id))) {
             return false;
         }
@@ -229,15 +225,22 @@ class SupplierController extends BaseAuthorizedController
         $customerLatlng = $gm->getLatLng($order->address . ' ' . $order->address_2);
         $distance = $gm->getDistanceMatrix($supplierLatlng, $customerLatlng);
 
+        $duration = '30 mins';
+
         if($distance['success'] == true) {
-            $order->delivery_duration = date('h:iA', strtotime($distance['duration'])) . ' | ' . $distance['duration'];
+            $duration = $distance['duration'];
         }
 
-        $order->supplier_id = $supplier->id;
-        $order->status = Order::ORDER_STATUS_IN_PROGRESS;
-        return $order->save();
+        return ['duration' => $duration];
     }
 
+    public function actionTakeOrder() {
+        $post = Yii::$app->request->post();
+
+        $this->takeOrder($post);
+
+        return true;
+    }
 
     private function complete($id) {
         if (!($order = Order::findOne($id))) {

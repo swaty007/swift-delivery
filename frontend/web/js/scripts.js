@@ -9,6 +9,7 @@ import Navbar from "./modules/Navbar";
 import Modal from "./modules/Modal";
 import Card from "./modules/Card";
 import Supplier from "./modules/Supplier";
+import Stars from "./modules/Stars";
 
 // Instantiate a new object using our modules/classes
 const main = new Main();
@@ -16,6 +17,7 @@ const navbar = new Navbar();
 const modal = new Modal();
 const card = new Card();
 const supplier = new Supplier();
+const stars = new Stars();
 
 
 
