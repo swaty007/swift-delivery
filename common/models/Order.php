@@ -18,6 +18,7 @@ use Yii;
  * @property string $description
  * @property double $latitude
  * @property double $longitude
+ * @property double $total
  * @property string $weblink
  * @property int $status
  * @property string $created_at
@@ -71,7 +72,7 @@ class Order extends \yii\db\ActiveRecord
         return [
             [['customer_id'], 'required'],
             [['customer_id', 'supplier_id', 'status'], 'integer'],
-            [['latitude', 'longitude'], 'number'],
+            [['latitude', 'longitude', 'total'], 'number'],
             [['created_at'], 'safe'],
             [['zip'], 'string', 'max' => 20],
             [['address', 'address_2'], 'string', 'max' => 80],
@@ -151,6 +152,7 @@ class Order extends \yii\db\ActiveRecord
             'deliver_name' => 'Deliver name',
             'created_at' => 'Created At',
             'delivery_duration' => 'Delivery Duration',
+            'total' => 'Total',
         ];
     }
 }

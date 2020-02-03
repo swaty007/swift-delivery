@@ -228,16 +228,29 @@ class SiteController extends Controller
             return $this->redirect('/site/index');
         }
 
-//        foreach ($order->getOrderItems() as $item) {
-//
-//        }
         $model = new RatingForm();
+
+        $model->supplier_id = $order->supplier_id;
+        $model->order_id = $order->id;
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->rate()) {
+                Yii::$app->session->setFlash('success', 'Order completed');
+            }
+
+            return $this->redirect('/');
+        }
         return $this->render('/customer/order-status', ['order' => $order, 'model' => $model]);
     }
 
     public function actionCancelOrder($l)
     {
+        if (!($order = Order::find()->where(['weblink' => $l])->with('orderItems')->with('supplier')->one())) {
+            return $this->redirect('/site/index');
+        }
 
+        $order->status = Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER;
+        $this->redirect('/');
     }
 
     /**
@@ -409,7 +422,7 @@ class SiteController extends Controller
 
     public function actionGetDistance() {
         $gm = new GoogleMaps();
-        var_dump($gm->getDistanceMatrix(AddressLatlng::findOne(['id' => 1]), AddressLatlng::findOne(['id' => 2])));
+        var_dump($gm->getDistanceMatrix(AddressLatlng::findOne(['id' => 5]), AddressLatlng::findOne(['id' => 8])));
     }
 
 

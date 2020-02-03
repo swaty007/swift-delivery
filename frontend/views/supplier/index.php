@@ -14,7 +14,7 @@ $this->title = 'Supplier cabinet';
         <div class="supplier-cab__menu">
             <div class="supplier-cab__username">
                 <p class="text--large"><strong>Hi,</strong> Green Label DC!</p>
-                <div class="stars">
+                <div class="stars stars--left">
                     <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
                     <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
                     <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
@@ -74,8 +74,11 @@ $this->title = 'Supplier cabinet';
                     <td colspan="3">
                         <div class="supplier-cab__table-content">
 
-<!--                            --><?//= $item['customer']['username'] ?>
-<!--                            --><?//=$item['supplier']['name']?>
+                            <?php if(\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2']) !== false):?>
+                                <img src="https://maps.googleapis.com/maps/api/staticmap?center=<?=@$item['address']?>&zoom=13&size=300x300&maptype=roadmap
+&markers=color:green%7Clabel:G%7C<?=\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2'])?>
+&key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
+                            <?php endif;?>
                             <h4 class="supplier-cab__table-content--title text--xs">
                                 Company: <span class="text--regular"><?=$item['supplier']['name']?></span>
                             </h4>
@@ -92,6 +95,12 @@ $this->title = 'Supplier cabinet';
                                 / <?= $item['zip'] ?>
                             </span>
                             </h4>
+
+                            <?php if(\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2']) !== null):?>
+                                <img src="https://maps.googleapis.com/maps/api/staticmap?center=<?=@$item['address']?>&zoom=13&size=300x300&maptype=roadmap
+&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2'])->latlng?>
+&key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
+                            <?php endif;?>
                             <h4 class="text--xs">
                                 Gift Order
                             </h4>
@@ -181,17 +190,16 @@ $this->title = 'Supplier cabinet';
                         <?= $item['total']; ?>
                     </td>
                     <td>
-                        <a href="?takeOrder=<?= $item['id'] ?>" class="btn-sm main-btn main-btn--xs" data-direction="take-order" data-order-id="<?= $item['id'] ?>">
+                        <button class="btn-sm main-btn main-btn--xs" data-direction="show-more-orders">
                             Take
-                        </a>
+                        </button>
                     </td>
                 </tr>
             <tr class="supplier-cab__table--content">
                 <td colspan="3">
                     <div class="supplier-cab__table-content">
 
-<!--                        --><?//= $item['customer']['username'] ?>
-<!--                        --><?//=$item['supplier']['name']?>
+
                         <h4 class="supplier-cab__table-content--title text--xs">
                             Company: <span class="text--regular"><?=$item['supplier']['name']?></span>
                         </h4>
@@ -208,6 +216,12 @@ $this->title = 'Supplier cabinet';
                                 / <?= $item['zip'] ?>
                             </span>
                         </h4>
+
+                        <?php if(\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2']) !== null):?>
+                            <img src="https://maps.googleapis.com/maps/api/staticmap?center=<?=@$item['address']?>&zoom=13&size=300x300&maptype=roadmap
+&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2'])->latlng?>
+&key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
+                        <?php endif;?>
                         <h4 class="text--xs">
                             Gift Order
                         </h4>
@@ -215,6 +229,7 @@ $this->title = 'Supplier cabinet';
                             <?php foreach ($item['orderItems'] as $key => $gift): ?>
                             <div class="card__item">
                                 <div class="card__item--left">
+
                                     <p class="text--xs text--blue-opacity">
                                         <strong>
                                             Flower | <span class="text--green">$<?= $gift['item_price'] ?></span>
@@ -267,6 +282,9 @@ $this->title = 'Supplier cabinet';
                         <h4 class="supplier-cab__table-content--title text--xs">
                             Delivery Review:
                         </h4>
+                        <a href="?takeOrder=<?= $item['id'] ?>" class="btn-sm main-btn main-btn--xs" data-direction="take-order" data-order-id="<?= $item['id'] ?>">
+                            Take
+                        </a>
                     </div>
                 </td>
             </tr>
@@ -301,8 +319,6 @@ $this->title = 'Supplier cabinet';
                     <td colspan="3">
                         <div class="supplier-cab__table-content">
 
-<!--                            --><?//= $item['customer']['username'] ?>
-<!--                            --><?//=$item['supplier']['name']?>
                             <h4 class="supplier-cab__table-content--title text--xs">
                                 Company: <span class="text--regular"><?=$item['supplier']['name']?></span>
                             </h4>
@@ -311,6 +327,7 @@ $this->title = 'Supplier cabinet';
                             </h4>
                             <h4 class="supplier-cab__table-content--title text--xs">
                                 Delivering to:
+
                                 <span class="text--regular">
                                 <?= $item['address'] ?>
                                     <?php if ($item['address_2']): ?>
@@ -319,6 +336,12 @@ $this->title = 'Supplier cabinet';
                                 / <?= $item['zip'] ?>
                             </span>
                             </h4>
+
+                            <?php if(\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2']) !== null):?>
+                                <img src="https://maps.googleapis.com/maps/api/staticmap?center=<?=@$item['address']?>&zoom=13&size=300x300&maptype=roadmap
+&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2'])->latlng?>
+&key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
+                            <?php endif;?>
                             <h4 class="text--xs">
                                 Gift Order
                             </h4>

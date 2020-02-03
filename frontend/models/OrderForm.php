@@ -27,6 +27,8 @@ class OrderForm extends Model
     public $address_2;
     public $description;
 
+    private $total;
+
     /**
      * @var Order
      */
@@ -95,11 +97,15 @@ class OrderForm extends Model
                 $order->weblink = Yii::$app->security->generateRandomString(16);
             } while (Order::find()->where(['weblink' => $order->weblink])->count());
 
+
             if (!$order->save()) {
                 $this->printAndExit($order->errors);
             }
 
             $this->processOrderItems($order);
+
+            $order->total = $this->total;
+            $order->save();
 
             $this->instance = $order;
             return true;
@@ -113,7 +119,7 @@ class OrderForm extends Model
     private function processOrderItems(Order $order)
     {
         $cart = SiteController::getCart();
-
+        $orderTotal = 0;
         foreach ($cart as $item) {
             $option = new OrderItem();
             $option->order_id = $order->id;
@@ -122,10 +128,13 @@ class OrderForm extends Model
             $option->item_price = $item['price'];
             $option->product_item_id = ProductOption::findOne(['id' => $item['id']])->product_id;
             $option->total_price = $item['price'] * $item['count'];
+            $orderTotal += $option->total_price;
             if (!$option->save()) {
                 $this->printAndExit($option->errors);
             }
         }
+
+        $this->total = $orderTotal;
 
         Yii::$app->session->set('cart', '{}');
         return true;

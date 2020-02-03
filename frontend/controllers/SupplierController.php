@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\GoogleMaps;
 use common\models\Order;
 use common\models\Product;
+use common\models\Rating;
 use common\models\Supplier;
 use common\models\User;
 use frontend\models\SupplierForm;
@@ -128,15 +129,27 @@ class SupplierController extends BaseAuthorizedController
             ->andWhere(['supplier_id' => $this->supplierModel->id])
             ->asArray()->all();
 
+        $rating = 0;
 
+        if (Rating::find()->where(['supplier_id' => $this->supplierModel->id])->count()) {
+            $ratingSum = Rating::find()->select('SUM(rating) as rating')->where(['supplier_id' => $this->supplierModel->id])->one()->rating;
+            $ratingCount = Rating::find()->select('COUNT(rating) as rating')->where(['supplier_id' => $this->supplierModel->id])->one()->rating;
+            $rating = $ratingSum / $ratingCount;
+        }
 
         return $this->render('index', [
             'allowed' => $allowedToDeliver,
             'inProgress' => $inProgress,
             'finished' => $finished,
+            'rating' => $rating,
             'earnings' => Order::find()->where(['supplier_id' => $this->supplierModel->id])->andWhere(['status' => Order::ORDER_STATUS_COMPLETE])->count(),
             'accepted' => Order::find()->where(['supplier_id' => $this->supplierModel->id])->count(),
-            'mounthlyEarnings' => 2500
+            'mounthlyEarnings' => Order::find()
+                ->select('SUM(total) as total')
+                ->where(['supplier_id' => $this->supplierModel->id])
+                ->andWhere(['status' => Order::ORDER_STATUS_COMPLETE])
+                ->andWhere(['>','created_at', date('Y-m-d H:i:s', strtotime('today - 30 days'))])
+                ->one()->total
         ]);
     }
 

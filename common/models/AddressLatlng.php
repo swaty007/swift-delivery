@@ -44,10 +44,10 @@ class AddressLatlng extends \yii\db\ActiveRecord
     }
 
     public static function tryGetAddressData($addressString) {
-        if (($entity = self::findOne(['address' => trim($addressString)]))) {
+        if (($entity = AddressLatlng::findOne(['address' => trim($addressString)]))) {
             return $entity;
         }
 
-        return false;
+        return null;
     }
 }

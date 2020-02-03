@@ -4,6 +4,7 @@ namespace frontend\models;
 
 
 use common\models\Order;
+use common\models\Rating;
 use yii\base\Model;
 
 /**
@@ -17,6 +18,8 @@ class RatingForm extends Model
     public $again;
     public $stars;
     public $comment;
+    public $order_id;
+    public $supplier_id;
 
     /**
      * {@inheritdoc}
@@ -24,18 +27,24 @@ class RatingForm extends Model
     public function rules()
     {
         return [
-//            [['phone_number', 'name', 'zip', 'address'], 'required'],
-//            ['phone_number', 'trim'],
-//            ['phone_number', 'match', 'pattern' => '/^\+1\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/', 'message' => 'Incorrect phone number'],
-//            [['name'], 'string', 'max' => 50, 'min' => 2],
-//            [['address', 'address_2'], 'string', 'max' => 80],
-//            [['description'], 'string', 'max' => 200],
-//            ['zip', 'string'],
-            ////  ['zip', 'exist', 'targetAttribute' => 'zipcode', 'targetClass' => 'common\models\Zipcode', 'message' => 'This zip is not supported.'],
+            [['stars', 'friendly', 'fulfilled', 'onTime', 'again', 'supplier_id', 'order_id', 'supplier_id'], 'integer'],
+            [['comment'], 'string'],
         ];
     }
 
+    public function rate() {
+        if(!$this->validate()) {
+            return false;
+        }
 
+        $rating = new Rating();
+        $rating->rating = $this->stars;
+        $rating->is_friendly = $this->friendly;
+        $rating->is_on_time = $this->onTime;
+        $rating->is_fulfilled = $this->fulfilled;
+        $rating->order_id = $this->order_id;
+        $rating->supplier_id = $this->supplier_id;
 
-
+        return $rating->save();
+    }
 }
