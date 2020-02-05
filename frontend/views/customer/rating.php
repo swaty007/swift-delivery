@@ -12,7 +12,7 @@ use yii\helpers\Html;
         </h1>
         <hr>
         <p class="text text--blue-opacity order-complete__sub-title">
-            How was Calvin, your delivery person?
+            How was <?=$order->deliver_name?>, your delivery person?
         </p>
         <?php $form = ActiveForm::begin(['id' => 'form-rate', 'enableAjaxValidation' => true, 'options' => ['class' => 'order__form']]); ?>
         <div class="row">

@@ -18,6 +18,15 @@
   &__product {
     margin-bottom: 35px;
   }
+  &__uploaded {
+    &--img {
+      max-width: 300px;
+      margin: 10px 0;
+    }
+    &--text {
+
+    }
+  }
   &__logo {
     margin-bottom: 25px;
   }

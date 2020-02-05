@@ -11,13 +11,16 @@ use common\models\Product;
 use common\models\ProductOption;
 use common\models\Rating;
 use common\models\Supplier;
+use common\models\SupplierItemRelation;
 use common\models\Twilio;
 use common\models\User;
+use frontend\models\SupplierEditForm;
 use frontend\models\SupplierForm;
 use Yii;
 use yii\bootstrap\ActiveForm;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 class SupplierController extends BaseAuthorizedController
@@ -198,6 +201,52 @@ class SupplierController extends BaseAuthorizedController
             }
         }
         return $this->render('confirm', ['model' => $model, 'gifts' => Product::getActiveList()]);
+    }
+
+    public function actionEditProfile()
+    {
+        $model = new SupplierEditForm();
+        $model->supplier_id = $this->supplierModel->id;
+        $model->name = $this->supplierModel->name;
+        $model->zip = $this->supplierModel->zip;
+        $model->address = $this->supplierModel->address;
+        $model->address_2 = $this->supplierModel->address_2;
+        $model->web_url = $this->supplierModel->website;
+        $model->product_name = $this->supplierModel->product_name;
+
+        if ($model->load(Yii::$app->request->post())) {
+            $product_image = UploadedFile::getInstance($model, 'product_image');
+            $logo = UploadedFile::getInstance($model, 'logo');
+            $model->logo = $logo;
+            $model->product_image = $product_image;
+
+            $model->supplier_id = Yii::$app->user->getId();
+
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = 'json';
+                return ActiveForm::validate($model);
+            }
+
+            if ($model->edit()) {
+                return $this->redirect('/supplier/index');
+            }
+        }
+
+        $rating = 0;
+
+        if (Rating::find()->where(['supplier_id' => $this->supplierModel->id])->count()) {
+            $ratingSum = Rating::find()->select('SUM(rating) as rating')->where(['supplier_id' => $this->supplierModel->id])->one()->rating;
+            $ratingCount = Rating::find()->select('COUNT(rating) as rating')->where(['supplier_id' => $this->supplierModel->id])->one()->rating;
+            $rating = $ratingSum / $ratingCount;
+        }
+
+        return $this->render('edit', [
+            'model' => $model,
+            'gifts' => Product::getActiveList(),
+            'supplier' => $this->supplierModel,
+            'selectedGifts' => ArrayHelper::index(SupplierItemRelation::find()->where(['supplier_id' => $this->supplierModel->id])->asArray()->all(), 'item_id'),
+            'rating' => $rating,
+        ]);
     }
 
     public function actionConfirmSuccess()

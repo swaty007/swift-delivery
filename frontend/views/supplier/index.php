@@ -36,7 +36,7 @@ $this->title = 'Supplier cabinet';
                     endfor;?>
                 </div>
             </div>
-            <a href="#" class="main-btn main-btn--settings">Settings</a>
+            <a href="<?=Url::toRoute('/supplier/edit-profile')?>" class="main-btn main-btn--settings">Settings</a>
         </div>
     </div>
     <hr class="full">
@@ -44,8 +44,8 @@ $this->title = 'Supplier cabinet';
         <div class="supplier-cab__monthly">
             <div class="supplier-cab__monthly--left">
                 <p class="supplier-cab__text text--blue-opacity">
-                    Monthly<br>
-                    Earnings:
+                    Earnings for<br>
+                    last 30 days:
                 </p>
                 <h4 class="supplier-cab__monthly--text text--green">
                     $<?= number_format($mounthlyEarnings) ?>
@@ -60,178 +60,6 @@ $this->title = 'Supplier cabinet';
     </div>
     <hr class="full">
     <div class="container">
-
-        <h2 class="text--blue text text--bold">
-            Order History:
-        </h2>
-        <?php \yii\widgets\Pjax::begin(['id' => 'supplier_tables',
-            'options' => [
-                'class' => '',
-                'tag' => 'div'
-            ]]); ?>
-        <table class="supplier-cab__table">
-            <tr>
-                <th>Date:</th>
-                <th>Total:</th>
-                <th></th>
-            </tr>
-            <?php foreach ($finished as $item): ?>
-                <tr>
-                    <td>
-                        <?= $item['created_at']; ?>
-                    </td>
-                    <td>
-                        <?= $item['total']; ?>
-                    </td>
-                    <td>
-                        <button class="btn-sm main-btn main-btn--xs" data-direction="show-more-orders">
-                            Show more
-                        </button>
-                    </td>
-                </tr>
-                <tr class="supplier-cab__table--content">
-                    <td colspan="3">
-                        <div class="supplier-cab__table-content">
-                            <h4 class="supplier-cab__table-content--title text--xs">
-                                Company: <span class="text--regular"><?=$item['supplier']['name']?></span>
-                            </h4>
-                            <h4 class="supplier-cab__table-content--title text--xs">
-                                Order #: <span class="text--regular"><?= $item['id'] ?></span>
-                            </h4>
-                            <h4 class="supplier-cab__table-content--title text--xs">
-                                Delivering to:
-                                <span class="text--regular">
-                                <?= $item['address'] ?>
-                                    <?php if ($item['address_2']): ?>
-                                        <?= $item['address_2'] ?>
-                                    <?php endif; ?>
-                                / <?= $item['zip'] ?>
-                            </span>
-                            </h4>
-
-                            <?php if(\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2']) !== null):?>
-                                <img class="supplier-cab__map" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=$item['address']?>&zoom=13&size=300x300&maptype=roadmap
-&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'])->latlng?>
-&key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
-                            <?php endif;?>
-                            <h4 class="text--xs">
-                                Gift Order
-                            </h4>
-                            <div class="card__wrap">
-                                <?php foreach ($item['orderItems'] as $key => $gift): ?>
-                                    <div class="card__item">
-                                        <div class="card__item--left">
-                                            <p class="text--xs text--blue-opacity">
-                                                <strong>
-                                                    Flower | <span class="text--green">$<?= $gift['item_price'] ?></span>
-                                                </strong>
-                                            </p>
-                                            <p class="card__text text--blue-opacity">
-                                                <?= $gift['description'] ?>
-                                            </p>
-                                            <p class="card__text text--blue-opacity">
-                                                <strong>
-                                                    Quantity: <span><?= $gift['count'] ?></span>
-                                                </strong>
-                                            </p>
-                                        </div>
-                                        <div class="card__item--right">
-                                            <p class="text--xs text--green">
-                                                <strong>
-                                                    $<?= number_format($gift['total_price'], 2); ?>
-                                                </strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                                <div class="card__item card__item--total">
-                                    <div class="card__item--left">
-                                        <p class="text--small text--blue-opacity">
-                                            <strong>Total</strong>
-                                        </p>
-                                    </div>
-                                    <div class="card__item--right">
-                                        <p class="text--small text--green">
-                                            <strong>
-                                                $<?= number_format($item['total'], 2); ?>
-                                            </strong>
-                                        </p>
-                                    </div>
-                                </div>
-                                <p class="text--xs text--blue-opacity">
-                                    <strong>&nbsp;</strong>
-                                </p>
-                                <p class="text--xs text--blue-opacity">
-                                    Rainbow Grinder:<?=$item['supplier']['product_name']?>
-                                </p>
-                                <?= Html::img(Yii::$app->params['webUploadsDir'].$item['supplier']['product_image'], ['class' => 'on-way__img']); ?>
-                            </div>
-
-                            <h4 class="supplier-cab__table-content--title text--xs">
-                                Delivery Status: <span class="text--regular"><?= \common\models\Order::getStatusTextFromStatus($item['status']) ?></span>
-                            </h4>
-                            <?php if ($item['rating']):?>
-                            <h4 class="supplier-cab__table-content--title text--xs">
-                                Delivery Review:
-                            </h4>
-                                <?php if (
-                                        $item['rating']['is_friendly'] ||
-                                        $item['rating']['is_fulfilled'] ||
-                                        $item['rating']['is_on_time'] ||
-                                        $item['rating']['would_use_again'] ):?>
-                                    <p class="supplier-cab__table-content--title text--xs text--regular">
-                                        Q: How was your delivery person?
-                                    </p>
-                                    <p class="supplier-cab__table-content--title text--xs text--regular">
-                                        A: <?=$item['rating']['is_friendly'] ? 'Friendly' : '';?>
-                                        <?=$item['rating']['is_fulfilled'] ? 'Fufilled order' : '';?>
-                                        <?=$item['rating']['is_on_time'] ? 'On time' : '';?>
-                                        <?=$item['rating']['would_use_again'] ? 'Would use again' : '';?>
-                                    </p>
-                                <?php endif;?>
-
-
-                                <p class="supplier-cab__table-content--title text--xs text--regular">
-                                    Q: Rating?
-                                </p>
-                                <div class="supplier-cab__table-content--title text--xs text--regular">
-                                    <div class="stars stars--left">
-                                        A:&nbsp;
-                                <?php
-                                for ($i = 1; $i <= 5; $i++):
-                                    if ($item['rating']['rating'] >= 1): ?>
-                                        <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
-                                    <?php elseif($item['rating']['rating'] <= 0):?>
-                                        <?= Html::img('@web/img/icon_star_empty.svg', ['class' => '']); ?>
-                                    <?php elseif($item['rating']['rating'] == 0.5):?>
-                                        <!--                            icon_star_half-->
-                                        <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
-                                    <?php elseif($item['rating']['rating'] > 0.5):?>
-                                        <!--                            icon_star_high-->
-                                        <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
-                                    <?php elseif($item['rating']['rating'] < 0.5):?>
-                                        <!--                            icon_star_low-->
-                                        <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
-                                    <?php endif;?>
-                                    <?php
-                                    $item['rating']['rating']--;
-                                endfor;?>
-                                    </div>
-                                </div>
-                            <?php if ($item['rating']['comment']):?>
-                                    <p class="supplier-cab__table-content--title text--xs text--regular">
-                                        Q: Additional comments:
-                                    </p>
-                                    <p class="supplier-cab__table-content--title text--xs text--regular">
-                                        A: <?=$item['rating']['comment'];?>
-                                    </p>
-                            <?php endif;?>
-                            <?php endif;?>
-                        </div>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
 
 
         <h2 class="text--blue text text--bold">
@@ -258,7 +86,7 @@ $this->title = 'Supplier cabinet';
                     </td>
                     <td>
                         <button class="btn-sm main-btn main-btn--xs" data-direction="show-more-orders">
-                            Take
+                            Show More
                         </button>
                     </td>
                 </tr>
@@ -470,12 +298,191 @@ $this->title = 'Supplier cabinet';
                 </tr>
             <?php endforeach; ?>
         </table>
+
+        <h2 class="text--blue text text--bold">
+            Order History:
+        </h2>
+        <?php \yii\widgets\Pjax::begin(['id' => 'supplier_tables',
+            'options' => [
+                'class' => '',
+                'tag' => 'div'
+            ]]); ?>
+        <table class="supplier-cab__table">
+            <tr>
+                <th>Date:</th>
+                <th>Total:</th>
+                <th></th>
+            </tr>
+            <?php foreach ($finished as $item): ?>
+                <tr>
+                    <td>
+                        <?= $item['created_at']; ?>
+                    </td>
+                    <td>
+                        <?= $item['total']; ?>
+                    </td>
+                    <td>
+                        <button class="btn-sm main-btn main-btn--xs" data-direction="show-more-orders">
+                            Show more
+                        </button>
+                    </td>
+                </tr>
+                <tr class="supplier-cab__table--content">
+                    <td colspan="3">
+                        <div class="supplier-cab__table-content">
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Company: <span class="text--regular"><?=$item['supplier']['name']?></span>
+                            </h4>
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Order #: <span class="text--regular"><?= $item['id'] ?></span>
+                            </h4>
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Delivering to:
+                                <span class="text--regular">
+                                <?= $item['address'] ?>
+                                    <?php if ($item['address_2']): ?>
+                                        <?= $item['address_2'] ?>
+                                    <?php endif; ?>
+                                / <?= $item['zip'] ?>
+                            </span>
+                            </h4>
+
+                            <?php if(\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2']) !== null):?>
+                                <img class="supplier-cab__map" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=$item['address']?>&zoom=13&size=300x300&maptype=roadmap
+&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'])->latlng?>
+&key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
+                            <?php endif;?>
+                            <h4 class="text--xs">
+                                Gift Order
+                            </h4>
+                            <div class="card__wrap">
+                                <?php foreach ($item['orderItems'] as $key => $gift): ?>
+                                    <div class="card__item">
+                                        <div class="card__item--left">
+                                            <p class="text--xs text--blue-opacity">
+                                                <strong>
+                                                    Flower | <span class="text--green">$<?= $gift['item_price'] ?></span>
+                                                </strong>
+                                            </p>
+                                            <p class="card__text text--blue-opacity">
+                                                <?= $gift['description'] ?>
+                                            </p>
+                                            <p class="card__text text--blue-opacity">
+                                                <strong>
+                                                    Quantity: <span><?= $gift['count'] ?></span>
+                                                </strong>
+                                            </p>
+                                        </div>
+                                        <div class="card__item--right">
+                                            <p class="text--xs text--green">
+                                                <strong>
+                                                    $<?= number_format($gift['total_price'], 2); ?>
+                                                </strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                                <div class="card__item card__item--total">
+                                    <div class="card__item--left">
+                                        <p class="text--small text--blue-opacity">
+                                            <strong>Total</strong>
+                                        </p>
+                                    </div>
+                                    <div class="card__item--right">
+                                        <p class="text--small text--green">
+                                            <strong>
+                                                $<?= number_format($item['total'], 2); ?>
+                                            </strong>
+                                        </p>
+                                    </div>
+                                </div>
+                                <p class="text--xs text--blue-opacity">
+                                    <strong>&nbsp;</strong>
+                                </p>
+                                <p class="text--xs text--blue-opacity">
+                                    Rainbow Grinder:<?=$item['supplier']['product_name']?>
+                                </p>
+                                <?= Html::img(Yii::$app->params['webUploadsDir'].$item['supplier']['product_image'], ['class' => 'on-way__img']); ?>
+                            </div>
+
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Delivery Status: <span class="text--regular"><?= \common\models\Order::getStatusTextFromStatus($item['status']) ?></span>
+                            </h4>
+                            <?php if ($item['rating']):?>
+                                <h4 class="supplier-cab__table-content--title text--xs">
+                                    Delivery Review:
+                                </h4>
+                                <?php if (
+                                    $item['rating']['is_friendly'] ||
+                                    $item['rating']['is_fulfilled'] ||
+                                    $item['rating']['is_on_time'] ||
+                                    $item['rating']['would_use_again'] ):?>
+                                    <p class="supplier-cab__table-content--title text--xs text--regular">
+                                        Q: How was your delivery person?
+                                    </p>
+                                    <p class="supplier-cab__table-content--title text--xs text--regular">
+                                        A: <?=$item['rating']['is_friendly'] ? 'Friendly' : '';?>
+                                        <?=$item['rating']['is_fulfilled'] ? 'Fufilled order' : '';?>
+                                        <?=$item['rating']['is_on_time'] ? 'On time' : '';?>
+                                        <?=$item['rating']['would_use_again'] ? 'Would use again' : '';?>
+                                    </p>
+                                <?php endif;?>
+
+
+                                <p class="supplier-cab__table-content--title text--xs text--regular">
+                                    Q: Rating?
+                                </p>
+                                <div class="supplier-cab__table-content--title text--xs text--regular">
+                                    <div class="stars stars--left">
+                                        A:&nbsp;
+                                        <?php
+                                        for ($i = 1; $i <= 5; $i++):
+                                            if ($item['rating']['rating'] >= 1): ?>
+                                                <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+                                            <?php elseif($item['rating']['rating'] <= 0):?>
+                                                <?= Html::img('@web/img/icon_star_empty.svg', ['class' => '']); ?>
+                                            <?php elseif($item['rating']['rating'] == 0.5):?>
+                                                <!--                            icon_star_half-->
+                                                <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+                                            <?php elseif($item['rating']['rating'] > 0.5):?>
+                                                <!--                            icon_star_high-->
+                                                <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+                                            <?php elseif($item['rating']['rating'] < 0.5):?>
+                                                <!--                            icon_star_low-->
+                                                <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+                                            <?php endif;?>
+                                            <?php
+                                            $item['rating']['rating']--;
+                                        endfor;?>
+                                    </div>
+                                </div>
+                                <?php if ($item['rating']['comment']):?>
+                                    <p class="supplier-cab__table-content--title text--xs text--regular">
+                                        Q: Additional comments:
+                                    </p>
+                                    <p class="supplier-cab__table-content--title text--xs text--regular">
+                                        A: <?=$item['rating']['comment'];?>
+                                    </p>
+                                <?php endif;?>
+                            <?php endif;?>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+
+
         <script>
-            setTimeout(function () {
+            clearInterval(intervarPjax)
+            var intervarPjax = setInterval(function () {
                 if (typeof $.pjax !== 'undefined') {
-                    // $.pjax.reload({container: "#supplier_tables"});
+                    if ($('.supplier-cab__table-content').is(':visible')) {
+
+                    } else {
+                        $.pjax.reload({container: "#supplier_tables"});
+                    }
                 }
-            }, 5000);
+            }, 5000)
         </script>
         <?php \yii\widgets\Pjax::end(); ?>
 

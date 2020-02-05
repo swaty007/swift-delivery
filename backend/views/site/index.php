@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Swift Delivery Admin';
 ?>
 <div class="row">
     <div class="col-xs-12" style="padding-bottom: 40px">

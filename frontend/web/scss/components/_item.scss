@@ -1,19 +1,25 @@
 .item {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   background: $white;
   box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   min-height: 230px;
-
+  justify-content: space-between;
   padding: 40px 25px 30px;
   margin-bottom: 20px;
-
-  width: unquote("calc(50% - 10px)");
-  &:nth-child(2n + 1) {
-    margin-right: 20px;
+  width: unquote("calc(25% - 15px)");
+  margin-right: 20px;
+  &:nth-child(4n+4) {
+    margin-right: 0;
+  }
+  @media (max-width: 991px) {
+    width: unquote("calc(50% - 10px)");
+    margin-right: 0;
+    &:nth-child(2n + 1) {
+      margin-right: 20px;
+    }
   }
   &--green {
     background-color: $brand-green;
@@ -26,6 +32,9 @@
     justify-content: space-between;
     flex-wrap: wrap;
     text-align: center;
+    @media (min-width: 992px) {
+      justify-content: start;
+    }
   }
   &__content {
 

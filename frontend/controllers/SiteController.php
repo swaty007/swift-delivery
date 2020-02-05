@@ -19,6 +19,7 @@ use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -87,12 +88,14 @@ class SiteController extends Controller
     public function beforeAction($action)
     {
         $allowedPages = [
-            'index', 'logout', 'order', 'order-status'
+            'index', 'logout', 'order', 'order-status', 'order-rating', 'cancel-order', 'error'
         ];
+
 
         if (!Yii::$app->user->isGuest && !in_array(Yii::$app->controller->action->id, $allowedPages)) {
             switch (Yii::$app->user->identity->role) {
                 case User::USER_ROLE_SUPPLIER:
+
                     $redirectUrl = '/supplier/index';
                     break;
                 default:
@@ -228,9 +231,16 @@ class SiteController extends Controller
         if (!($order = Order::find()->where(['weblink' => $l])->with('orderItems')->with('supplier')->one())) {
             return $this->redirect('/site/index');
         }
-
+        if ($order->status == Order::ORDER_STATUS_COMPLETE) {
+            $this->redirect(Url::toRoute(['site/order-rating','l' => $order->weblink]));
+        }
+        return $this->render('/customer/order-status', ['order' => $order]);
+    }
+    public function actionOrderRating($l) {
+        if (!($order = Order::find()->where(['weblink' => $l])->with('orderItems')->with('supplier')->one())) {
+            return $this->redirect('/site/index');
+        }
         $model = new RatingForm();
-
         $model->supplier_id = $order->supplier_id;
         $model->order_id = $order->id;
 
@@ -242,10 +252,9 @@ class SiteController extends Controller
             if ($model->rate()) {
                 Yii::$app->session->setFlash('success', 'Order completed');
             }
-
             return $this->redirect('/');
         }
-        return $this->render('/customer/order-status', ['order' => $order, 'model' => $model]);
+        return $this->render('/customer/rating', ['order' => $order, 'model' => $model]);
     }
 
     public function actionCancelOrder($l)
@@ -257,6 +266,7 @@ class SiteController extends Controller
         Log::orderLog($order->id,null , "Order canceled by customer");
 
         $order->status = Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER;
+        $order->save();
         $this->redirect('/');
     }
 

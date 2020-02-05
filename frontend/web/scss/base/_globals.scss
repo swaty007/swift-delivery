@@ -137,6 +137,13 @@ body {
     background-position: 20px 50%;
     background-repeat: no-repeat;
   }
+  &--overview {
+    background-image: url(../../img/icon_user.svg);
+    margin-left: 0;
+    margin-right: 0;
+    background-position: 20px 50%;
+    background-repeat: no-repeat;
+  }
 }
 
 hr {

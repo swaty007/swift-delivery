@@ -47,7 +47,6 @@ AppAsset::register($this);
             ['label' => 'Products', 'url' => ['/product/index']],
             ['label' => 'Suppliers', 'url' => ['/supplier/index']],
             ['label' => 'Zips', 'url' => ['/zipcode/index']],
-            ['label' => 'Pages', 'url' => ['/info-page/index']],
             ['label' => 'Users', 'url' => ['/user/index']],
             ['label' => 'Logs', 'url' => ['/log/index']],
         ];
@@ -55,6 +54,7 @@ AppAsset::register($this);
         if (Yii::$app->user->identity->role == \common\models\User::USER_ROLE_SUPERADMIN) {
             $menuItems[] = ['label' => 'Messages', 'url' => ['/message/index']];
             $menuItems[] = ['label' => 'Configs', 'url' => ['/param/index']];
+            $menuItems[] = ['label' => 'Pages', 'url' => ['/info-page/index']];
         }
 
         $menuItems[] = '<li>'
