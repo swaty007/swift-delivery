@@ -42,7 +42,7 @@ class Supplier extends \yii\db\ActiveRecord
 
     public function __construct($config = [])
     {
-        if (!Yii::$app->user->isGuest && $this->supplier_id == Yii::$app->user->getId()) {
+        if (isset(Yii::$app->user) && !Yii::$app->user->isGuest && $this->supplier_id == Yii::$app->user->getId()) {
             $this->user = Yii::$app->user->identity;
         } else if(!empty($this->supplier_id)) {
             $this->user = User::findOne($this->supplier_id);

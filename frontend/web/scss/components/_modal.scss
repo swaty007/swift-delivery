@@ -92,6 +92,8 @@
     }
   }
   &__img {
+    max-height: 100px;
+    object-fit: contain;
     margin-bottom: 25px;
   }
   &__title {

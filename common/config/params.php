@@ -9,6 +9,8 @@ return [
     'webProjectUrl' => 'http://swift-delivery.infinitum.tech',
     'webUploadsDir' => '/img/uploads/',
     'googleMapsApiKey' => 'AIzaSyAPc-Tmoxe8loUBzd2d9osUSIxbEurzWSg',
+    'supplierSessionDurationDays' => 3,
+    'twilio_phone_number' => '12052559366',
     'subscribePlans' => [
         [
             'name' => 'Basic',

@@ -15,11 +15,25 @@ $this->title = 'Supplier cabinet';
             <div class="supplier-cab__username">
                 <p class="text--large"><strong>Hi,</strong> Green Label DC!</p>
                 <div class="stars stars--left">
-                    <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
-                    <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
-                    <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
-                    <?= Html::img('@web/img/icon_star_empty.svg', ['class' => '']); ?>
-                    <?= Html::img('@web/img/icon_star_empty.svg', ['class' => '']); ?>
+                    <?php
+                    for ($i = 1; $i <= 5; $i++):
+                        if ($rating >= 1): ?>
+                            <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+                        <?php elseif($rating <= 0):?>
+                            <?= Html::img('@web/img/icon_star_empty.svg', ['class' => '']); ?>
+                        <?php elseif($rating == 0.5):?>
+<!--                            icon_star_half-->
+                        <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+                        <?php elseif($rating > 0.5):?>
+<!--                            icon_star_high-->
+                        <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+                        <?php elseif($rating < 0.5):?>
+<!--                            icon_star_low-->
+                        <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+                        <?php endif;?>
+                        <?php
+                        $rating--;
+                    endfor;?>
                 </div>
             </div>
             <a href="#" class="main-btn main-btn--settings">Settings</a>
@@ -50,6 +64,11 @@ $this->title = 'Supplier cabinet';
         <h2 class="text--blue text text--bold">
             Order History:
         </h2>
+        <?php \yii\widgets\Pjax::begin(['id' => 'supplier_tables',
+            'options' => [
+                'class' => '',
+                'tag' => 'div'
+            ]]); ?>
         <table class="supplier-cab__table">
             <tr>
                 <th>Date:</th>
@@ -73,12 +92,6 @@ $this->title = 'Supplier cabinet';
                 <tr class="supplier-cab__table--content">
                     <td colspan="3">
                         <div class="supplier-cab__table-content">
-
-                            <?php if(\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2']) !== false):?>
-                                <img src="https://maps.googleapis.com/maps/api/staticmap?center=<?=@$item['address']?>&zoom=13&size=300x300&maptype=roadmap
-&markers=color:green%7Clabel:G%7C<?=\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2'])?>
-&key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
-                            <?php endif;?>
                             <h4 class="supplier-cab__table-content--title text--xs">
                                 Company: <span class="text--regular"><?=$item['supplier']['name']?></span>
                             </h4>
@@ -96,9 +109,9 @@ $this->title = 'Supplier cabinet';
                             </span>
                             </h4>
 
-                            <?php if(\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2']) !== null):?>
-                                <img src="https://maps.googleapis.com/maps/api/staticmap?center=<?=@$item['address']?>&zoom=13&size=300x300&maptype=roadmap
-&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2'])->latlng?>
+                            <?php if(\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2']) !== null):?>
+                                <img class="supplier-cab__map" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=$item['address']?>&zoom=13&size=300x300&maptype=roadmap
+&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'])->latlng?>
 &key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
                             <?php endif;?>
                             <h4 class="text--xs">
@@ -146,7 +159,7 @@ $this->title = 'Supplier cabinet';
                                     </div>
                                 </div>
                                 <p class="text--xs text--blue-opacity">
-                                    <strong>Total</strong>
+                                    <strong>&nbsp;</strong>
                                 </p>
                                 <p class="text--xs text--blue-opacity">
                                     Rainbow Grinder:<?=$item['supplier']['product_name']?>
@@ -157,9 +170,63 @@ $this->title = 'Supplier cabinet';
                             <h4 class="supplier-cab__table-content--title text--xs">
                                 Delivery Status: <span class="text--regular"><?= \common\models\Order::getStatusTextFromStatus($item['status']) ?></span>
                             </h4>
+                            <?php if ($item['rating']):?>
                             <h4 class="supplier-cab__table-content--title text--xs">
                                 Delivery Review:
                             </h4>
+                                <?php if (
+                                        $item['rating']['is_friendly'] ||
+                                        $item['rating']['is_fulfilled'] ||
+                                        $item['rating']['is_on_time'] ||
+                                        $item['rating']['would_use_again'] ):?>
+                                    <p class="supplier-cab__table-content--title text--xs text--regular">
+                                        Q: How was your delivery person?
+                                    </p>
+                                    <p class="supplier-cab__table-content--title text--xs text--regular">
+                                        A: <?=$item['rating']['is_friendly'] ? 'Friendly' : '';?>
+                                        <?=$item['rating']['is_fulfilled'] ? 'Fufilled order' : '';?>
+                                        <?=$item['rating']['is_on_time'] ? 'On time' : '';?>
+                                        <?=$item['rating']['would_use_again'] ? 'Would use again' : '';?>
+                                    </p>
+                                <?php endif;?>
+
+
+                                <p class="supplier-cab__table-content--title text--xs text--regular">
+                                    Q: Rating?
+                                </p>
+                                <div class="supplier-cab__table-content--title text--xs text--regular">
+                                    <div class="stars stars--left">
+                                        A:&nbsp;
+                                <?php
+                                for ($i = 1; $i <= 5; $i++):
+                                    if ($item['rating']['rating'] >= 1): ?>
+                                        <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+                                    <?php elseif($item['rating']['rating'] <= 0):?>
+                                        <?= Html::img('@web/img/icon_star_empty.svg', ['class' => '']); ?>
+                                    <?php elseif($item['rating']['rating'] == 0.5):?>
+                                        <!--                            icon_star_half-->
+                                        <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+                                    <?php elseif($item['rating']['rating'] > 0.5):?>
+                                        <!--                            icon_star_high-->
+                                        <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+                                    <?php elseif($item['rating']['rating'] < 0.5):?>
+                                        <!--                            icon_star_low-->
+                                        <?= Html::img('@web/img/icon_star_full.svg', ['class' => '']); ?>
+                                    <?php endif;?>
+                                    <?php
+                                    $item['rating']['rating']--;
+                                endfor;?>
+                                    </div>
+                                </div>
+                            <?php if ($item['rating']['comment']):?>
+                                    <p class="supplier-cab__table-content--title text--xs text--regular">
+                                        Q: Additional comments:
+                                    </p>
+                                    <p class="supplier-cab__table-content--title text--xs text--regular">
+                                        A: <?=$item['rating']['comment'];?>
+                                    </p>
+                            <?php endif;?>
+                            <?php endif;?>
                         </div>
                     </td>
                 </tr>
@@ -217,9 +284,9 @@ $this->title = 'Supplier cabinet';
                             </span>
                         </h4>
 
-                        <?php if(\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2']) !== null):?>
-                            <img src="https://maps.googleapis.com/maps/api/staticmap?center=<?=@$item['address']?>&zoom=13&size=300x300&maptype=roadmap
-&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2'])->latlng?>
+                        <?php if(\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2']) !== null):?>
+                            <img class="supplier-cab__map" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=$item['address']?>&zoom=13&size=300x300&maptype=roadmap
+&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'])->latlng?>
 &key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
                         <?php endif;?>
                         <h4 class="text--xs">
@@ -268,7 +335,7 @@ $this->title = 'Supplier cabinet';
                                 </div>
                             </div>
                             <p class="text--xs text--blue-opacity">
-                                <strong>Total</strong>
+                                <strong>&nbsp;</strong>
                             </p>
                             <p class="text--xs text--blue-opacity">
                                 Rainbow Grinder:<?=$item['supplier']['product_name']?>
@@ -279,10 +346,7 @@ $this->title = 'Supplier cabinet';
                         <h4 class="supplier-cab__table-content--title text--xs">
                             Delivery Status: <span class="text--regular"><?= \common\models\Order::getStatusTextFromStatus($item['status']) ?></span>
                         </h4>
-                        <h4 class="supplier-cab__table-content--title text--xs">
-                            Delivery Review:
-                        </h4>
-                        <a href="?takeOrder=<?= $item['id'] ?>" class="btn-sm main-btn main-btn--xs" data-direction="take-order" data-order-id="<?= $item['id'] ?>">
+                        <a href="#" class="btn-sm main-btn main-btn--xs" data-direction="take-order" data-order-id="<?= $item['id'] ?>">
                             Take
                         </a>
                     </div>
@@ -337,9 +401,9 @@ $this->title = 'Supplier cabinet';
                             </span>
                             </h4>
 
-                            <?php if(\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2']) !== null):?>
-                                <img src="https://maps.googleapis.com/maps/api/staticmap?center=<?=@$item['address']?>&zoom=13&size=300x300&maptype=roadmap
-&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData(@$item['address'] . ' ' . @$item['address_2'])->latlng?>
+                            <?php if(\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2']) !== null):?>
+                                <img class="supplier-cab__map" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=$item['address']?>&zoom=13&size=300x300&maptype=roadmap
+&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'])->latlng?>
 &key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
                             <?php endif;?>
                             <h4 class="text--xs">
@@ -387,7 +451,7 @@ $this->title = 'Supplier cabinet';
                                     </div>
                                 </div>
                                 <p class="text--xs text--blue-opacity">
-                                    <strong>Total</strong>
+                                    <strong>&nbsp;</strong>
                                 </p>
                                 <p class="text--xs text--blue-opacity">
                                     Rainbow Grinder:<?=$item['supplier']['product_name']?>
@@ -398,34 +462,24 @@ $this->title = 'Supplier cabinet';
                             <h4 class="supplier-cab__table-content--title text--xs">
                                 Delivery Status: <span class="text--regular"><?= \common\models\Order::getStatusTextFromStatus($item['status']) ?></span>
                             </h4>
-                            <h4 class="supplier-cab__table-content--title text--xs">
-                                Delivery Review:
-                            </h4>
+                            <a href="<?=Url::toRoute(['supplier/index','complete' => $item['id']]);?>" class="btn-sm main-btn main-btn--xs">
+                                Complete order
+                            </a>
                         </div>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </table>
-
+        <script>
+            setTimeout(function () {
+                if (typeof $.pjax !== 'undefined') {
+                    // $.pjax.reload({container: "#supplier_tables"});
+                }
+            }, 5000);
+        </script>
+        <?php \yii\widgets\Pjax::end(); ?>
 
     </div>
-
-
-    <?php \yii\widgets\Pjax::begin(['id' => 'supplier_tables',
-        'options' => [
-            'class' => '',
-            'tag' => 'div'
-        ]]); ?>
-
-
-    <script>
-        setTimeout(function () {
-            if (typeof $.pjax !== 'undefined') {
-                $.pjax.reload({container: "#supplier_tables"});
-            }
-        }, 5000);
-    </script>
-    <?php \yii\widgets\Pjax::end(); ?>
 
 </section>
 
@@ -465,7 +519,7 @@ $this->title = 'Supplier cabinet';
                     <p class="text--small text--blue-opacity">
                         ETA:
                     </p>
-                    <p class="text--large text--bold text--green">
+                    <p id="modal_take_order_duration" class="text--large text--bold text--green">
 
                     </p>
                 </div>

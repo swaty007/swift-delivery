@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use common\models\GoogleMaps;
+use common\models\Log;
 use common\models\OrderItem;
 use common\models\Order;
 use common\models\Product;
@@ -106,6 +107,7 @@ class OrderForm extends Model
 
             $order->total = $this->total;
             $order->save();
+            Log::orderLog($order->id,$customer->id, "Order created");
 
             $this->instance = $order;
             return true;

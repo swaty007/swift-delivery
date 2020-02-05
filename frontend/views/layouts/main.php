@@ -153,9 +153,12 @@ AppAsset::register($this);
     <?= Breadcrumbs::widget([
         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
     ]) ?>
-    <?= Alert::widget() ?>
+<!--    --><?//= Alert::widget() ?>
 </div>
-
+<?php if( Yii::$app->session->hasFlash('success') ): ?>
+    <!--    --><?//= Yii::$app->session->getFlash('success'); ?>
+    <?= $this->render('../components/_alert', ['module' => 'thank']); ?>
+<?php endif;?>
 <header class="header">
     <div class="container">
         <div class="header__logo">
@@ -170,7 +173,6 @@ AppAsset::register($this);
         </div>
     </div>
 </header>
-
 
     <?= $content ?>
 

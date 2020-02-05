@@ -3,10 +3,15 @@
 namespace frontend\controllers;
 
 use common\models\GoogleMaps;
+use common\models\Log;
+use common\models\Message;
 use common\models\Order;
+use common\models\OrderItem;
 use common\models\Product;
+use common\models\ProductOption;
 use common\models\Rating;
 use common\models\Supplier;
+use common\models\Twilio;
 use common\models\User;
 use frontend\models\SupplierForm;
 use Yii;
@@ -63,7 +68,8 @@ class SupplierController extends BaseAuthorizedController
         return true;
     }
 
-    public function actionNeedActivation() {
+    public function actionNeedActivation()
+    {
         if ($this->supplierModel->is_active) {
             return $this->redirect('index')->send();
         }
@@ -71,45 +77,46 @@ class SupplierController extends BaseAuthorizedController
         return $this->render('need-activation');
     }
 
-    public function actionIndex($takeOrder = 0, $cancelSupplier = 0, $cancelDeliver = 0, $complete = 0) {
-        if ($takeOrder) {
-            $this->takeOrder($takeOrder);
-            $this->redirect('index');
-        }
-
+    public function actionIndex($cancelSupplier = 0, $cancelDeliver = 0, $complete = 0)
+    {
         if ($cancelSupplier) {
             $this->cancelOrder($cancelSupplier, Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER);
-            $this->redirect('index');
         }
 
         if ($cancelDeliver) {
             $this->cancelOrder($cancelDeliver, Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER);
-            $this->redirect('index');
         }
 
         if ($complete) {
             $this->complete($complete);
-            $this->redirect('index');
         }
 
-        $allowedToDeliver = Order::find()
-            ->with('orderItems')
-            ->with('customer')
-            ->with('supplier')
-            ->where(['status' => Order::ORDER_STATUS_NEW])
-            ->asArray()
-            ->all();
+        $alreadyTakenInThisMonth = Order::find()->where(['supplier_id' => $this->supplierModel->id])->andWhere(['>', 'created_at', date('Y-m-d H:i:s', strtotime("-30 days"))])->count();
+
+        if ($alreadyTakenInThisMonth > Yii::$app->params['subscribePlans'][$this->supplierModel->id][$this->supplierModel->status]['dealsPerMonth']) {
+            $allowedToDeliver = Order::find()
+                ->with('orderItems')
+                ->with('customer')
+                ->with('supplier')
+                ->with('rating')
+                ->where(['status' => Order::ORDER_STATUS_NEW])
+                ->asArray()
+                ->all();
+        } else {
+            $allowedToDeliver = [];
+        }
 
         $inProgress = Order::find()
             ->with('orderItems')
             ->with('customer')
             ->with('supplier')
+            ->with('rating')
             ->where(['IN', 'status',
-            [
-                Order::ORDER_STATUS_IN_PROGRESS,
-                Order::ORDER_STATUS_DELIVER_NEAR_PLACE,
-                Order::ORDER_STATUS_DELIVER_AT_PLACE,
-            ]])
+                [
+                    Order::ORDER_STATUS_IN_PROGRESS,
+                    Order::ORDER_STATUS_DELIVER_NEAR_PLACE,
+                    Order::ORDER_STATUS_DELIVER_AT_PLACE,
+                ]])
             ->andWhere(['supplier_id' => $this->supplierModel->id])
             ->asArray()
             ->all();
@@ -118,14 +125,15 @@ class SupplierController extends BaseAuthorizedController
             ->with('orderItems')
             ->with('customer')
             ->with('supplier')
+            ->with('rating')
             ->where(['IN', 'status',
-            [
-                Order::ORDER_STATUS_COMPLETE,
-                Order::ORDER_STATUS_CANCELLED,
-                Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER,
-                Order::ORDER_STATUS_CANCELLED_BY_DELIVER,
-                Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER,
-            ]])
+                [
+                    Order::ORDER_STATUS_COMPLETE,
+                    Order::ORDER_STATUS_CANCELLED,
+                    Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER,
+                    Order::ORDER_STATUS_CANCELLED_BY_DELIVER,
+                    Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER,
+                ]])
             ->andWhere(['supplier_id' => $this->supplierModel->id])
             ->asArray()->all();
 
@@ -142,22 +150,24 @@ class SupplierController extends BaseAuthorizedController
             'inProgress' => $inProgress,
             'finished' => $finished,
             'rating' => $rating,
+            'ratingArray' => Rating::find()->where(['supplier_id' => $this->supplierModel->id])->all(),
             'earnings' => Order::find()->where(['supplier_id' => $this->supplierModel->id])->andWhere(['status' => Order::ORDER_STATUS_COMPLETE])->count(),
             'accepted' => Order::find()->where(['supplier_id' => $this->supplierModel->id])->count(),
             'mounthlyEarnings' => Order::find()
                 ->select('SUM(total) as total')
                 ->where(['supplier_id' => $this->supplierModel->id])
                 ->andWhere(['status' => Order::ORDER_STATUS_COMPLETE])
-                ->andWhere(['>','created_at', date('Y-m-d H:i:s', strtotime('today - 30 days'))])
+                ->andWhere(['>', 'created_at', date('Y-m-d H:i:s', strtotime('today - 30 days'))])
                 ->one()->total
         ]);
     }
 
-    function getNeedleArray($source, $keys = []) {
+    function getNeedleArray($source, $keys = [])
+    {
         $result = [];
 
         foreach ($keys as $key) {
-            if (is_array($source[$key]) && count($source[$key])){
+            if (is_array($source[$key]) && count($source[$key])) {
                 $result[$key] = $source[$key][0];
             }
         }
@@ -165,8 +175,9 @@ class SupplierController extends BaseAuthorizedController
         return $result;
     }
 
-    public function actionConfirm() {
-        if($this->isSupplierDataFilled()) {
+    public function actionConfirm()
+    {
+        if ($this->isSupplierDataFilled()) {
             return $this->redirect('confirm-success');
         }
 
@@ -189,45 +200,73 @@ class SupplierController extends BaseAuthorizedController
         return $this->render('confirm', ['model' => $model, 'gifts' => Product::getActiveList()]);
     }
 
-    public function actionConfirmSuccess() {
+    public function actionConfirmSuccess()
+    {
         return $this->render('confirm-success');
     }
 
-    private function isSupplierDataFilled() {
+    private function isSupplierDataFilled()
+    {
         return (boolean)Supplier::find()->where(['supplier_id' => Yii::$app->user->getId()])->count();
     }
 
-    private function getSupplierModel() {
+    private function getSupplierModel()
+    {
         return Supplier::findOne(['supplier_id' => Yii::$app->user->getId()]);
     }
 
-    private function takeOrder() {
+    private function takeOrder()
+    {
         if (!($order = Order::findOne(['id' => Yii::$app->request->post('id')]))) {
             return false;
         }
 
-        if($order->status !== Order::ORDER_STATUS_NEW) {
+        if ($order->status !== Order::ORDER_STATUS_NEW) {
             return false;
         }
 
         $supplier = $this->getSupplierModel();
 
-        $duration = Yii::$app->request->post(['deliveryTime']). ' mins';
+        $duration = Yii::$app->request->post('deliveryTime') . ' mins';
         $order->deliver_name = Yii::$app->request->post('deliverName');
         $order->delivery_duration = date('h:iA', strtotime($duration)) . ' | ' . $duration;
         $order->supplier_id = $supplier->id;
         $order->status = Order::ORDER_STATUS_IN_PROGRESS;
+        $number = User::find()->where(['id' => $order->customer_id])->one()->phone_number;
+        $products = [];
+        $rawProducts = [];
+
+        foreach (OrderItem::findAll(['order_id' => $order->id]) as $orderItem) {
+            $productName = Product::find()->where(['id' => $orderItem->product_item_id])->one()->name;
+            if (!isset($rawProducts[$productName])) {
+                $rawProducts[$productName] = $orderItem->count;
+            } else {
+                $rawProducts[$productName] += $orderItem->count;
+            }
+        }
+
+        foreach ($rawProducts as $name => $count) {
+            $products[] = $count . ' ' . $name;
+        }
+
+        $messageCustomer = "Your order for " . implode(' & ', $products) . " ($" . $order->total . ") is on the way! " . $order->deliver_name . ", from " . $this->supplierModel->name . ", should arrive in about $order->delivery_duration";
+        $messageSupplier = "On, $order->delivery_duration, you accepted a new order #$order->id for $" . $order->total . " to delivery: " . implode(' & ', $products);
+
+        Twilio::sendSms($number, $messageCustomer);
+        Twilio::sendSms(Yii::$app->user->identity->phone_number, $messageSupplier);
+
         return $order->save();
     }
 
-    public function actionCalculateDelivery($id) {
+    public function actionCalculateDelivery($id)
+    {
         Yii::$app->response->format = 'json';
 
         if (!($order = Order::findOne($id))) {
             return false;
         }
 
-        if($order->status !== Order::ORDER_STATUS_NEW) {
+        if ($order->status !== Order::ORDER_STATUS_NEW) {
             return false;
         }
 
@@ -240,14 +279,15 @@ class SupplierController extends BaseAuthorizedController
 
         $duration = '30 mins';
 
-        if($distance['success'] == true) {
+        if ($distance['success'] == true) {
             $duration = $distance['duration'];
         }
 
-        return ['duration' => $duration];
+        return ['duration' => $duration, 'estimation' => date('H:i', strtotime($duration))];
     }
 
-    public function actionTakeOrder() {
+    public function actionTakeOrder()
+    {
         $post = Yii::$app->request->post();
 
         $this->takeOrder($post);
@@ -255,15 +295,19 @@ class SupplierController extends BaseAuthorizedController
         return true;
     }
 
-    private function complete($id) {
+    private function complete($id)
+    {
         if (!($order = Order::findOne($id))) {
             return false;
         }
 
-        if($order->status !== Order::ORDER_STATUS_IN_PROGRESS) {
+        if ($order->status !== Order::ORDER_STATUS_IN_PROGRESS) {
             return false;
         }
 
+        $number = User::find()->where(['id' => $order->customer_id])->one()->phone_number;
+        Twilio::sendSms($number, Message::getText('delivery_complete_sms'));
+        Log::orderLog($order->id, Yii::$app->user->getId(), 'Order complete');
         $order->status = Order::ORDER_STATUS_COMPLETE;
         return $order->save();
     }
@@ -290,10 +334,12 @@ class SupplierController extends BaseAuthorizedController
             ->andWhere(['IN', 'status', $orderAllowedStatuses])
             ->andWhere(['supplier_id' => $this->supplierModel->id]);
 
-        if(!$order->count()) {
+        if (!$order->count()) {
             return false;
         }
 
+        $number = User::find()->where(['id' => $order->customer_id])->one()->phone_number;
+        Twilio::sendSms($number, Message::getText('delivery_failed_sms'));
         $order = $order->one();
         $order->status = $status;
         $order->save();

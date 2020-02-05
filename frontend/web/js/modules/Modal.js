@@ -1,3 +1,5 @@
+import {finishPjax} from "./global_functions";
+
 class Modal {
     constructor() {
         this.events();
@@ -23,7 +25,29 @@ class Modal {
             let $this = $(e.currentTarget),
                 modalEl = $("#take_order"),
                 order_id = $this.attr('data-order-id'),
+                modalDuration = $('#modal_take_order_duration'),
                 inputId = $('#modal_take_order_id');
+
+            $.ajax({
+                type: "GET",
+                url: "/supplier/calculate-delivery",
+                cache : false,
+                data: {
+                    id: order_id
+                },
+                success: function (msg) {
+                    console.log(msg);
+                    modalDuration.text(msg.duration)
+                    if (msg.result) {
+                        // $("#zip_validate").closest('.form-group').removeClass('has-error').addClass('has-success');
+                        // $("#zip_validate_status").text('You write available zip code');
+                    } else {
+                        // $("#zip_validate").closest('.form-group').removeClass('has-success').addClass('has-error');
+                        // $("#zip_validate_status").text('You write unavailable zip code');
+                    }
+                    // finishPjax("#supplier_tables");
+                }
+            });
 
             inputId.val(order_id)
             modalEl.show('fade', 300);

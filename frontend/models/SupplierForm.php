@@ -2,8 +2,11 @@
 
 namespace frontend\models;
 
+use common\models\GoogleMaps;
+use common\models\Message;
 use common\models\Product;
 use common\models\SupplierItemRelation;
+use common\models\Twilio;
 use common\models\Zipcode;
 use Yii;
 use yii\base\Model;
@@ -64,6 +67,15 @@ class SupplierForm extends Model
             return null;
         }
 
+        $gm = new GoogleMaps();
+
+        $apiResult = $gm->getLatLng($this->address . ' ' . $this->address_2);
+
+        if ($apiResult['success'] == false) {
+            $this->addError('address', $apiResult['message']);
+            return null;
+        }
+
         try {
             $supplier = new Supplier();
 
@@ -74,6 +86,7 @@ class SupplierForm extends Model
             $supplier->address_2 = $this->address_2;
             $supplier->website = $this->web_url;
             $supplier->product_name = $this->product_name;
+            $supplier->status = $this->plan;
 
             if (!$this->saveImages($supplier)) {
                 throw new Exception("Error while saving file");
@@ -84,7 +97,8 @@ class SupplierForm extends Model
             $supplier->logo = $this->logo;
             $supplier->product_image = $this->product_image;
             $supplier->save();
-
+            Twilio::sendSms(Yii::$app->user->identity->phone_number, Message::getText('supplier_registeration_sms'));
+            Twilio::sendEmailToAdmins("Supplier need activation", Message::getText('new_supplier_admin_email'));
             return true;
         } catch (\Exception $e) {
             Supplier::deleteAll(['supplier_id' => $this->supplier_id]);

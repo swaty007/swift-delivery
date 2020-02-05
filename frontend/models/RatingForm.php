@@ -43,6 +43,7 @@ class RatingForm extends Model
         $rating->is_on_time = $this->onTime;
         $rating->is_fulfilled = $this->fulfilled;
         $rating->order_id = $this->order_id;
+        $rating->comment = $this->comment;
         $rating->supplier_id = $this->supplier_id;
 
         return $rating->save();

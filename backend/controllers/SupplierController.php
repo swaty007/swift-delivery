@@ -2,6 +2,9 @@
 
 namespace backend\controllers;
 
+use common\models\Message;
+use common\models\Twilio;
+use common\models\User;
 use Yii;
 use common\models\Supplier;
 use common\models\SearchSupplier;
@@ -69,8 +72,19 @@ class SupplierController extends BaseAdminController
     {
         $model = $this->findModel($id);
 
+        $wasActive = $model->is_active;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+            if ($model->validate() && $model->save()) {
+                $nowActive = $model->is_active;
+
+                if ($nowActive == 1 && $wasActive == 0) {
+                    $number = User::find()->where(['id' => $model->supplier_id])->one()->phone_number;
+                    Twilio::sendSms($number, Message::getText('supplier_activated_sms'));
+                }
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
@@ -87,8 +101,9 @@ class SupplierController extends BaseAdminController
      */
     public function actionDelete($id)
     {
+        $number = User::find()->where(['id' => $id])->one()->phone_number;
         $this->findModel($id)->delete();
-
+        Twilio::sendSms($number, Message::getText('supplier_order_declined_sms'));
         return $this->redirect(['index']);
     }
 

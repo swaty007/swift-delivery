@@ -42,23 +42,29 @@ AppAsset::register($this);
     } else {
 
         $menuItems = [
-            ['label' => 'Dashboard', 'url' => ['/site/index']],
+            ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Orders', 'url' => ['/order/index']],
             ['label' => 'Products', 'url' => ['/product/index']],
-            ['label' => 'Customers', 'url' => ['/customer/index']],
             ['label' => 'Suppliers', 'url' => ['/supplier/index']],
-            ['label' => 'Zipcodes', 'url' => ['/zipcode/index']],
-            ['label' => 'Info Pages', 'url' => ['/info-page/index']],
+            ['label' => 'Zips', 'url' => ['/zipcode/index']],
+            ['label' => 'Pages', 'url' => ['/info-page/index']],
             ['label' => 'Users', 'url' => ['/user/index']],
-            '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
+            ['label' => 'Logs', 'url' => ['/log/index']],
         ];
+
+        if (Yii::$app->user->identity->role == \common\models\User::USER_ROLE_SUPERADMIN) {
+            $menuItems[] = ['label' => 'Messages', 'url' => ['/message/index']];
+            $menuItems[] = ['label' => 'Configs', 'url' => ['/param/index']];
+        }
+
+        $menuItems[] = '<li>'
+            . Html::beginForm(['/site/logout'], 'post')
+            . Html::submitButton(
+                'Logout (' . Yii::$app->user->identity->username . ')',
+                ['class' => 'btn btn-link logout']
+            )
+            . Html::endForm()
+            . '</li>';
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],

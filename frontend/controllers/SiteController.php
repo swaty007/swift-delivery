@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\AddressLatlng;
 use common\models\GoogleMaps;
 use common\models\InfoPage;
+use common\models\Log;
 use common\models\Order;
 use common\models\Product;
 use common\models\ProductOption;
@@ -233,7 +234,11 @@ class SiteController extends Controller
         $model->supplier_id = $order->supplier_id;
         $model->order_id = $order->id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post())) {
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = 'json';
+                return ActiveForm::validate($model);
+            }
             if ($model->rate()) {
                 Yii::$app->session->setFlash('success', 'Order completed');
             }
@@ -248,6 +253,8 @@ class SiteController extends Controller
         if (!($order = Order::find()->where(['weblink' => $l])->with('orderItems')->with('supplier')->one())) {
             return $this->redirect('/site/index');
         }
+
+        Log::orderLog($order->id,null , "Order canceled by customer");
 
         $order->status = Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER;
         $this->redirect('/');
@@ -411,8 +418,8 @@ class SiteController extends Controller
         return $cart;
     }
 
-    public function actionTestTwilio($phone) {
-        Twilio::sendSms($phone, "Twilio works?");
+    public function actionTestTwilio() {
+        Twilio::sendEmailToAdmins("test", "Email works?");
     }
 
     public function actionGetLatLng($address) {

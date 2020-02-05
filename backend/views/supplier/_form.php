@@ -30,17 +30,18 @@ $subscribes = \yii\helpers\ArrayHelper::getColumn(Yii::$app->params['subscribePl
             <?= $form->field($model, 'status')->dropDownList(
                 $subscribes
             ); ?>
-            <?=$form->field($model, 'subscribe_ends')->widget(\kartik\datetime\DateTimePicker::className(),[
-    'name' => 'dp_1',
-    'type' => \kartik\datetime\DateTimePicker::TYPE_INPUT,
-    'convertFormat' => true,
-    'value'=> $model->subscribe_ends,
-    'pluginOptions' => [
-        'autoclose'=>true,
-        'weekStart'=>1, //неделя начинается с понедельника
-        'todayBtn'=>true, //снизу кнопка "сегодня"
-    ]
-]);?>
+            <?= $form->field($model, 'subscribe_ends')->widget(\kartik\datetime\DateTimePicker::className(), [
+                'name' => 'dp_1',
+                'type' => \kartik\datetime\DateTimePicker::TYPE_INPUT,
+                //'convertFormat' => true,
+                   'value'=> $model->subscribe_ends,
+                'pluginOptions' => [
+                    'format' => 'yyyy-mm-dd hh:ii:ss',
+                    'autoclose' => true,
+                    'weekStart' => 1, //неделя начинается с понедельника
+                    'todayBtn' => true, //снизу кнопка "сегодня"
+                ]
+            ]); ?>
             <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'address_2')->textInput(['maxlength' => true]) ?>
         </div>
@@ -49,28 +50,29 @@ $subscribes = \yii\helpers\ArrayHelper::getColumn(Yii::$app->params['subscribePl
     <div class="row">
         <div class="col-xs-6">
             <?= $form->field($model, 'product_name')->textInput(['maxlength' => true]) ?>
-            <?php if (!empty($model->product_image)):?>
-                <img src="<?=Yii::$app->params['webProjectUrl'] . '/img/uploads/' . $model->product_image?>" style="height:100px;widht:auto;">
-            <?php endif;?>
+            <?php if (!empty($model->product_image)): ?>
+                <img src="<?= Yii::$app->params['webProjectUrl'] . '/img/uploads/' . $model->product_image ?>"
+                     style="height:100px;widht:auto;">
+            <?php endif; ?>
             <!--
                 <?= $form->field($model, 'product_image')->fileInput() ?>
               -->
         </div>
         <div class="col-xs-6">
             <?= $form->field($model, 'is_active')->dropDownList([
-                    '0' => 'No',
-                    '1' => 'Yes'
+                '0' => 'No',
+                '1' => 'Yes'
             ]) ?>
-            <?php if (!empty($model->logo)):?>
-                <img src="<?=Yii::$app->params['webProjectUrl'] . '/img/uploads/' . $model->logo?>" style="height:100px;widht:auto;">
-            <?php endif;?>
+            <?php if (!empty($model->logo)): ?>
+                <img src="<?= Yii::$app->params['webProjectUrl'] . '/img/uploads/' . $model->logo ?>"
+                     style="height:100px;widht:auto;">
+            <?php endif; ?>
             <!--
             <?= $form->field($model, 'logo')->fileInput() ?>
                 -->
         </div>
 
     </div>
-
 
 
     <!--
