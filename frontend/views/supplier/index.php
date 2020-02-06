@@ -13,7 +13,7 @@ $this->title = 'Supplier cabinet';
     <div class="container">
         <div class="supplier-cab__menu">
             <div class="supplier-cab__username">
-                <p class="text--large"><strong>Hi,</strong> Green Label DC!</p>
+                <p class="text--large"><strong>Hi,</strong> <?=Yii::$app->user->identity->username?>!</p>
                 <div class="stars stars--left">
                     <?php
                     for ($i = 1; $i <= 5; $i++):
