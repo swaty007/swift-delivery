@@ -524,7 +524,7 @@ $this->title = 'Supplier cabinet';
                 </div>
                 <div class="form-group">
                     <p class="text--small text--blue-opacity">
-                        ETA:
+                        ETA: (by google maps from your office)
                     </p>
                     <p id="modal_take_order_duration" class="text--large text--bold text--green">
 
