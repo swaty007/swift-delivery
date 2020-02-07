@@ -127,6 +127,10 @@ body {
     background-color: $brand-blue;
     box-shadow: none;
   }
+  &--red {
+    background-color: $brand-red;
+    box-shadow: none;
+  }
   &--no-shadow {
     box-shadow: none;
   }

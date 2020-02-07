@@ -290,9 +290,14 @@ $this->title = 'Supplier cabinet';
                             <h4 class="supplier-cab__table-content--title text--xs">
                                 Delivery Status: <span class="text--regular"><?= \common\models\Order::getStatusTextFromStatus($item['status']) ?></span>
                             </h4>
-                            <a href="<?=Url::toRoute(['supplier/index','complete' => $item['id']]);?>" class="btn-sm main-btn main-btn--xs">
-                                Complete order
-                            </a>
+                            <div class="flex-center">
+                                <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $item['id']]);?>" class="btn-sm main-btn main-btn--xs main-btn--red">
+                                    Cancel order
+                                </a>
+                                <a href="<?=Url::toRoute(['supplier/index','complete' => $item['id']]);?>" class="btn-sm main-btn main-btn--xs">
+                                    Complete order
+                                </a>
+                            </div>
                         </div>
                     </td>
                 </tr>

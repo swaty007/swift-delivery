@@ -299,7 +299,6 @@ class SupplierController extends BaseAuthorizedController
         }
 
         $messageCustomer = "Your order for " . implode(' & ', $products) . " ($" . $order->total . ") is on the way! " . $order->deliver_name . ", from " . $this->supplierModel->name . ", should arrive in about $order->delivery_duration";
-        $messageSupplier = "On, $order->delivery_duration, you accepted a new order #$order->id for $" . $order->total . " to delivery: " . implode(' & ', $products);
 
         Twilio::sendSms($number, $messageCustomer);
         Twilio::sendSms(Yii::$app->user->identity->phone_number, $messageSupplier);
