@@ -20,6 +20,6 @@ use yii\helpers\Html;
             if (typeof $.pjax !== 'undefined') {
                 $.pjax.reload({container: "#order_status"});
             }
-        }, 7500)
+        }, 5500)
     </script>
 <?php \yii\widgets\Pjax::end(); ?>

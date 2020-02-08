@@ -109,3 +109,22 @@ use yii\helpers\Html;
         </div>
     </div>
 </div>
+<div class="deliver__info">
+    <div class="container">
+        <div class="flex-center flex-center--between">
+            <div class="flex-center">
+                <div class="deliver__info--logo">
+                    <?= Html::img(Yii::$app->params['webUploadsDir'].$order->supplier->logo, ['class' => '']); ?>
+                </div>
+                <div class="deliver__info--content">
+                    <p class="text text--white text--small"><strong><?=$order->deliver_name;?></strong> is on his way!</p>
+                    <p class="text text--white text--small"><strong>Company</strong>: <?=$order->supplier->name;?></p>
+                </div>
+            </div>
+            <div class="deliver__info--icons flex-center">
+                <a href="tel:" class="deliver__call"></a>
+                <a href="sms:" class="deliver__sms"></a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -176,7 +176,6 @@ AppAsset::register($this);
 
     <?= $content ?>
 
-
 <nav id="navbar_sd" class="navbar__wrap">
     <div class="container navbar__container">
         <div class="navbar__header">
@@ -205,6 +204,8 @@ AppAsset::register($this);
                </div>
                <div class="navbar__step--text">
                    Confirmation
+<!--                   --><?php //var_dump($this->params);?>
+<!--                   --><?php //var_dump(Yii::$app->user->identity);?>
                </div>
            </div>
             <?php else:?>

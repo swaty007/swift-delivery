@@ -96,7 +96,7 @@ class SiteController extends Controller
             switch (Yii::$app->user->identity->role) {
                 case User::USER_ROLE_SUPPLIER:
 
-                    $redirectUrl = '/supplier/index';
+                    $redirectUrl = 'supplier/index';
                     break;
                 default:
                     $redirectUrl = null;
@@ -106,7 +106,7 @@ class SiteController extends Controller
 
             if (!is_null($redirectUrl)) {
 
-                return $this->redirect($redirectUrl)->send();
+                return $this->redirect(Url::toRoute([$redirectUrl]))->send();
             }
         }
 
@@ -263,7 +263,7 @@ class SiteController extends Controller
             return $this->redirect('/site/index');
         }
 
-        Log::orderLog($order->id,null , "Order canceled by customer");
+        Log::orderLog($order->id, Yii::$app->user->getId() , "Order canceled by customer");
 
         $order->status = Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER;
         $order->save();

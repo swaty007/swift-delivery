@@ -1,0 +1,41 @@
+.deliver {
+  &__info {
+    box-shadow: 0px -10px 25px rgba(0, 0, 0, 0.1);
+    background-color: $brand-blue;
+    padding: 20px 0;
+    position: sticky;
+    bottom: 71px;
+    &--logo {
+      margin-right: 15px;
+      img {
+        height: 50px;
+        width: 50px;
+        border-radius: 25px;
+        overflow: hidden;
+      }
+    }
+    &--content {
+
+    }
+    &--icons {
+
+    }
+  }
+  &__call, &__sms {
+    display: block;
+    text-decoration: none;
+    outline: 0;
+    margin-left: 30px;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+  }
+  &__call {
+    background-image: url(../../img/icon_phone_white.svg);
+  }
+  &__sms {
+    background-image: url(../../img/icon_chat.svg);
+  }
+}

@@ -29,6 +29,9 @@ class Supplier {
                 data: data,
                 success: function (msg) {
                     console.log(msg);
+                    orderName.val('');
+                    inputTimeSelect.val('');
+                    inputTimeVal.val('');
                     if (msg.result) {
                         // $("#zip_validate").closest('.form-group').removeClass('has-error').addClass('has-success');
                         // $("#zip_validate_status").text('You write available zip code');

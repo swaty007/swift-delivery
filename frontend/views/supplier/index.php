@@ -8,12 +8,17 @@ use yii\web\View;
 $this->title = 'Supplier cabinet';
 ?>
 <section class="supplier-cab">
-
+    <?php \yii\widgets\Pjax::begin(['id' => 'supplier_tables',
+        'options' => [
+            'class' => '',
+            'tag' => 'div'
+        ]]); ?>
     <hr class="full">
     <div class="container">
         <div class="supplier-cab__menu">
             <div class="supplier-cab__username">
-                <p class="text--large"><strong>Hi,</strong> <?=Yii::$app->user->identity->username?>!</p>
+<!--                <p class="text--large"><strong>Hi,</strong> --><?//=Yii::$app->user->identity->username?><!--!</p>-->
+                <p class="text--large"><strong>Hi,</strong> <?=$this->params['supplierModel']->name?>!</p>
                 <div class="stars stars--left">
                     <?php
                     for ($i = 1; $i <= 5; $i++):
@@ -307,11 +312,7 @@ $this->title = 'Supplier cabinet';
         <h2 class="text--blue text text--bold">
             Order History:
         </h2>
-        <?php \yii\widgets\Pjax::begin(['id' => 'supplier_tables',
-            'options' => [
-                'class' => '',
-                'tag' => 'div'
-            ]]); ?>
+
         <table class="supplier-cab__table">
             <tr>
                 <th>Date:</th>
@@ -476,23 +477,41 @@ $this->title = 'Supplier cabinet';
             <?php endforeach; ?>
         </table>
 
-
-        <script>
-            clearInterval(intervarPjax)
-            var intervarPjax = setInterval(function () {
-                if (typeof $.pjax !== 'undefined') {
-                    if ($('.supplier-cab__table-content').is(':visible')) {
-
-                    } else {
-                        $.pjax.reload({container: "#supplier_tables"});
-                    }
-                }
-            }, 5000)
-        </script>
-        <?php \yii\widgets\Pjax::end(); ?>
-
     </div>
+    <?php if (!empty($inProgress)):?>
+        <div class="deliver__info">
+            <div class="container">
+                <div class="flex-center flex-center--between">
+                    <div class="deliver__info--content">
+                        <p class="text text--white text--small"><strong><?=$inProgress[0]['customer']['username'];?></strong> is your customer!</p>
+                        <p class="text">
+                            <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $inProgress[0]['id']]);?>" class="text text--red text--xs">
+                                <?= Html::img('@web/img/icon_cancel.svg', ['class' => '']) ?>
+                                Cancel Order
+                            </a>
+                        </p>
+                    </div>
+                    <div class="deliver__info--icons flex-center">
+                        <a href="tel:<?=preg_replace( '/[^0-9]/', '', $inProgress[0]['customer']['phone_number'] );?>" class="deliver__call"></a>
+                        <a href="sms:<?=preg_replace( '/[^0-9]/', '', $inProgress[0]['customer']['phone_number'] );?>" class="deliver__sms"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
+    <script>
+        clearInterval(intervarPjax)
+        var intervarPjax = setInterval(function () {
+            if (typeof $.pjax !== 'undefined') {
+                if ($('.supplier-cab__table-content').is(':visible')) {
 
+                } else {
+                    $.pjax.reload({container: "#supplier_tables"});
+                }
+            }
+        }, 5000)
+    </script>
+    <?php \yii\widgets\Pjax::end(); ?>
 </section>
 
 <div class="modal modal--full-screen modal--order" id="take_order">

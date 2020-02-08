@@ -63,6 +63,7 @@ class SupplierController extends BaseAuthorizedController
         }
 
         $this->supplierModel = $this->getSupplierModel();
+        Yii::$app->view->params['supplierModel'] = $this->supplierModel;
 
         if (!$this->supplierModel->is_active && !in_array($actionId, ['need-activation', 'confirm'])) {
             return $this->redirect('need-activation')->send();
@@ -385,10 +386,11 @@ class SupplierController extends BaseAuthorizedController
         if (!$order->count()) {
             return false;
         }
+        $order = $order->one();
 
         $number = User::find()->where(['id' => $order->customer_id])->one()->phone_number;
         Twilio::sendSms($number, Message::getText('delivery_failed_sms'));
-        $order = $order->one();
+        Log::orderLog($order->id, Yii::$app->user->getId(), 'Order canceled by supplier');
         $order->status = $status;
         $order->save();
     }

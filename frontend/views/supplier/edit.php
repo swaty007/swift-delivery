@@ -12,13 +12,13 @@ use yii\helpers\Url;
 $this->title = 'Edit supplier';
 ?>
 <?//= $this->render('../components/_alert', ['module' => 'available']); ?>
-<section class="supplier supplier-cab">
-    <div class="container">
+<section class="supplier-cab">
+
         <hr class="full">
         <div class="container">
             <div class="supplier-cab__menu">
                 <div class="supplier-cab__username">
-                    <p class="text--large"><strong>Hi,</strong> Green Label DC!</p>
+                    <p class="text--large"><strong>Hi,</strong> <?=$this->params['supplierModel']->name?>!</p>
                     <div class="stars stars--left">
                         <?php
                         for ($i = 1; $i <= 5; $i++):
@@ -45,7 +45,7 @@ $this->title = 'Edit supplier';
             </div>
         </div>
         <hr class="full">
-
+    <div class="container">
         <?php $form = ActiveForm::begin(['id' => 'form-create-supplier', 'enableAjaxValidation' => true]);//, 'enableAjaxValidation' => true ?>
         <!--        --><? //= $form->field($model, 'password')->label(false)->passwordInput() ?>
         <!--        --><? //= $form->field($model, 'password_repeat')->label(false)->passwordInput() ?>
