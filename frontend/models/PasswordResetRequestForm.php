@@ -1,6 +1,7 @@
 <?php
 namespace frontend\models;
 
+use common\models\Twilio;
 use Yii;
 use yii\base\Model;
 use common\models\User;
@@ -54,15 +55,6 @@ class PasswordResetRequestForm extends Model
             }
         }
 
-//        return Yii::$app
-//            ->mailer
-//            ->compose(
-//                ['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'],
-//                ['user' => $user]
-//            )
-//            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-//            ->setTo($this->email)
-//            ->setSubject('Password reset for ' . Yii::$app->name)
-//            ->send();
+        Twilio::sendSms($user->phone_number, "Password reset link - " . Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 'token' => $user->password_reset_token]));
     }
 }

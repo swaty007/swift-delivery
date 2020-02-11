@@ -30,6 +30,32 @@ $this->params['breadcrumbs'][] = $this->title;
                     'type',
                     'date',
                     'receiver',
+                    'order_id' => [
+                        'format' => 'raw',
+                        'label' => 'Order',
+                        'value' => function ($data) {
+                            $output = '<a href="' .
+                                \yii\helpers\Url::toRoute('/order/index?SearchOrder[id]=' .
+                                $data['order_id']) .
+                                '">' .
+                                $data['order_id'] .
+                                '</a>';
+                            return $output;
+                        }
+                    ],
+                    'user_id' => [
+                        'format' => 'raw',
+                        'label' => 'User',
+                        'value' => function ($data) {
+                            $output = '<a href="' .
+                                \yii\helpers\Url::toRoute('/user/index?SearchUser[id]=' .
+                                    $data['user_id']) .
+                                '">' .
+                                $data['user_id'] .
+                                '</a>';
+                            return $output;
+                        }
+                    ],
                 ],
             ]); ?>
         </div>

@@ -14,24 +14,26 @@ use yii\widgets\ActiveForm;
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
-
-    <?= $form->field($model, 'id') ?>
-
     <?= $form->field($model, 'order_id') ?>
 
     <?= $form->field($model, 'user_id') ?>
 
     <?= $form->field($model, 'text') ?>
 
-    <?= $form->field($model, 'type') ?>
+    <?= $form->field($model, 'type')->dropDownList(
+        [
+            \common\models\Log::TYPE_ORDER => 'Orders',
+            \common\models\Log::TYPE_ERROR => 'Errors',
+            \common\models\Log::TYPE_EMAIL => 'Emails',
+            \common\models\Log::TYPE_SMS => 'SMS',
+        ]
+    ); ?>
 
-    <?php // echo $form->field($model, 'date') ?>
-
-    <?php // echo $form->field($model, 'receiver') ?>
+    <?= $form->field($model, 'receiver') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::a('Reset', \yii\helpers\Url::toRoute('/log/index'),['class' => 'btn btn-outline-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

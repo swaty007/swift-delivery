@@ -52,7 +52,6 @@ class SupplierForm extends Model
             [['web_url'], 'url'],
             ['terms', 'compare', 'compareValue' => 1, 'type' => 'number', 'operator' => '==', 'message' => 'Please, accept terms of use.'],
             [['logo', 'product_image'], 'file', 'extensions' => 'png, jpg'],
-            ['zip', 'exist', 'targetAttribute' => 'zipcode', 'targetClass' => 'common\models\Zipcode', 'message' => 'This zip is not supported.'],
         ];
     }
 
@@ -73,6 +72,11 @@ class SupplierForm extends Model
 
         if ($apiResult['success'] == false) {
             $this->addError('address', $apiResult['message']);
+            return null;
+        }
+
+        if (Zipcode::isBlocked($this->zip)) {
+            $this->addError('zip', 'Zipcode is not allowed');
             return null;
         }
 

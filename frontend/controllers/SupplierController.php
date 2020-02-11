@@ -302,7 +302,6 @@ class SupplierController extends BaseAuthorizedController
         $messageCustomer = "Your order for " . implode(' & ', $products) . " ($" . $order->total . ") is on the way! " . $order->deliver_name . ", from " . $this->supplierModel->name . ", should arrive in about $order->delivery_duration";
 
         Twilio::sendSms($number, $messageCustomer);
-        Twilio::sendSms(Yii::$app->user->identity->phone_number, $messageSupplier);
 
         return $order->save();
     }

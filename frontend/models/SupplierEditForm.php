@@ -3,10 +3,8 @@
 namespace frontend\models;
 
 use common\models\GoogleMaps;
-use common\models\Message;
 use common\models\Product;
 use common\models\SupplierItemRelation;
-use common\models\Twilio;
 use common\models\Zipcode;
 use Yii;
 use yii\base\Model;
@@ -48,7 +46,6 @@ class SupplierEditForm extends Model
             [['web_url'], 'url'],
             ['terms', 'compare', 'compareValue' => 1, 'type' => 'number', 'operator' => '==', 'message' => 'Please, accept terms of use.'],
             [['logo', 'product_image'], 'file', 'extensions' => 'png, jpg'],
-            ['zip', 'exist', 'targetAttribute' => 'zipcode', 'targetClass' => 'common\models\Zipcode', 'message' => 'This zip is not supported.'],
         ];
     }
 
@@ -69,6 +66,11 @@ class SupplierEditForm extends Model
 
         if ($apiResult['success'] == false) {
             $this->addError('address', $apiResult['message']);
+            return null;
+        }
+
+        if(Zipcode::isBlocked($this->zip)) {
+            $this->addError('zip', 'Zipcode not allowed');
             return null;
         }
 

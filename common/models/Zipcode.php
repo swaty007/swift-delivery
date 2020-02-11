@@ -44,4 +44,8 @@ class Zipcode extends \yii\db\ActiveRecord
             'zipcode' => 'Zipcode',
         ];
     }
+
+    static public function isBlocked($zip) {
+        return (is_null(Zipcode::find()->where(['zipcode' => $zip])->andWhere(['is_active' => 1])->one())) ? false : true;
+    }
 }

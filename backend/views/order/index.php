@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                 foreach ($products as $product) {
                                     $data.= $product->description . ' ' . $product->item_price . '$' . ' x' . $product->count . '<br>';
-                                    $total+=$product->total_price;
+                                    $total+=(int)$product->total_price;
                                 }
 
                                 $data.= 'Total: '.$total.'$';

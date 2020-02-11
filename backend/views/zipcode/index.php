@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>Blocked Zipcodes</h1>
 
     <div style="position: relative">
         <p style="position: absolute;right: 0;top:-50px;">
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'yii\grid\SerialColumn'],
                     'zipcode',
                     'is_active' => [
-                            'label' => 'Active',
+                            'label' => 'Blocked',
                             'value' => function ($data) {
                                 return $data->is_active == 1 ? 'Yes' : 'No';
                             }

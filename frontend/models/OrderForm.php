@@ -8,7 +8,10 @@ use common\models\OrderItem;
 use common\models\Order;
 use common\models\Product;
 use common\models\ProductOption;
+use common\models\Supplier;
+use common\models\Twilio;
 use common\models\User;
+use common\models\Zipcode;
 use frontend\controllers\SiteController;
 use Yii;
 use yii\base\Model;
@@ -48,8 +51,6 @@ class OrderForm extends Model
             [['address', 'address_2'], 'string', 'max' => 80],
             [['description'], 'string', 'max' => 200],
             ['zip', 'string'],
-            // TODO: ask if we need this
-            ////  ['zip', 'exist', 'targetAttribute' => 'zipcode', 'targetClass' => 'common\models\Zipcode', 'message' => 'This zip is not supported.'],
         ];
     }
 
@@ -66,8 +67,13 @@ class OrderForm extends Model
 
         $apiResult = $gm->getLatLng($this->address . ' ' . $this->address_2);
 
-        if($apiResult['success'] == false) {
+        if ($apiResult['success'] == false) {
             $this->addError('address', $apiResult['message']);
+            return null;
+        }
+
+        if (Zipcode::isBlocked($this->zip)) {
+            $this->addError('zip', 'Zipcode is not allowed');
             return null;
         }
 
@@ -107,13 +113,35 @@ class OrderForm extends Model
 
             $order->total = $this->total;
             $order->save();
-            Log::orderLog($order->id,$customer->id, "Order created");
+            Log::orderLog($order->id, $customer->id, "Order created");
 
             $this->instance = $order;
+
+            $products = [];
+            $rawProducts = [];
+
+            foreach (OrderItem::findAll(['order_id' => $order->id]) as $orderItem) {
+                $productName = Product::find()->where(['id' => $orderItem->product_item_id])->one()->name;
+                if (!isset($rawProducts[$productName])) {
+                    $rawProducts[$productName] = $orderItem->count;
+                } else {
+                    $rawProducts[$productName] += $orderItem->count;
+                }
+            }
+
+            foreach ($rawProducts as $name => $count) {
+                $products[] = $count . ' ' . $name;
+            }
+
+            $messageSupplier = "New order available for $$order->total to delivery: " . implode(' & ', $products);
+
+            foreach (Supplier::find()->where(['is_active' => 1])->all() as $supplier) {
+                $supplierUser = User::find()->where(['id' => $supplier->supplier_id])->one();
+                Twilio::sendSms($supplierUser->phone_number, $messageSupplier);
+            }
+
             return true;
         } catch (\Exception $e) {
-            //User::deleteAll(['phone_number' => $this->phone_number]);
-
             return false;
         }
     }
@@ -142,9 +170,8 @@ class OrderForm extends Model
         return true;
     }
 
-    private function printAndExit($d) {
-        echo '<pre>';
-        var_dump($d);
-        exit;
+    private function printAndExit($d)
+    {
+        return false;
     }
 }

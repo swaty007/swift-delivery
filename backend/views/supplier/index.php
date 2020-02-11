@@ -26,7 +26,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     'id',
-                    'supplier_id',
+                    'supplier_id' => [
+                        'format' => 'raw',
+                        'label' => 'User',
+                        'value' => function ($data) {
+                            $supplier = '';
+                            $supplier .= '<a href="' .
+                                \yii\helpers\Url::toRoute('/user/update/?id=') .
+                                $data['supplier_id'] . '">' . $data['supplier_id'] . '</a>';
+                            return $supplier;
+                        }
+                    ],
                     'name',
                     'zip',
                     //'description',
