@@ -51,6 +51,7 @@ $subscribes = \yii\helpers\ArrayHelper::getColumn(Yii::$app->params['subscribePl
         <div class="col-xs-6">
             <?= $form->field($model, 'product_name')->textInput(['maxlength' => true]) ?>
             <?php if (!empty($model->product_image)): ?>
+                <h3>Product Image</h3>
                 <img src="<?= Yii::$app->params['webProjectUrl'] . '/img/uploads/' . $model->product_image ?>"
                      style="height:100px;widht:auto;">
             <?php endif; ?>
@@ -64,6 +65,7 @@ $subscribes = \yii\helpers\ArrayHelper::getColumn(Yii::$app->params['subscribePl
                 '1' => 'Yes'
             ]) ?>
             <?php if (!empty($model->logo)): ?>
+                <h3>Company Logo</h3>
                 <img src="<?= Yii::$app->params['webProjectUrl'] . '/img/uploads/' . $model->logo ?>"
                      style="height:100px;widht:auto;">
             <?php endif; ?>

@@ -24,7 +24,6 @@ switch ($module):
                     <p class="text text--small">
                         Thank for using <strong class="text--white">Swift Delivery!</strong> Hope to see you again soon.
                     </p>
-                    <a class="text text--small text--white" href="#">Share your love on social!</a>
                 </div>
             </div>
         </div>

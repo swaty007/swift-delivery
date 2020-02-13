@@ -88,7 +88,7 @@ class SiteController extends Controller
     public function beforeAction($action)
     {
         $allowedPages = [
-            'index', 'logout', 'order', 'order-status', 'order-rating', 'cancel-order', 'error'
+            'index', 'logout', 'order', 'order-status', 'order-rating', 'cancel-order', 'error', 'show-info-page'
         ];
 
 

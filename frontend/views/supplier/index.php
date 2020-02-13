@@ -176,8 +176,11 @@ $this->title = 'Supplier cabinet';
                             <?= Html::img(Yii::$app->params['webUploadsDir'].$item['supplier']['product_image'], ['class' => 'on-way__img']); ?>
                         </div>
 
+<!--                        <h4 class="supplier-cab__table-content--title text--xs">-->
+<!--                            Delivery Status: <span class="text--regular">--><?//= \common\models\Order::getStatusTextFromStatus($item['status']) ?><!--</span>-->
+<!--                        </h4>-->
                         <h4 class="supplier-cab__table-content--title text--xs">
-                            Delivery Status: <span class="text--regular"><?= \common\models\Order::getStatusTextFromStatus($item['status']) ?></span>
+                            Zip Code: <span class="text--regular"><?= $item['zip'] ?></span>
                         </h4>
                         <a href="#" class="btn-sm main-btn main-btn--xs" data-direction="take-order" data-order-id="<?= $item['id'] ?>">
                             Take
@@ -292,8 +295,11 @@ $this->title = 'Supplier cabinet';
                                 <?= Html::img(Yii::$app->params['webUploadsDir'].$item['supplier']['product_image'], ['class' => 'on-way__img']); ?>
                             </div>
 
+<!--                            <h4 class="supplier-cab__table-content--title text--xs">-->
+<!--                                Delivery Status: <span class="text--regular">--><?//= \common\models\Order::getStatusTextFromStatus($item['status']) ?><!--</span>-->
+<!--                            </h4>-->
                             <h4 class="supplier-cab__table-content--title text--xs">
-                                Delivery Status: <span class="text--regular"><?= \common\models\Order::getStatusTextFromStatus($item['status']) ?></span>
+                                Zip Code: <span class="text--regular"><?= $item['zip'] ?></span>
                             </h4>
                             <div class="flex-center">
                                 <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $item['id']]);?>" class="btn-sm main-btn main-btn--xs main-btn--red">
@@ -411,8 +417,11 @@ $this->title = 'Supplier cabinet';
                                 <?= Html::img(Yii::$app->params['webUploadsDir'].$item['supplier']['product_image'], ['class' => 'on-way__img']); ?>
                             </div>
 
+<!--                            <h4 class="supplier-cab__table-content--title text--xs">-->
+<!--                                Delivery Status: <span class="text--regular">--><?//= \common\models\Order::getStatusTextFromStatus($item['status']) ?><!--</span>-->
+<!--                            </h4>-->
                             <h4 class="supplier-cab__table-content--title text--xs">
-                                Delivery Status: <span class="text--regular"><?= \common\models\Order::getStatusTextFromStatus($item['status']) ?></span>
+                                Zip Code: <span class="text--regular"><?= $item['zip'] ?></span>
                             </h4>
                             <?php if ($item['rating']):?>
                                 <h4 class="supplier-cab__table-content--title text--xs">

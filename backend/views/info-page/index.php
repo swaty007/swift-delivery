@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div style="position: relative">
         <p style="position: absolute;right: 0;top:-50px;">
-            <?= Html::a('Add Zipcode', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Add Page', ['create'], ['class' => 'btn btn-success']) ?>
         </p>
     </div>
 

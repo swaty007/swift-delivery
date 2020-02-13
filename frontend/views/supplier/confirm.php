@@ -128,7 +128,7 @@ $this->title = 'Create supplier';
                 ->label(false)->error(false); ?>
             <p class="text text--small text--blue-opacity supplier__terms--text">
                 My company will follw Swift Delivery’s
-                <a href="<?=Url::toRoute(['site/index']);?>" class="text--bold text--blue-opacity">
+                <a href="<?=Url::toRoute(['/info/supplier-code-of-ethics']);?>" class="text--bold text--blue-opacity">
                     Code of Ethics
                     <?= Html::img('@web/img/icon_share_link.svg', ['class' => 'supplier__terms--img']); ?>
                 </a>

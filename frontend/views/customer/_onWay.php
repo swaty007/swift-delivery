@@ -122,8 +122,8 @@ use yii\helpers\Html;
                 </div>
             </div>
             <div class="deliver__info--icons flex-center">
-                <a href="tel:" class="deliver__call"></a>
-                <a href="sms:" class="deliver__sms"></a>
+                <a href="tel:<?=preg_replace( '/[^0-9]/', '', \common\models\User::find()->where(['id' => $order->supplier->supplier_id])->one()->phone_number );?>" class="deliver__call"></a>
+                <a href="sms:<?=preg_replace( '/[^0-9]/', '',\common\models\User::find()->where(['id' => $order->supplier->supplier_id])->one()->phone_number);?>" class="deliver__sms"></a>
             </div>
         </div>
     </div>

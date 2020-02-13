@@ -22,7 +22,6 @@ class PasswordResetRequestForm extends Model
         return [
             ['phone_number', 'trim'],
             ['phone_number', 'required'],
-            ['phone_number', 'email'],
             ['phone_number', 'exist',
                 'targetClass' => '\common\models\User',
                 'filter' => ['status' => User::STATUS_ACTIVE],
@@ -41,7 +40,7 @@ class PasswordResetRequestForm extends Model
         /* @var $user User */
         $user = User::findOne([
             'status' => User::STATUS_ACTIVE,
-            'phone_number' => $this->phone,
+            'phone_number' => $this->phone_number,
         ]);
 
         if (!$user) {
@@ -56,5 +55,7 @@ class PasswordResetRequestForm extends Model
         }
 
         Twilio::sendSms($user->phone_number, "Password reset link - " . Yii::$app->urlManager->createAbsoluteUrl(['site/reset-password', 'token' => $user->password_reset_token]));
+
+        return true;
     }
 }

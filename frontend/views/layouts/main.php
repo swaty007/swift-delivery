@@ -220,10 +220,10 @@ AppAsset::register($this);
         <div id="navbar_collapse" class="navbar__collapse">
             <ul class="navbar__menu">
                 <li class="navbar__item">
-                    <a href="#" class="sub-title text--blue">Help Center</a>
+                    <a href="<?=Url::toRoute('/info/help-center')?>" class="sub-title text--blue">Help Center</a>
                 </li>
                 <li class="navbar__item">
-                    <a href="<?=Url::toRoute(['site/signup']);?>" class="sub-title text--blue">Contact</a>
+                    <a href="<?=Url::toRoute(['/info/contact']);?>" class="sub-title text--blue">Contact</a>
                 </li>
                 <li class="navbar__item">
                     <hr>
