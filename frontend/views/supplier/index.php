@@ -66,12 +66,132 @@ $this->title = 'Supplier cabinet';
     <hr class="full">
     <div class="container">
 
+        <h2 class="text--blue text text--bold">
+            Orders In Progress
+        </h2>
+        <table class="supplier-cab__table">
+            <tr>
+                <th>Date:</th>
+                <th>Total:</th>
+                <th></th>
+            </tr>
+            <?php foreach ($inProgress as $item): ?>
+                <tr>
+                    <td>
+                        <?= $item['created_at']; ?>
+                    </td>
+                    <td>
+                        <?= $item['total']; ?>
+                    </td>
+                    <td>
+                        <button class="btn-sm main-btn main-btn--xs" data-direction="show-more-orders">
+                            Show More
+                        </button>
+                    </td>
+                </tr>
+                <tr class="supplier-cab__table--content">
+                    <td colspan="3">
+                        <div class="supplier-cab__table-content">
+
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Company: <span class="text--regular"><?=$item['supplier']['name']?></span>
+                            </h4>
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Order #: <span class="text--regular"><?= $item['id'] ?></span>
+                            </h4>
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Delivering to:
+
+                                <span class="text--regular">
+                                <?= $item['address'] ?>
+                                    <?php if ($item['address_2']): ?>
+                                        <?= $item['address_2'] ?>
+                                    <?php endif; ?>
+                                / <?= $item['zip'] ?>
+                            </span>
+                            </h4>
+
+                            <?php if(\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2']) !== null):?>
+                                <img class="supplier-cab__map" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=$item['address']?>&zoom=13&size=300x300&maptype=roadmap
+&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'])->latlng?>
+&key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
+                            <?php endif;?>
+                            <h4 class="text--xs">
+                                Gift Order
+                            </h4>
+                            <div class="card__wrap">
+                                <?php foreach ($item['orderItems'] as $key => $gift): ?>
+                                    <div class="card__item">
+                                        <div class="card__item--left">
+                                            <p class="text--xs text--blue-opacity">
+                                                <strong>
+                                                    Flower | <span class="text--green">$<?= $gift['item_price'] ?></span>
+                                                </strong>
+                                            </p>
+                                            <p class="card__text text--blue-opacity">
+                                                <?= $gift['description'] ?>
+                                            </p>
+                                            <p class="card__text text--blue-opacity">
+                                                <strong>
+                                                    Quantity: <span><?= $gift['count'] ?></span>
+                                                </strong>
+                                            </p>
+                                        </div>
+                                        <div class="card__item--right">
+                                            <p class="text--xs text--green">
+                                                <strong>
+                                                    $<?= number_format($gift['total_price'], 2); ?>
+                                                </strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                                <div class="card__item card__item--total">
+                                    <div class="card__item--left">
+                                        <p class="text--small text--blue-opacity">
+                                            <strong>Total</strong>
+                                        </p>
+                                    </div>
+                                    <div class="card__item--right">
+                                        <p class="text--small text--green">
+                                            <strong>
+                                                $<?= number_format($item['total'], 2); ?>
+                                            </strong>
+                                        </p>
+                                    </div>
+                                </div>
+                                <p class="text--xs text--blue-opacity">
+                                    <strong>&nbsp;</strong>
+                                </p>
+                                <p class="text--xs text--blue-opacity">
+                                    Gift Product: <?=$item['supplier']['product_name']?>
+                                </p>
+                                <?= Html::img(Yii::$app->params['webUploadsDir'].$item['supplier']['product_image'], ['class' => 'on-way__img']); ?>
+                            </div>
+
+                            <!--                            <h4 class="supplier-cab__table-content--title text--xs">-->
+                            <!--                                Delivery Status: <span class="text--regular">--><?//= \common\models\Order::getStatusTextFromStatus($item['status']) ?><!--</span>-->
+                            <!--                            </h4>-->
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Zip Code: <span class="text--regular"><?= $item['zip'] ?></span>
+                            </h4>
+                            <div class="flex-center">
+                                <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $item['id']]);?>" class="btn-sm main-btn main-btn--xs main-btn--red">
+                                    Cancel order
+                                </a>
+                                <a href="<?=Url::toRoute(['supplier/index','complete' => $item['id']]);?>" class="btn-sm main-btn main-btn--xs">
+                                    Complete order
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
 
         <h2 class="text--blue text text--bold">
             Allowed Orders
         </h2>
-
-<!--        <pre>--><?php //var_dump($inProgress)?><!--</pre>-->
         <table class="supplier-cab__table">
             <thead>
             <tr>
@@ -171,7 +291,7 @@ $this->title = 'Supplier cabinet';
                                 <strong>&nbsp;</strong>
                             </p>
                             <p class="text--xs text--blue-opacity">
-                                Rainbow Grinder:<?=$item['supplier']['product_name']?>
+                                Gift Product: <?=$item['supplier']['product_name']?>
                             </p>
                             <?= Html::img(Yii::$app->params['webUploadsDir'].$item['supplier']['product_image'], ['class' => 'on-way__img']); ?>
                         </div>
@@ -191,134 +311,11 @@ $this->title = 'Supplier cabinet';
             <?php endforeach; ?>
             </tbody>
         </table>
-        <h2 class="text--blue text text--bold">
-            Orders In Progress
-        </h2>
 
-        <table class="supplier-cab__table">
-            <tr>
-                <th>Date:</th>
-                <th>Total:</th>
-                <th></th>
-            </tr>
-            <?php foreach ($inProgress as $item): ?>
-                <tr>
-                    <td>
-                        <?= $item['created_at']; ?>
-                    </td>
-                    <td>
-                        <?= $item['total']; ?>
-                    </td>
-                    <td>
-                        <button class="btn-sm main-btn main-btn--xs" data-direction="show-more-orders">
-                            Show More
-                        </button>
-                    </td>
-                </tr>
-                <tr class="supplier-cab__table--content">
-                    <td colspan="3">
-                        <div class="supplier-cab__table-content">
-
-                            <h4 class="supplier-cab__table-content--title text--xs">
-                                Company: <span class="text--regular"><?=$item['supplier']['name']?></span>
-                            </h4>
-                            <h4 class="supplier-cab__table-content--title text--xs">
-                                Order #: <span class="text--regular"><?= $item['id'] ?></span>
-                            </h4>
-                            <h4 class="supplier-cab__table-content--title text--xs">
-                                Delivering to:
-
-                                <span class="text--regular">
-                                <?= $item['address'] ?>
-                                    <?php if ($item['address_2']): ?>
-                                        <?= $item['address_2'] ?>
-                                    <?php endif; ?>
-                                / <?= $item['zip'] ?>
-                            </span>
-                            </h4>
-
-                            <?php if(\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2']) !== null):?>
-                                <img class="supplier-cab__map" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=$item['address']?>&zoom=13&size=300x300&maptype=roadmap
-&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'])->latlng?>
-&key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
-                            <?php endif;?>
-                            <h4 class="text--xs">
-                                Gift Order
-                            </h4>
-                            <div class="card__wrap">
-                                <?php foreach ($item['orderItems'] as $key => $gift): ?>
-                                    <div class="card__item">
-                                        <div class="card__item--left">
-                                            <p class="text--xs text--blue-opacity">
-                                                <strong>
-                                                    Flower | <span class="text--green">$<?= $gift['item_price'] ?></span>
-                                                </strong>
-                                            </p>
-                                            <p class="card__text text--blue-opacity">
-                                                <?= $gift['description'] ?>
-                                            </p>
-                                            <p class="card__text text--blue-opacity">
-                                                <strong>
-                                                    Quantity: <span><?= $gift['count'] ?></span>
-                                                </strong>
-                                            </p>
-                                        </div>
-                                        <div class="card__item--right">
-                                            <p class="text--xs text--green">
-                                                <strong>
-                                                    $<?= number_format($gift['total_price'], 2); ?>
-                                                </strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                                <div class="card__item card__item--total">
-                                    <div class="card__item--left">
-                                        <p class="text--small text--blue-opacity">
-                                            <strong>Total</strong>
-                                        </p>
-                                    </div>
-                                    <div class="card__item--right">
-                                        <p class="text--small text--green">
-                                            <strong>
-                                                $<?= number_format($item['total'], 2); ?>
-                                            </strong>
-                                        </p>
-                                    </div>
-                                </div>
-                                <p class="text--xs text--blue-opacity">
-                                    <strong>&nbsp;</strong>
-                                </p>
-                                <p class="text--xs text--blue-opacity">
-                                    Rainbow Grinder:<?=$item['supplier']['product_name']?>
-                                </p>
-                                <?= Html::img(Yii::$app->params['webUploadsDir'].$item['supplier']['product_image'], ['class' => 'on-way__img']); ?>
-                            </div>
-
-<!--                            <h4 class="supplier-cab__table-content--title text--xs">-->
-<!--                                Delivery Status: <span class="text--regular">--><?//= \common\models\Order::getStatusTextFromStatus($item['status']) ?><!--</span>-->
-<!--                            </h4>-->
-                            <h4 class="supplier-cab__table-content--title text--xs">
-                                Zip Code: <span class="text--regular"><?= $item['zip'] ?></span>
-                            </h4>
-                            <div class="flex-center">
-                                <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $item['id']]);?>" class="btn-sm main-btn main-btn--xs main-btn--red">
-                                    Cancel order
-                                </a>
-                                <a href="<?=Url::toRoute(['supplier/index','complete' => $item['id']]);?>" class="btn-sm main-btn main-btn--xs">
-                                    Complete order
-                                </a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
 
         <h2 class="text--blue text text--bold">
             Order History:
         </h2>
-
         <table class="supplier-cab__table">
             <tr>
                 <th>Date:</th>
@@ -412,7 +409,7 @@ $this->title = 'Supplier cabinet';
                                     <strong>&nbsp;</strong>
                                 </p>
                                 <p class="text--xs text--blue-opacity">
-                                    Rainbow Grinder:<?=$item['supplier']['product_name']?>
+                                    Gift Product: <?=$item['supplier']['product_name']?>
                                 </p>
                                 <?= Html::img(Yii::$app->params['webUploadsDir'].$item['supplier']['product_image'], ['class' => 'on-way__img']); ?>
                             </div>
@@ -540,7 +537,7 @@ $this->title = 'Supplier cabinet';
                         <div class="col-xs-8 col-md-4">
                             <select class="default-select" name="" id="modal_take_order_time">
                                 <option value="min">minutes</option>
-                                <option value="hours">hours</option>
+<!--                                <option value="hours">hours</option>-->
                             </select>
                         </div>
                     </div>

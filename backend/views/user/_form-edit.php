@@ -30,7 +30,7 @@ if(Yii::$app->user->identity->role !== \common\models\User::USER_ROLE_SUPERADMIN
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'username')->textInput() ?>
-    <?= $form->field($model, 'phone_number')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-99-99'])->textInput(['placeholder' => '+1 (__) __-__-__']); ?>
+    <?= $form->field($model, 'phone_number')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-9999'])->textInput(['placeholder' => '+1 (__) __-__-__']); ?>
     <?= $form->field($model, 'role')->dropDownList(
         $roleList
     ); ?>

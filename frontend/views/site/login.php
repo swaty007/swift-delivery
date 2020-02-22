@@ -38,7 +38,7 @@ $this->title = 'Login';
                     <!--            --><?//= Html::error($model, 'username') ?>
 
 
-                    <?= $form->field($model, 'phone_number')->label(false)->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-99-99'])->textInput(['placeholder' => '+1 (___) ___-__-__', 'class' => 'form-control access__phone no-border--top']); ?>
+                    <?= $form->field($model, 'phone_number')->label(false)->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-9999'])->textInput(['placeholder' => '+1 (___) ___-____', 'class' => 'form-control access__phone no-border--top']); ?>
 
                     <?= $form->field($model, 'password')->label(false)->passwordInput(['class'=>'form-control no-border--r0 access__password']) ?>
 

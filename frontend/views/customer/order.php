@@ -64,7 +64,7 @@ $this->title = 'Order Form';
         <hr>
         <?= $form->field($model, 'name')->textInput()->label('First Name:'); ?>
 <!--        --><?//= $form->field($model, 'phone_number')->textInput()->label('Phone Number:'); ?>
-        <?= $form->field($model, 'phone_number')->label('Phone Number:')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-99-99'])->textInput(['placeholder' => '+1 (___) ___-__-__', 'class' => 'access__phone form-control']); ?>
+        <?= $form->field($model, 'phone_number')->label('Phone Number:')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-9999'])->textInput(['placeholder' => '+1 (___) ___-____', 'class' => 'access__phone form-control']); ?>
 
 
         <p class="sub-text text--green text--small text-center">
@@ -181,13 +181,13 @@ $this->title = 'Order Form';
 <div class="container">
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
-            <div class="card__info--items">
+            <a href="#card_pjax" class="card__info--items">
                 <p class="text text--white text--bold">View cart (<?= count($cart);?>)</p>
                 <div class="flex-center">
                     <p class="card__info--margin text text--white text--bold">Total:</p>
                     <p class="text text--white text--bold">$<?=number_format($totalOrder,2)?></p>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>

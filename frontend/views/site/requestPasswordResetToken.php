@@ -25,7 +25,7 @@ $this->title = 'Forgot your password?  No sweat.';
             </h2>
             <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form', 'options' => ['class' => 'access__form']]); ?>
 
-            <?= $form->field($model, 'phone_number')->label(false)->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-99-99'])->textInput(['placeholder' => '+1 (___) ___-__-__', 'class' => 'form-control access__phone no-border--top']); ?>
+            <?= $form->field($model, 'phone_number')->label(false)->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-9999'])->textInput(['placeholder' => '+1 (___) ___-____', 'class' => 'form-control access__phone no-border--top']); ?>
 
             <div class="form-group">
                 <?= Html::submitButton('Text a reset link.', ['class' => 'main-btn main-btn--no-shadow w100 no-border--bottom']) ?>

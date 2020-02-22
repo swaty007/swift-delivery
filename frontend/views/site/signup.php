@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
                     <?php $form = ActiveForm::begin(['id' => 'form-signup', 'options' => ['class'=>'access__form']]); ?>
-                    <?= $form->field($model, 'phone_number',['options' => ['class' => 'form-group']])->label(false)->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-99-99'])->textInput(['placeholder' => '+1 (___) ___-__-__','class'=>'form-control access__phone no-border--top']); ?>
+                    <?= $form->field($model, 'phone_number',['options' => ['class' => 'form-group']])->label(false)->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-9999'])->textInput(['placeholder' => '+1 (___) ___-____','class'=>'form-control access__phone no-border--top']); ?>
                     <?= $form->field($model, 'password')->label(false)->passwordInput(['class'=>'form-control access__password no-border--r0']) ?>
                     <?= $form->field($model, 'password_repeat')->label(false)->passwordInput(['class'=>'form-control access__password no-border--r0']) ?>
                     <div class="form-group">
