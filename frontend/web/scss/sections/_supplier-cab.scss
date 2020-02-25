@@ -1,4 +1,5 @@
 .supplier-cab {
+  min-height: unquote("calc(100vh - 87px - 96px)");
   &__menu {
     display: flex;
     justify-content: space-between;
