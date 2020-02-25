@@ -287,13 +287,13 @@ $this->title = 'Supplier cabinet';
                                     </p>
                                 </div>
                             </div>
-                            <p class="text--xs text--blue-opacity">
-                                <strong>&nbsp;</strong>
-                            </p>
-                            <p class="text--xs text--blue-opacity">
-                                Gift Product: <?=$item['supplier']['product_name']?>
-                            </p>
-                            <?= Html::img(Yii::$app->params['webUploadsDir'].$item['supplier']['product_image'], ['class' => 'on-way__img']); ?>
+<!--                            <p class="text--xs text--blue-opacity">-->
+<!--                                <strong>&nbsp;</strong>-->
+<!--                            </p>-->
+<!--                            <p class="text--xs text--blue-opacity">-->
+<!--                                Gift Product: --><?//=$item['supplier']['product_name']?>
+<!--                            </p>-->
+<!--                            --><?//= Html::img(Yii::$app->params['webUploadsDir'].$item['supplier']['product_image'], ['class' => 'on-way__img']); ?>
                         </div>
 
 <!--                        <h4 class="supplier-cab__table-content--title text--xs">-->
