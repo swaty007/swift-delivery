@@ -527,19 +527,20 @@ $this->title = 'Supplier cabinet';
             <div class="modal__header">
                 <input type="hidden" id="modal_take_order_id">
                 <h3 class="modal__title text--small text--blue">
-                    What’s your ETA?
+                    What’s your ETA? (minutes)
                 </h3>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-xs-4 col-md-4 col-md-offset-2">
+                        <div class="col-md-4 col-md-offset-4">
                             <input id="modal_take_order_time_val" type="text" class="form-control">
                         </div>
-                        <div class="col-xs-8 col-md-4">
-                            <select class="default-select" name="" id="modal_take_order_time">
-                                <option value="min">minutes</option>
+<!--                        <div class="col-xs-8 col-md-4">-->
+<!--                            <p class="modal__select--text text text--blue">minutes</p>-->
+<!--                            <select class="default-select" name="" id="modal_take_order_time">-->
+<!--                                <option value="min">minutes</option>-->
 <!--                                <option value="hours">hours</option>-->
-                            </select>
-                        </div>
+<!--                            </select>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>

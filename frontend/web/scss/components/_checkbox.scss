@@ -4,14 +4,21 @@
   cursor: pointer;
   height: 0;
   width: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  margin: 0;
   appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
   outline: none;
   &:before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
-    border: 2px solid fade-out($brand-blue,0.8);
+    //border: 2px solid fade-out($brand-blue,0.8);
+    border: 2px solid #d4d5dd;
     width: 25px;
     height: 25px;
     box-sizing: border-box;
@@ -57,7 +64,7 @@
       display: flex;
       align-items: center;
       label {
-        margin-left: 25px;
+        margin-left: 35px;
         font-size: 16px;
         line-height: 19px;
         color: $text-blue;

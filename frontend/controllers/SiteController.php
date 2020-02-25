@@ -217,9 +217,6 @@ class SiteController extends Controller
             if ($model->createOrder()) {
                 $twilioService = Yii::$app->Yii2Twilio->initTwilio();
 
-
-
-
                 return $this->redirect('/site/order-status/?l=' . $model->instance->weblink);
             }
         }

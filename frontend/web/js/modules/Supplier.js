@@ -13,14 +13,28 @@ class Supplier {
             let $this = $(e.currentTarget),
                 modalEl = $this.closest('.modal'),
                 inputId = $('#modal_take_order_id'),
-                inputTimeSelect = $('#modal_take_order_time'),
+                // inputTimeSelect = $('#modal_take_order_time'),
                 inputTimeVal = $('#modal_take_order_time_val'),
                 orderName = $("#modal_take_order_name"),
                 data = {
                     id: inputId.val(),
                     deliverName: orderName.val(),
-                    deliveryTime: inputTimeSelect.val() === 'min' ? Number(inputTimeVal.val()) : Number(inputTimeVal.val()) * 60,
+                    deliveryTime: Number(inputTimeVal.val()) ,
+                    // deliveryTime: inputTimeSelect.val() === 'min' ? Number(inputTimeVal.val()) : Number(inputTimeVal.val()) * 60,
                 };
+
+            if (data.deliveryTime === 0) {
+                inputTimeVal.closest('.form-group').addClass('has-error')
+                return
+            } else {
+                inputTimeVal.closest('.form-group').removeClass('has-error')
+            }
+            if (data.deliverName === "") {
+                orderName.closest('.form-group').addClass('has-error')
+                return
+            } else {
+                orderName.closest('.form-group').removeClass('has-error')
+            }
             console.log(data);
             $.ajax({
                 type: "POST",
@@ -30,7 +44,7 @@ class Supplier {
                 success: function (msg) {
                     console.log(msg);
                     orderName.val('');
-                    inputTimeSelect.val('');
+                    // inputTimeSelect.val('');
                     inputTimeVal.val('');
                     if (msg.result) {
                         // $("#zip_validate").closest('.form-group').removeClass('has-error').addClass('has-success');

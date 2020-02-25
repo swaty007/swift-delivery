@@ -16,7 +16,7 @@ use yii\helpers\Html;
         </p>
         <?php $form = ActiveForm::begin(['id' => 'form-rate', 'enableAjaxValidation' => true, 'options' => ['class' => 'order__form']]); ?>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-xs-6 col-md-4 col-md-offset-2">
                 <div class="order-complete__form-group">
                     <?= $form->field($model, 'friendly', ['options' => ['class' => 'default-checkbox__container default-checkbox__container--label']])
                         ->checkbox([
@@ -26,7 +26,7 @@ use yii\helpers\Html;
                         ->label('Friendly')->error(false); ?>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-xs-6 col-md-4">
                 <div class="order-complete__form-group">
                     <?= $form->field($model, 'fulfilled', ['options' => ['class' => 'default-checkbox__container default-checkbox__container--label']])
                         ->checkbox([
@@ -38,7 +38,7 @@ use yii\helpers\Html;
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-xs-6 col-md-4 col-md-offset-2">
                 <div class="order-complete__form-group">
                     <?= $form->field($model, 'onTime', ['options' => ['class' => 'default-checkbox__container default-checkbox__container--label']])
                         ->checkbox([
@@ -48,7 +48,7 @@ use yii\helpers\Html;
                         ->label('On time')->error(false); ?>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-xs-6 col-md-4">
                 <div class="order-complete__form-group">
                     <?= $form->field($model, 'again', ['options' => ['class' => 'default-checkbox__container default-checkbox__container--label']])
                         ->checkbox([
@@ -62,7 +62,7 @@ use yii\helpers\Html;
         <p class="text text--blue-opacity order-complete__sub-text">
             Rate your experience.
         </p>
-        <?= $form->field($model, 'stars')->hiddenInput(['id' => 'stars_form']); ?>
+        <?= $form->field($model, 'stars')->hiddenInput(['id' => 'stars_form'])->label(false); ?>
         <div class="stars" id="start_select">
             <div class="stars__block"></div>
             <div class="stars__block"></div>

@@ -104,7 +104,6 @@ class SupplierController extends BaseAuthorizedController
                 ->with('supplier')
                 ->with('rating')
                 ->where(['status' => Order::ORDER_STATUS_NEW])
-                ->andWhere(['supplier_id'=> $this->supplierModel->id])
                 ->asArray()
                 ->orderBy('id DESC')
                 ->all();
@@ -360,7 +359,11 @@ class SupplierController extends BaseAuthorizedController
         }
 
         $number = User::find()->where(['id' => $order->customer_id])->one()->phone_number;
-        Twilio::sendSms($number, Message::getText('delivery_complete_sms'));
+        $orderLink = Yii::$app->urlManager->createAbsoluteUrl(['site/order-rating', 'l' => $order->weblink]);
+        $message = "Delivery completed.
+        Please take a short survey about your delivery: $orderLink";
+
+        Twilio::sendSms($number, $message);
         Log::orderLog($order->id, Yii::$app->user->getId(), 'Order complete');
         $order->status = Order::ORDER_STATUS_COMPLETE;
         return $order->save();

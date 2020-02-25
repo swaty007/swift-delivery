@@ -112,6 +112,11 @@ class OrderForm extends Model
             $this->processOrderItems($order);
 
             $order->total = $this->total;
+
+            if ($order->total == 0) {
+                throw new \Exception("Wrong order");
+            }
+
             $order->save();
             Log::orderLog($order->id, $customer->id, "Order created");
 
@@ -142,6 +147,7 @@ class OrderForm extends Model
 
             return true;
         } catch (\Exception $e) {
+            Order::deleteAll(['total' => 0, 'status' => Order::ORDER_STATUS_NEW]);
             return false;
         }
     }

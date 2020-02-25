@@ -96,6 +96,12 @@
     object-fit: contain;
     margin-bottom: 25px;
   }
+  &__select {
+    &--text {
+      text-align: left;
+      line-height: 50px;
+    }
+  }
   &__title {
 
   }
