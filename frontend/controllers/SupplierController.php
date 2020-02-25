@@ -104,7 +104,9 @@ class SupplierController extends BaseAuthorizedController
                 ->with('supplier')
                 ->with('rating')
                 ->where(['status' => Order::ORDER_STATUS_NEW])
+                ->andWhere(['supplier_id'=> $this->supplierModel->id])
                 ->asArray()
+                ->orderBy('id DESC')
                 ->all();
         } else {
             $allowedToDeliver = [];
@@ -122,7 +124,9 @@ class SupplierController extends BaseAuthorizedController
                     Order::ORDER_STATUS_DELIVER_AT_PLACE,
                 ]])
             ->andWhere(['supplier_id' => $this->supplierModel->id])
+            ->andWhere(['supplier_id'=> $this->supplierModel->id])
             ->asArray()
+            ->orderBy('id DESC')
             ->all();
 
         $finished = Order::find()
@@ -139,7 +143,9 @@ class SupplierController extends BaseAuthorizedController
                     Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER,
                 ]])
             ->andWhere(['supplier_id' => $this->supplierModel->id])
-            ->asArray()->all();
+            ->asArray()
+            ->orderBy('id DESC')
+            ->all();
 
         $rating = 0;
 

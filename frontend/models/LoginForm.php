@@ -22,7 +22,7 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            ['phone_number', 'match', 'pattern' => '/^\+1\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/', 'message' => 'Incorrect phone number'],
+            ['phone_number', 'match', 'pattern' => '/^\+1\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{4}$/', 'message' => 'Incorrect phone number'],
             ['phone_number', 'required'],
 
             [['phone_number', 'password'], 'required'],
