@@ -202,7 +202,7 @@ AppAsset::register($this);
                    ( Yii::$app->controller->action->id === 'order' || Yii::$app->controller->action->id === 'order-status' )):?>
            <div class="navbar__step <?= Yii::$app->controller->action->id === 'order' ? 'navbar__step--active' : '';?>">
                <div class="navbar__step--number">
-                   1 <?= $step_n; ?>
+                   1
                </div>
                <div class="navbar__step--text">
                    Enter Information
