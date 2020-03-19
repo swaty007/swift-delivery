@@ -4,7 +4,7 @@ use yii\helpers\Url;
 switch ($module):
     case "signUp":
         ?>
-        <section class="cta cta--blue text-center">
+        <section class="cta cta--black text-center">
             <div class="container">
                 <h3 class="cta__title">
                     Delivery Companies
@@ -20,14 +20,14 @@ switch ($module):
         <?php break;
     case "help-green":
         ?>
-        <section class="cta cta--green text-center">
+        <section class="cta cta--blue text-center">
             <div class="container">
                 <h3 class="cta__title">
                     Still Have Questions?
                 </h3>
                 <p class="text text--small">Visit our help center to learn about the full process and high quality of our service.</p>
                 <a href="#" class="main-btn main-btn--transparent">
-                <span class="text--green">
+                <span class="text--red">
                     Help Center
                 </span>
                 </a>
@@ -36,7 +36,7 @@ switch ($module):
         <?php break;
     case "help-blue":
         ?>
-        <section class="cta cta--blue text-center">
+        <section class="cta cta--black text-center">
             <div class="container">
                 <h3 class="cta__title">
                     In the meantime

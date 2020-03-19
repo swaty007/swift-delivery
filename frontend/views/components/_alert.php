@@ -5,7 +5,7 @@ use yii\helpers\Html;
 switch ($module):
     case "available":
         ?>
-        <div class="alert alert--blue">
+        <div class="alert alert--black">
             <div class="container flex-center">
                 <?= Html::img('@web/img/icon_alarm.svg', ['class' => 'alert__icon']); ?>
                 <p class="text text--small">
@@ -17,7 +17,7 @@ switch ($module):
         <?php break;
     case "thank":
         ?>
-        <div class="alert alert--green">
+        <div class="alert alert--black">
             <div class="container flex-center">
                 <?= Html::img('@web/img/icon_glasses_emoji.png', ['class' => 'alert__icon']); ?>
                 <div>

@@ -7,7 +7,7 @@
   &__info {
     position: sticky;
     bottom: 71px;
-    background-color: $brand-green;
+    background-color: $brand-black;
     &--items {
       display: flex;
       justify-content: space-between;
@@ -34,7 +34,7 @@
     align-items: center;
     justify-content: space-between;
     min-height: 90px;
-    border-bottom: 1px solid fade-out($brand-blue,0.9);
+    border-bottom: 1px solid fade-out($brand-black, 0.9);
     padding: 20px 0;
     &--left {
       min-height: 70px;
@@ -51,7 +51,7 @@
     &--empty {
       justify-content: center;
 
-      border: 2px solid $brand-blue;
+      border: 2px solid $brand-black;
       border-radius: 5px;
     }
     &--error {

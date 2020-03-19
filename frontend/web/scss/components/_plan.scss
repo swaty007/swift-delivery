@@ -27,7 +27,7 @@
       position: absolute;
       top: 0;
       left: 0;
-      border: 2px solid fade-out($brand-blue,0.8);
+      border: 2px solid fade-out($brand-black,0.8);
       width: 25px;
       height: 25px;
       border-radius: 14px;
@@ -35,13 +35,13 @@
     }
     &:checked {
       &:before {
-        background-color: $brand-green;
+        background-color: $brand-blue;
         background-image: url("../../img/icon_check.svg");
         background-repeat: no-repeat;
         background-position: 50% 50%;
       }
       & + .plan__container {
-        border-color: $brand-green;
+        border-color: $brand-black;
       }
     }
   }

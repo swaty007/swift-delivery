@@ -11,14 +11,15 @@ use yii\helpers\Url;
 $this->title = 'Forgot your password?  No sweat.';
 ?>
 
-<div class="access--blue">
+<div class="access--black">
     <div class="container">
         <!--        <div class="row">-->
         <!--            <div class="col-lg-5">-->
         <div class="access__content">
             <h1 class="access__logo">
                 <a href="<?=Url::toRoute(['site/index']);?>"></a>
-                <?= Html::img('@web/img/logo-on-purple.svg', ['class' => '']); ?>
+<!--                --><?//= Html::img('@web/img/logo-on-purple.svg', ['class' => '']); ?>
+                <?= Html::img('@web/img/logo-white.svg', ['class' => '']); ?>
             </h1>
             <h2 class="access__desc text text--white">
                 <?= $this->title;?>
@@ -28,7 +29,7 @@ $this->title = 'Forgot your password?  No sweat.';
             <?= $form->field($model, 'phone_number')->label(false)->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-9999'])->textInput(['placeholder' => '+1 (___) ___-____', 'class' => 'form-control access__phone no-border--top']); ?>
 
             <div class="form-group">
-                <?= Html::submitButton('Text a reset link.', ['class' => 'main-btn main-btn--no-shadow w100 no-border--bottom']) ?>
+                <?= Html::submitButton('Text a reset link.', ['class' => 'main-btn main-btn--blue main-btn--no-shadow w100 no-border--bottom']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>

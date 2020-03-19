@@ -4,8 +4,8 @@ use yii\helpers\Html;
 
 ?>
 
-<div class="bg--green on-way">
-    <div class="confirm-supplier__container text-center">
+<div class="bg--black on-way">
+    <div class="confirm-supplier__container confirm-supplier__container--black text-center">
         <div class="container">
             <h1 class="text--white title confirm-supplier__title">
                 <?= $order->getStatusText(); ?>
@@ -27,14 +27,14 @@ use yii\helpers\Html;
 
 
         <div class="card__table">
-            <p class="on-way__text sub-text text--green text--small text-center">
+            <p class="on-way__text sub-text text--red text--small text-center">
                 Confirmed Location:
             </p>
             <p class="sub-text text--blue text--small text-center">
                 <?=$order->address;?>
             </p>
             <hr>
-            <p class="on-way__text sub-text text--green text--small text-center">
+            <p class="on-way__text sub-text text--red text--small text-center">
                 Confirmed Order:
             </p>
             <div class="card__wrap">
@@ -47,7 +47,7 @@ use yii\helpers\Html;
                         <div class="card__item--left">
                             <p class="text--small text--blue-opacity">
                                 <strong>
-                                   Flower <?=$item->item_price;?> | <span class="text--green">$<?= $item->item_price; ?></span>
+                                   Flower <?=$item->item_price;?> | <span class="text--blue">$<?= $item->item_price; ?></span>
                                 </strong>
                             </p>
                             <p class="card__text text--blue-opacity">
@@ -60,7 +60,7 @@ use yii\helpers\Html;
                             </p>
                         </div>
                         <div class="card__item--right">
-                            <p class="text--small text--green">
+                            <p class="text--small text--blue">
                                 <strong>
                                     $<?= number_format($item->total_price, 2); ?>
                                 </strong>
@@ -77,7 +77,7 @@ use yii\helpers\Html;
                         </p>
                     </div>
                     <div class="card__item--right">
-                        <p class="text--small text--green">
+                        <p class="text--small text--red">
                             <strong>
                                 $<?= number_format($order->total, 2); ?>
                             </strong>

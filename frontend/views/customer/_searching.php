@@ -5,8 +5,8 @@ use yii\helpers\Url;
 
 ?>
 
-<div class="bg--blue searching">
-    <div class="confirm-supplier__container--blue confirm-supplier__container text-center">
+<div class="bg--black searching">
+    <div class="confirm-supplier__container--black confirm-supplier__container text-center">
         <div class="container">
             <h1 class="text--white sub-title confirm-supplier__sub-title">
                 <?= $order->getStatusText(); ?>
@@ -34,20 +34,21 @@ use yii\helpers\Url;
         </p>
 
         <div class="card__table">
-            <p class="searching__text sub-text text--green text--small text-center">
+            <p class="searching__text sub-text text--red text--small text-center">
                 Confirmed Location:
             </p>
             <p class="sub-text text--blue text--small text-center">
                 <?= $order->address; ?>
             </p>
             <hr>
-            <p class="searching__text sub-text text--green text--small text-center">
+            <p class="searching__text sub-text text--red text--small text-center">
                 Confirmed Order:
             </p>
             <div class="card__wrap">
                 <?php
                 foreach ($order->orderItems as $item):
-                    //var_dump($item->productItem);
+//                    var_dump($order->orderItems);
+//                    var_dump($item);
                     ?>
 
                     <div class="card__item">
@@ -55,7 +56,7 @@ use yii\helpers\Url;
                             <p class="text--small text--blue-opacity">
                                 <strong>
                                     Flower<?= $item->item_price; ?> | <span
-                                            class="text--green">$<?= $item->item_price; ?></span>
+                                            class="text--blue">$<?= $item->item_price; ?></span>
                                 </strong>
                             </p>
                             <p class="card__text text--blue-opacity">
@@ -68,7 +69,7 @@ use yii\helpers\Url;
                             </p>
                         </div>
                         <div class="card__item--right">
-                            <p class="text--small text--green">
+                            <p class="text--small text--blue">
                                 <strong>
                                     $<?= number_format($item->total_price, 2); ?>
                                 </strong>
@@ -86,7 +87,7 @@ use yii\helpers\Url;
                         <p class="text--small text--blue-opacity">Cash upon delivery</p>
                     </div>
                     <div class="card__item--right">
-                        <p class="text text--green">
+                        <p class="text text--red">
                             <strong>
                                 $<?= number_format($order->total, 2); ?>
                             </strong>

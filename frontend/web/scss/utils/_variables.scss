@@ -2,13 +2,19 @@ $black: #000;
 $white: #fff;
 
 $brand-green: #0EC69A;
-$brand-blue: #2A2C57;
-$brand-red: #E24343;
+//$brand-blue: #2A2C57;
+$brand-blue: #DF1629;
+//$brand-red: #E24343;
+$brand-red: $brand-blue;
 $brand-yellow: #F2C94C;
+$brand-black: #292929;
 
 $text-white: fade-out($white, 0.2);
-$text-blue: fade-out($brand-blue, 0.2);
-$text-blue-opacity: fade-out($brand-blue, 0.5);
+//$text-blue: fade-out($brand-blue, 0.2);
+
+$text-blue: fade-out($brand-black, 0.2);
+$text-blue-opacity: fade-out($brand-black, 0.5);
+//$text-blue-opacity: fade-out($brand-blue, 0.5);
 $text-green: fade-out($brand-green, 0.2);
 
 $light: 300;

@@ -18,7 +18,7 @@ $this->title = 'Order Form';
         <h2 class="sub-title text--blue text-center">
             Let’s Roll!
         </h2>
-        <p class="sub-text text--green text-center m35">
+        <p class="sub-text text--blue text-center m35">
             Select your cannabis gift:
         </p>
         <div class="item__wrap">
@@ -29,7 +29,7 @@ $this->title = 'Order Form';
                         <h3 class="item__title text--small text--blue"><?= $item['name']; ?></h3>
                         <p class="item__desc text--blue-opacity">
                             starting at <strong
-                                    class="text--green text--normal">$<?= number_format($item['display_price'], 2); ?></strong>
+                                    class="text--blue text--normal">$<?= number_format($item['display_price'], 2); ?></strong>
                         </p>
                     </div>
                     <?php foreach ($item['productOptions'] as $option): ?>
@@ -41,13 +41,13 @@ $this->title = 'Order Form';
                                data-order="<?= $option['order']; ?>"
                                data-is_active="<?= $option['is_active']; ?>">
                     <?php endforeach; ?>
-                    <a href="#" class="main-btn main-btn--sm w-100 item__button">
+                    <a href="#" class="main-btn main-btn--black main-btn--sm w-100 item__button">
                         Select
                     </a>
                 </div>
             <?php endforeach; ?>
 
-            <div class="item item--green item--center">
+            <div class="item item--black item--center">
                 <p class="text text--white">
                     <strong>
                         Coming Soon
@@ -58,7 +58,7 @@ $this->title = 'Order Form';
         </div>
 
         <?php $form = ActiveForm::begin(['id' => 'form-create-order', 'enableAjaxValidation' => true, 'options' => ['class' => 'order__form'] ]);//, 'enableAjaxValidation' => true ?>
-        <p class="sub-text text--green text--small text-center">
+        <p class="sub-text text--blue text--small text-center">
             Basic information:
         </p>
         <hr>
@@ -67,7 +67,7 @@ $this->title = 'Order Form';
         <?= $form->field($model, 'phone_number')->label('Phone Number:')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+1 (999) 999-9999'])->textInput(['placeholder' => '+1 (___) ___-____', 'class' => 'access__phone form-control']); ?>
 
 
-        <p class="sub-text text--green text--small text-center">
+        <p class="sub-text text--blue text--small text-center">
             What’s your location:
         </p>
         <hr>
@@ -88,7 +88,7 @@ $this->title = 'Order Form';
         <?= $form->field($model, 'description')->textarea(['placeholder' => 'Dont ring door bell, etc.'])->label("Any additional about your location:"); ?>
 
 
-        <p class="sub-text text--green text-center">
+        <p class="sub-text text--blue text-center">
             What’s in your cart
         </p>
 
@@ -113,7 +113,7 @@ $this->title = 'Order Form';
                     <div class="card__item--left">
                         <p class="text--small text--blue-opacity">
                             <strong>
-                                <?=$item['product']['name'];?> | <span class="text--green">$<?=$item['price']?></span>
+                                <?=$item['product']['name'];?> | <span class="text--blue">$<?=$item['price']?></span>
                             </strong>
                         </p>
                         <p class="card__text text--blue-opacity">
@@ -126,7 +126,7 @@ $this->title = 'Order Form';
                         </p>
                     </div>
                     <div class="card__item--right">
-                        <p class="text--small text--green">
+                        <p class="text--small text--blue">
                             <strong>
                                 $<?=number_format($priceItem, 2)?>
                             </strong>
@@ -146,7 +146,7 @@ $this->title = 'Order Form';
 
                 </div>
                 <div class="card__item--right">
-                    <p class="text text--green">
+                    <p class="text text--red">
                         <strong>
                             $<?=number_format($totalOrder,2)?>
                         </strong>
@@ -164,7 +164,7 @@ $this->title = 'Order Form';
                     Find a delivery service near you.
                 </strong>
             </p>
-            <?= Html::submitButton('Start delivery request', ['class' => 'main-btn']) ?>
+            <?= Html::submitButton('Start delivery request', ['class' => 'main-btn main-btn--blue']) ?>
         </div>
 
 
@@ -214,14 +214,14 @@ $this->title = 'Order Form';
                 </p>
                 <div class="spinner">
                     <input id="item_quanitity" data-price="75" value="1"/>
-                    <label class="sub-text text--green" for="item_quanitity">$75.00</label>
+                    <label class="sub-text text--blue" for="item_quanitity">$75.00</label>
                 </div>
                 <blockquotes class="blockquotes text-left">
                     <p class="text--small">
                         <strong>Note:</strong> Product types may vary slightly between delvery services
                     </p>
                 </blockquotes>
-                <button id="add_to_card_btn" class="main-btn w100">Add to cart.</button>
+                <button id="add_to_card_btn" class="main-btn main-btn--black w100">Add to cart.</button>
             </div>
             <div class="modal__success">
                 <?= Html::img('@web/img/icon_add_to_cart.svg', ['class' => 'modal__success--img']); ?>

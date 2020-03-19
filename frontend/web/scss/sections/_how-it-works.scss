@@ -19,7 +19,7 @@
       width: 62px;
       font-size: 28px;
       color: $white;
-      background-color: $brand-green;
+      background-color: $brand-black;
       &:before,&:after {
         content: "";
         position: absolute;
@@ -27,7 +27,7 @@
         transform: translateY(-50%);
         width: 30px;
         height: 1px;
-        background-color: fade-out($brand-blue,0.5);
+        background-color: fade-out($brand-black,0.5);
       }
       &:before {
         left: -63px;

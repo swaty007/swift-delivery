@@ -121,7 +121,6 @@ AppAsset::register($this);
     </script>
     <meta name="application-name" content="Swift Delivery">
     <meta name="msapplication-TileColor" content="#242221">
-    <meta name="msapplication-TileImage" content="/img/logo-144.png">
 <!--    <meta name="msapplication-config" content="/weblx/assets/browserconfig.xml">-->
     <?php $this->head() ?>
 </head>
@@ -177,11 +176,12 @@ AppAsset::register($this);
         <div class="header__logo">
 
             <a href="<?=Url::toRoute(['site/index']);?>">
-                <?=
-                (Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'index') ?
-                    Html::img('@web/img/logo.svg', ['class' => 'header__logo--img']) :
-                    Html::img('@web/img/logo-small.svg', ['class' => 'header__logo--img']);
-                ?>
+                <?= Html::img('@web/img/logo.svg', ['class' => 'header__logo--img']); ?>
+                <?php
+//                (Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'index') ?
+//                    Html::img('@web/img/logo.svg', ['class' => 'header__logo--img']) :
+//                    Html::img('@web/img/logo-small.svg', ['class' => 'header__logo--img']);
+//                ?>
             </a>
         </div>
     </div>

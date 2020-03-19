@@ -7,7 +7,7 @@ use yii\helpers\Html;
 <div class="order-complete">
 
     <div class="container text-center">
-        <h1 class="text--green sub-title">
+        <h1 class="text--blue sub-title">
             <?= $order->getStatusText(); ?>
         </h1>
         <hr>
@@ -73,6 +73,6 @@ use yii\helpers\Html;
         <?= $form->field($model, 'comment', ['options' => ['class' => 'text-center form-group']])->textarea(['placeholder' => ''])->label("Additional Comments:"); ?>
     </div>
 
-        <?= Html::submitButton('Send Review', ['class' => 'main-btn']) ?>
+        <?= Html::submitButton('Send Review', ['class' => 'main-btn main-btn--blue']) ?>
         <?php ActiveForm::end(); ?>
 </div>

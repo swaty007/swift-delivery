@@ -19,7 +19,7 @@ use yii\helpers\Url; ?>
                             </div>
                             <p class="how-it-works__item-text text--blue">
                                 Start your order by completing the
-                                <a class="text--green" href="<?=Url::toRoute(['site/order']);?>">Minimal Order Form</a>.
+                                <a class="text--red text--bold" href="<?=Url::toRoute(['site/order']);?>">Minimal Order Form</a>.
                             </p>
                             <div class="how-it-works__item-img">
                                 <?php  echo Html::img('', ['class' => 'lazy', 'data-src' => Yii::getAlias('@web/img/hww_icon_1.svg')]); ?>
@@ -57,7 +57,7 @@ use yii\helpers\Url; ?>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <a href="<?=Url::toRoute(['site/order']);?>" class="main-btn">
+                <a href="<?=Url::toRoute(['site/order']);?>" class="main-btn main-btn--blue">
                     Start Delivery!
                 </a>
             </div>

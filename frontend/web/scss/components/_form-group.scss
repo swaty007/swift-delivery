@@ -26,12 +26,12 @@
     margin-bottom: 10px;
   }
   .form-control {
-    border: 2px solid fade-out($brand-blue, 0.8);
+    border: 2px solid fade-out($brand-black, 0.8);
     padding: 0 25px;
     line-height: 46px;
     outline: none;
     border-radius: 30px;
-    color: $brand-blue;
+    color: $brand-black;
     font-size: 16px;
     width: 100%;
     transition: border-color .15s ease-in-out 0s,box-shadow .15s ease-in-out 0s;
@@ -39,7 +39,7 @@
     appearance: none;
     cursor: pointer;
     &::placeholder {
-      color: fade-out($brand-blue, 0.5);
+      color: fade-out($brand-black, 0.5);
     }
   }
 }

@@ -52,7 +52,7 @@ body.show-scc-navbar {
     text-decoration: none;
     transition: 0.3s all;
     &--red {
-      background: $brand-red;
+      background: $brand-blue;
       box-shadow: 0px 5px 10px rgba(195, 15, 15, 0.2);
     }
     &:hover {
@@ -71,7 +71,7 @@ body.show-scc-navbar {
       margin-right: 7px;
     }
     &--number {
-      background-color: $brand-green;
+      background-color: $brand-black;
       width: 23px;
       height: 23px;
       border-radius: 23px;
@@ -85,7 +85,7 @@ body.show-scc-navbar {
     &--text {
       font-size: 13px;
       line-height: 16px;
-      border-bottom: 1px solid $brand-green;
+      border-bottom: 1px solid $brand-black;
       cursor: default;
     }
   }
@@ -134,8 +134,7 @@ body.show-scc-navbar {
       height: auto;
       z-index: 1000;
       overflow: auto;
-      background: transparent;
-      padding: 100px 25px 25px;
+      padding: 200px 25px 25px;
       top: 0;
       left: 0;
       right: 0;
@@ -144,9 +143,11 @@ body.show-scc-navbar {
       pointer-events: none;
       transition: opacity .3s  ease;
       text-align: left;
-    background-image: url(../../img/logo.svg);
+    background-image: url(../../img/logo-full.svg);
+    background-attachment: local;
     background-repeat: no-repeat;
-    background-position: 50% 2%;
+    background-position: 50% 10px;
+    background-size: auto 160px;
   }
   &__menu {
     //display: inline-block;
@@ -196,7 +197,7 @@ body.show-scc-navbar {
     display: block;
     &:not(.collapsed) {
       span {
-        background-color: $brand-blue;
+        background-color: $brand-black;
         &:nth-child(1) {
           top: 9px;
           transform: rotate(45deg);
@@ -215,7 +216,7 @@ body.show-scc-navbar {
       left: 0;
       width: 24px;
       height: 4px;
-      background-color: $brand-blue;
+      background-color: $brand-black;
       transition: all 500ms ease-in-out;
       &:nth-child(1) {
         top: 0;

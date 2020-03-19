@@ -10,14 +10,15 @@ use yii\bootstrap\ActiveForm;
 
 $this->title = 'Login';
 ?>
-<div class="access--blue">
+<div class="access--black">
     <div class="container">
 <!--        <div class="row">-->
 <!--            <div class="col-lg-5">-->
                 <div class="access__content">
                     <h1 class="access__logo">
                         <a href="<?=Url::toRoute(['site/index']);?>">
-                            <?= Html::img('@web/img/logo-on-purple.svg', ['class' => '']); ?>
+<!--                            --><?//= Html::img('@web/img/logo-on-purple.svg', ['class' => '']); ?>
+                            <?= Html::img('@web/img/logo-white.svg', ['class' => '']); ?>
                         </a>
                     </h1>
                     <h2 class="access__desc text text--white">
@@ -43,7 +44,7 @@ $this->title = 'Login';
                     <?= $form->field($model, 'password')->label(false)->passwordInput(['class'=>'form-control no-border--r0 access__password']) ?>
 
                     <div class="form-group">
-                        <?= Html::submitButton('Login', ['class' => 'main-btn main-btn--no-shadow w100 no-border--bottom', 'name' => 'login-button']) ?>
+                        <?= Html::submitButton('Login', ['class' => 'main-btn main-btn--blue main-btn--no-shadow w100 no-border--bottom', 'name' => 'login-button']) ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>

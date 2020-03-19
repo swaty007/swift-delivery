@@ -41,7 +41,7 @@ $this->title = 'Edit supplier';
                         endfor;?>
                     </div>
                 </div>
-                <a href="<?=Url::toRoute('/supplier/index')?>" class="main-btn main-btn--overview">Overview</a>
+                <a href="<?=Url::toRoute('/supplier/index')?>" class="main-btn main-btn--black main-btn--overview">Overview</a>
             </div>
         </div>
         <hr class="full">
@@ -90,7 +90,7 @@ $this->title = 'Edit supplier';
             </div>
         </div>
 
-        <h3 class="sub-text text--green text--small text-center text--bold">
+        <h3 class="sub-text text--blue text--small text-center text--bold">
             What cannabis products do you sell?
         </h3>
         <br>
@@ -191,7 +191,7 @@ $this->title = 'Edit supplier';
         </div>
         -->
         <div class="form-group">
-            <?= Html::submitButton('Submit Application', ['class' => 'main-btn']) ?>
+            <?= Html::submitButton('Submit Application', ['class' => 'main-btn main-btn--blue']) ?>
         </div>
         <?php ActiveForm::end(); ?>
 

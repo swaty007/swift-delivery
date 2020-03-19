@@ -45,11 +45,6 @@
       "density": "4.0"
     },
     {
-      "src": "img/logo-144.png",
-      "sizes": "144x144",
-      "type": "image/png"
-    },
-    {
       "src": "img/logo.svg",
       "sizes": "142x82"
     }

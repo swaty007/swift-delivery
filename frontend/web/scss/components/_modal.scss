@@ -47,7 +47,7 @@
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: $brand-green;
+    background-color: $brand-blue;
     width: 100%;
     height: 0%;
     &--img {
@@ -78,7 +78,7 @@
     position: absolute;
     right: 20px;
     top: 20px;
-    background-color: fade-out($brand-blue, 0.9);
+    background-color: fade-out($brand-black, 0.9);
     width: 40px;
     height: 40px;
     background-image: url(../../img/icon_close_modal.svg);

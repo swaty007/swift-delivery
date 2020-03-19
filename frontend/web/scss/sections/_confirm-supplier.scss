@@ -12,9 +12,12 @@
     padding-top: 50px;
     padding-bottom: 40px;
     position: relative;
-    background-color: $brand-green;
+    background-color: $brand-black;
     &--blue {
       background-color: $brand-blue;
+    }
+    &--black {
+      background-color: $brand-black;
     }
     &--white {
       background-color: transparent;

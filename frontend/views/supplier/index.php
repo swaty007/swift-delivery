@@ -41,7 +41,7 @@ $this->title = 'Supplier cabinet';
                     endfor;?>
                 </div>
             </div>
-            <a href="<?=Url::toRoute('/supplier/edit-profile')?>" class="main-btn main-btn--settings">Settings</a>
+            <a href="<?=Url::toRoute('/supplier/edit-profile')?>" class="main-btn main-btn--black main-btn--settings">Settings</a>
         </div>
     </div>
     <hr class="full">
@@ -84,7 +84,7 @@ $this->title = 'Supplier cabinet';
                         <?= $item['total']; ?>
                     </td>
                     <td>
-                        <button class="btn-sm main-btn main-btn--xs" data-direction="show-more-orders">
+                        <button class="btn-sm main-btn main-btn--black main-btn--xs" data-direction="show-more-orders">
                             Show More
                         </button>
                     </td>
@@ -125,7 +125,7 @@ $this->title = 'Supplier cabinet';
                                         <div class="card__item--left">
                                             <p class="text--xs text--blue-opacity">
                                                 <strong>
-                                                    Flower | <span class="text--green">$<?= $gift['item_price'] ?></span>
+                                                    Flower | <span class="text--blue">$<?= $gift['item_price'] ?></span>
                                                 </strong>
                                             </p>
                                             <p class="card__text text--blue-opacity">
@@ -138,7 +138,7 @@ $this->title = 'Supplier cabinet';
                                             </p>
                                         </div>
                                         <div class="card__item--right">
-                                            <p class="text--xs text--green">
+                                            <p class="text--xs text--blue">
                                                 <strong>
                                                     $<?= number_format($gift['total_price'], 2); ?>
                                                 </strong>
@@ -153,7 +153,7 @@ $this->title = 'Supplier cabinet';
                                         </p>
                                     </div>
                                     <div class="card__item--right">
-                                        <p class="text--small text--green">
+                                        <p class="text--small text--red">
                                             <strong>
                                                 $<?= number_format($item['total'], 2); ?>
                                             </strong>
@@ -210,7 +210,7 @@ $this->title = 'Supplier cabinet';
                         <?= $item['total']; ?>
                     </td>
                     <td>
-                        <button class="btn-sm main-btn main-btn--xs" data-direction="show-more-orders">
+                        <button class="btn-sm main-btn main-btn--black main-btn--xs" data-direction="show-more-orders">
                             Show More
                         </button>
                     </td>
@@ -252,7 +252,7 @@ $this->title = 'Supplier cabinet';
 
                                     <p class="text--xs text--blue-opacity">
                                         <strong>
-                                            Flower | <span class="text--green">$<?= $gift['item_price'] ?></span>
+                                            Flower | <span class="text--blue">$<?= $gift['item_price'] ?></span>
                                         </strong>
                                     </p>
                                     <p class="card__text text--blue-opacity">
@@ -265,7 +265,7 @@ $this->title = 'Supplier cabinet';
                                     </p>
                                 </div>
                                 <div class="card__item--right">
-                                    <p class="text--xs text--green">
+                                    <p class="text--xs text--blue">
                                         <strong>
                                             $<?= number_format($gift['total_price'], 2); ?>
                                         </strong>
@@ -280,7 +280,7 @@ $this->title = 'Supplier cabinet';
                                     </p>
                                 </div>
                                 <div class="card__item--right">
-                                    <p class="text--small text--green">
+                                    <p class="text--small text--red">
                                         <strong>
                                             $<?= number_format($item['total'], 2); ?>
                                         </strong>
@@ -331,7 +331,7 @@ $this->title = 'Supplier cabinet';
                         <?= $item['total']; ?>
                     </td>
                     <td>
-                        <button class="btn-sm main-btn main-btn--xs" data-direction="show-more-orders">
+                        <button class="btn-sm main-btn main-btn--black main-btn--xs" data-direction="show-more-orders">
                             Show more
                         </button>
                     </td>
@@ -370,7 +370,7 @@ $this->title = 'Supplier cabinet';
                                         <div class="card__item--left">
                                             <p class="text--xs text--blue-opacity">
                                                 <strong>
-                                                    Flower | <span class="text--green">$<?= $gift['item_price'] ?></span>
+                                                    Flower | <span class="text--blue">$<?= $gift['item_price'] ?></span>
                                                 </strong>
                                             </p>
                                             <p class="card__text text--blue-opacity">
@@ -383,7 +383,7 @@ $this->title = 'Supplier cabinet';
                                             </p>
                                         </div>
                                         <div class="card__item--right">
-                                            <p class="text--xs text--green">
+                                            <p class="text--xs text--blue">
                                                 <strong>
                                                     $<?= number_format($gift['total_price'], 2); ?>
                                                 </strong>
@@ -398,7 +398,7 @@ $this->title = 'Supplier cabinet';
                                         </p>
                                     </div>
                                     <div class="card__item--right">
-                                        <p class="text--small text--green">
+                                        <p class="text--small text--red">
                                             <strong>
                                                 $<?= number_format($item['total'], 2); ?>
                                             </strong>
@@ -557,12 +557,12 @@ $this->title = 'Supplier cabinet';
                     <p class="text--small text--blue-opacity">
                         ETA: (by google maps from your office)
                     </p>
-                    <p id="modal_take_order_duration" class="text--large text--bold text--green">
+                    <p id="modal_take_order_duration" class="text--large text--bold text--red">
 
                     </p>
                 </div>
 
-                <button id="take_order_btn" class="main-btn w100">Accept Delivery!</button>
+                <button id="take_order_btn" class="main-btn main-btn--black w100">Accept Delivery!</button>
             </div>
             <div class="modal__success">
                 <?= Html::img('@web/img/icon_accept_delivery.svg', ['class' => 'modal__success--img']); ?>

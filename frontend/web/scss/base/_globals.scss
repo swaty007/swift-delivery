@@ -30,9 +30,11 @@ body {
     color: $text-green;
   }
   &--blue {
-    color: $brand-blue;
+    //color: $brand-blue;
+    color: $brand-black;
   }
   &--red {
+    //color: $brand-red;
     color: $brand-red;
   }
   &--blue-opacity {
@@ -127,6 +129,10 @@ body {
     background-color: $white;
     box-shadow: 0px 10px 30px rgba(41, 41, 41, 0.2);
   }
+  &--black {
+    background-color: $brand-black;
+    box-shadow: none;
+  }
   &--blue {
     background-color: $brand-blue;
     box-shadow: none;
@@ -159,7 +165,7 @@ body {
 
 hr {
   border-bottom: 0;
-  border-color: fade-out($brand-blue,0.9);
+  border-color: fade-out($brand-black,0.9);
   max-width: 80%;
   margin-top: 25px;
   margin-bottom: 25px;
@@ -193,6 +199,9 @@ hr {
   }
   &--blue {
     background-color: $brand-blue;
+  }
+  &--black {
+    background-color: $brand-black;
   }
 }
 

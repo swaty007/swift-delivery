@@ -11,14 +11,15 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="access--green">
+<div class="access--black">
     <div class="container">
 <!--        <div class="row">-->
 <!--            <div class="col-lg-5">-->
                 <div class="access__content">
                     <h1 class="access__logo">
                         <a href="<?= Url::toRoute(['site/index']);?>">
-                            <?= Html::img('@web/img/logo-on-green.svg', ['class' => '']); ?>
+<!--                            --><?//= Html::img('@web/img/logo-on-green.svg', ['class' => '']); ?>
+                            <?= Html::img('@web/img/logo-white.svg', ['class' => '']); ?>
                         </a>
                     </h1>
                     <h2 class="access__desc text text--white">

@@ -14,7 +14,7 @@
   }
   &__line {
     width: 1px;
-    background-color: fade-out($brand-blue,0.9);
+    background-color: fade-out($brand-black, 0.9);
   }
   &__monthly {
     display: flex;
@@ -48,7 +48,7 @@
   &__table {
     width: 100%;
     text-align: left;
-    border: 1px solid fade-out($brand-blue,0.9);
+    border: 1px solid fade-out($brand-black,0.9);
     padding: 0 30px;
     margin-top: 15px;
     margin-bottom: 25px;
@@ -57,12 +57,12 @@
     }
     tr:not(.supplier-cab__table--content) {
       td {
-        border-top: 1px solid fade-out($brand-blue,0.9);
+        border-top: 1px solid fade-out($brand-black,0.9);
         line-height: 50px;
       }
     }
     &-content {
-      background-color: fade-out($brand-blue,0.9);
+      background-color: fade-out($brand-black,0.9);
       padding: 20px;
       display: none;
       &--title {
