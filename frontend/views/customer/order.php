@@ -85,7 +85,7 @@ $this->title = 'Order Form';
 
         <?= $form->field($model, 'address')->textInput()->label('Address:'); ?>
         <?= $form->field($model, 'address_2')->textInput(['placeholder' => 'Addres Line 2 (optional)'])->label(false); ?>
-        <?= $form->field($model, 'description')->textarea(['placeholder' => 'Dont ring door bell, etc.'])->label("Any additional about your location:"); ?>
+        <?= $form->field($model, 'description')->textarea(['placeholder' => 'Dont ring door bell, etc.'])->label("Any additional information about your location:"); ?>
 
 
         <p class="sub-text text--blue text-center">

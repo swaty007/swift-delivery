@@ -104,8 +104,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function beforeSave($insert)
     {
-        if (Yii::$app->user->identity->role !== User::USER_ROLE_SUPERADMIN &&
-            in_array($this->role, [User::USER_ROLE_SUPERADMIN, User::USER_ROLE_ADMIN])
+        if (in_array($this->role, [User::USER_ROLE_SUPERADMIN, User::USER_ROLE_ADMIN])
+            && Yii::$app->user->identity->role !== User::USER_ROLE_SUPERADMIN
         ) {
             $this->role = User::USER_ROLE_CUSTOMER;
         }

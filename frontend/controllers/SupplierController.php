@@ -58,15 +58,17 @@ class SupplierController extends BaseAuthorizedController
         parent::beforeAction($action);
         $actionId = Yii::$app->controller->action->id;
 
-        if (!$this->isSupplierDataFilled() && !in_array($actionId, ['confirm'])) {
+        if ($this->isSupplierDataFilled() == false && $actionId != 'confirm') {
+            var_dump($this->isSupplierDataFilled());
+            exit;
             return $this->redirect('confirm')->send();
-        }
+        } elseif ($actionId != 'confirm') {
+            $this->supplierModel = $this->getSupplierModel();
+            Yii::$app->view->params['supplierModel'] = $this->supplierModel;
 
-        $this->supplierModel = $this->getSupplierModel();
-        Yii::$app->view->params['supplierModel'] = $this->supplierModel;
-
-        if (!$this->supplierModel->is_active && !in_array($actionId, ['need-activation', 'confirm'])) {
-            return $this->redirect('need-activation')->send();
+            if (!$this->supplierModel->is_active && !in_array($actionId, ['need-activation', 'confirm'])) {
+                return $this->redirect('need-activation')->send();
+            }
         }
 
         return true;
@@ -97,7 +99,7 @@ class SupplierController extends BaseAuthorizedController
 
         $alreadyTakenInThisMonth = Order::find()->where(['supplier_id' => $this->supplierModel->id])->andWhere(['>', 'created_at', date('Y-m-d H:i:s', strtotime("-30 days"))])->count();
 
-        if ($alreadyTakenInThisMonth > Yii::$app->params['subscribePlans'][$this->supplierModel->id][$this->supplierModel->status]['dealsPerMonth']) {
+        if ($alreadyTakenInThisMonth > Yii::$app->params['subscribePlans'][$this->supplierModel->status]['dealsPerMonth']) {
             $allowedToDeliver = Order::find()
                 ->with('orderItems')
                 ->with('customer')

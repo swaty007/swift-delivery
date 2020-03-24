@@ -103,7 +103,9 @@ use yii\helpers\Html;
                 </p>
 
             <p class="on-way__text--small text--blue-opacity text-left">
-                <strong>Why am I recieving this?</strong>  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Learn more here.
+                <strong>Why am I receiving this:</strong>
+                 DC Cannabis Law: Possession, purchase, and transportation of up to two ounces of marijuana for personal use by adults 21 and older. Transfer of up to one ounce of marijuana by adults 21 or older to another adult 21 or older. All transfers are to be free from remuneration; sales are still prohibited.
+                <a href="https://www.mpp.org/states/district-of-columbia/summary-of-d-c-s-initiative-71">Learn more about the DC law, Initiative 71</a>
             </p>
 
         </div>
