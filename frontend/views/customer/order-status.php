@@ -10,7 +10,7 @@ use yii\helpers\Html;
         'tag' => 'section'
     ]]); ?>
 
-<?php if ($order->status == \common\models\Order::ORDER_STATUS_NEW) {
+<?php if ($order->status == \common\models\Order::ORDER_STATUS_NEW || $order->status == \common\models\Order::ORDER_STATUS_CANCELLED) {
     echo $this->render('../customer/_searching', ['order' => $order]);
 } else {
     echo $this->render('../customer/_onWay', ['order' => $order]);

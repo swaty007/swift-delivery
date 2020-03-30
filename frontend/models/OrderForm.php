@@ -6,6 +6,7 @@ use common\models\GoogleMaps;
 use common\models\Log;
 use common\models\OrderItem;
 use common\models\Order;
+use common\models\OrderQuery;
 use common\models\Product;
 use common\models\ProductOption;
 use common\models\Supplier;
@@ -109,6 +110,11 @@ class OrderForm extends Model
                 $this->printAndExit($order->errors);
             }
 
+            if (!OrderQuery::createOrderQuery($order)) {
+                echo 'Error while making query';
+                exit;
+            }
+
             $this->processOrderItems($order);
 
             $order->total = $this->total;
@@ -138,12 +144,8 @@ class OrderForm extends Model
                 $products[] = $count . ' ' . $name;
             }
 
-            $messageSupplier = "New order available for $$order->total to delivery: " . implode(' & ', $products);
-
-            foreach (Supplier::find()->where(['is_active' => 1])->all() as $supplier) {
-                $supplierUser = User::find()->where(['id' => $supplier->supplier_id])->one();
-                Twilio::sendSms($supplierUser->phone_number, $messageSupplier);
-            }
+            /*
+            */
 
             return true;
         } catch (\Exception $e) {

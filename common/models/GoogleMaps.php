@@ -80,6 +80,6 @@ class GoogleMaps {
             return ['success' => false, 'message' => 'No data about duration'];
         }
 
-        return ['success' => true, 'duration' => $response['rows'][0]['elements'][0]['duration']['text']];
+        return ['success' => true, 'duration' => $response['rows'][0]['elements'][0]['duration']['text'], 'distance' => $response['rows'][0]['elements'][0]['distance']['value']];
     }
 }

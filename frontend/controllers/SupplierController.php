@@ -7,6 +7,7 @@ use common\models\Log;
 use common\models\Message;
 use common\models\Order;
 use common\models\OrderItem;
+use common\models\OrderQuery;
 use common\models\Product;
 use common\models\ProductOption;
 use common\models\Rating;
@@ -100,12 +101,24 @@ class SupplierController extends BaseAuthorizedController
         $alreadyTakenInThisMonth = Order::find()->where(['supplier_id' => $this->supplierModel->id])->andWhere(['>', 'created_at', date('Y-m-d H:i:s', strtotime("-30 days"))])->count();
 
         if ($alreadyTakenInThisMonth > Yii::$app->params['subscribePlans'][$this->supplierModel->status]['dealsPerMonth']) {
+            $queryData = OrderQuery::find()
+                ->select('order_id')
+                ->where(['and',
+                    ['supplier_id' => $this->supplierModel->id],
+                    ['order' => 0]
+                ])
+                ->asArray()
+                ->all();
+
+            $allowedIds = ArrayHelper::getColumn($queryData, 'order_id');
+
             $allowedToDeliver = Order::find()
                 ->with('orderItems')
                 ->with('customer')
                 ->with('supplier')
                 ->with('rating')
                 ->where(['status' => Order::ORDER_STATUS_NEW])
+                ->andWhere(['IN', 'order.id', $allowedIds])
                 ->asArray()
                 ->orderBy('id DESC')
                 ->all();
@@ -257,6 +270,27 @@ class SupplierController extends BaseAuthorizedController
         ]);
     }
 
+    public function actionShowOrder($l) {
+        $order = Order::find()
+            ->where(['AND',
+                ['weblink' => $l],
+                ['OR',[
+                    ['supplier_id' => null],
+                    ['supplier_id' => $this->supplierModel->id],
+                ]]])
+            ->with('orderItems')
+            ->with('customer')
+            ->with('supplier')
+            ->with('rating')
+            ->one();
+
+        if ($order) {
+            return $this->render('show-order', ['order' => $order]);
+        } else {
+            return $this->render('order-not-allowed');
+        }
+    }
+
     public function actionConfirmSuccess()
     {
         return $this->render('confirm-success');
@@ -310,6 +344,7 @@ class SupplierController extends BaseAuthorizedController
 
         Twilio::sendSms($number, $messageCustomer);
 
+        OrderQuery::deleteAll(['order_id' => $order->id]);
         return $order->save();
     }
 
