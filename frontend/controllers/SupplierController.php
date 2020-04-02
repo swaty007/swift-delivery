@@ -92,7 +92,8 @@ class SupplierController extends BaseAuthorizedController
         }
 
         if ($cancelDeliver) {
-            $this->cancelOrder($cancelDeliver, Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER);
+            Yii::$app->session->setFlash('success', 'ORDER_STATUS_CANCELLED_BY_DELIVER');
+            $this->cancelOrder($cancelDeliver, Order::ORDER_STATUS_CANCELLED_BY_DELIVER);
         }
 
         if ($complete) {

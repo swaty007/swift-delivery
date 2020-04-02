@@ -125,15 +125,15 @@ use yii\helpers\Url;
                 </div>
             </div>
             <div class="deliver__info--icons flex-center">
-                <a href="tel:<?=preg_replace( '/[^0-9]/', '', \common\models\User::find()->where(['id' => $order->supplier->supplier_id])->one()->phone_number );?>" class="deliver__call"></a>
-                <a href="sms:<?=preg_replace( '/[^0-9]/', '',\common\models\User::find()->where(['id' => $order->supplier->supplier_id])->one()->phone_number);?>" class="deliver__sms"></a>
+                <a href="tel:<?=preg_replace( '/[^0-9]/', '', \common\models\User::findById($order->supplier->supplier_id)->phone_number );?>" class="deliver__call"></a>
+                <a href="sms:<?=preg_replace( '/[^0-9]/', '',\common\models\User::findById($order->supplier->supplier_id)->phone_number);?>" class="deliver__sms"></a>
             </div>
         </div>
     </div>
 </div>
 
 <?php if ($order->status == \common\models\Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER):?>
-<div class="modal modal--full-screen" id="cancel_order_by_customer">
+<div class="modal modal--full-screen" id="cancel_order_by_customer" style="display: block;">
     <div class="modal__wrapper">
         <div class="modal__container container">
             <div class="modal__close"></div>
@@ -141,8 +141,8 @@ use yii\helpers\Url;
                 <br>
                 <p class="text text--blue">Please call the delivery service to cancel your order</p>
                 <br>
-                <a href="tel:<?=preg_replace( '/[^0-9]/', '', \common\models\User::find()->where(['id' => $order->supplier->supplier_id])->one()->phone_number );?>">
-                    <?= \common\models\User::find()->where(['id' => $order->supplier->supplier_id])->one()->phone_number ;?>
+                <a href="tel:<?=preg_replace( '/[^0-9]/', '', \common\models\User::findById($order->supplier->supplier_id)->phone_number );?>">
+                    <?= \common\models\User::findById($order->supplier->supplier_id)->phone_number ;?>
                 </a>
             </div>
         </div>
@@ -161,8 +161,8 @@ use yii\helpers\Url;
                     <br>
                     <p class="text text--blue">You can call to the supplier</p>
                     <br>
-                    <a href="tel:<?=preg_replace( '/[^0-9]/', '', \common\models\User::find()->where(['id' => $order->supplier->supplier_id])->one()->phone_number );?>">
-                        <?= \common\models\User::find()->where(['id' => $order->supplier->supplier_id])->one()->phone_number ;?>
+                    <a href="tel:<?=preg_replace( '/[^0-9]/', '', \common\models\User::findById($order->supplier->supplier_id)->phone_number );?>">
+                        <?= \common\models\User::findById($order->supplier->supplier_id)->phone_number ;?>
                     </a>
                     <br>
                     <p class="text text--blue">Or make an other order</p>

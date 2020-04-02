@@ -94,6 +94,14 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public static function findById($id)
+    {
+        return static::findOne(['id' => $id]);
+    }
+
+    /**
      * @param string $phoneNumber
      * @return array|bool|User|ActiveRecord|null
      */
