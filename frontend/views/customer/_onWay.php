@@ -85,6 +85,17 @@ use yii\helpers\Url;
                         </p>
                     </div>
                 </div>
+                <?php if ($order->status == \common\models\Order::ORDER_STATUS_IN_PROGRESS ||
+                    $order->status == \common\models\Order::ORDER_STATUS_DELIVER_NEAR_PLACE ||
+                    $order->status == \common\models\Order::ORDER_STATUS_DELIVER_AT_PLACE):?>
+                <div class="card__item card__item--cancel">
+                    <a href="<?=Url::toRoute(['site/cancel-order','l' => $order->weblink]);?>" class="card__text text--blue">
+                        <strong>
+                            Cancel Order
+                        </strong>
+                    </a>
+                </div>
+                <?php endif;?>
 
             </div>
 

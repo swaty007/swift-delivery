@@ -505,6 +505,34 @@ $this->title = 'Supplier cabinet';
             </div>
         </div>
     <?php endif;?>
+
+
+    <?php if (Yii::$app->session->hasFlash('success')): ?>
+        <?php if (Yii::$app->session->getFlash('success') === 'ORDER_STATUS_CANCELLED_BY_SUPPLIER'): ?>
+            <div class="modal modal--full-screen" id="cancel_order_by_customer" style="display:block;">
+                <div class="modal__wrapper">
+                    <div class="modal__container container">
+                        <div class="modal__close"></div>
+                        <div class="modal__header">
+                            <br>
+                            <p class="text text--blue">
+                                Please call the customer to cancel the order.
+                            </p>
+                            <br>
+                            <p class="text text--blue">
+                                Tell them to go back to the homepage & start a new order
+                            </p>
+                            <br>
+                            <a href="tel:<?=preg_replace( '/[^0-9]/', '', $finished[0]['customer']['phone_number'] );?>">
+                                <?= $finished[0]['customer']['phone_number'] ;?>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif;?>
+    <?php endif;?>
+
     <script>
         clearInterval(intervarPjax)
         var intervarPjax = setInterval(function () {
@@ -515,33 +543,10 @@ $this->title = 'Supplier cabinet';
             }
         }, 5000)
     </script>
+
     <?php \yii\widgets\Pjax::end(); ?>
 </section>
-<?php if (Yii::$app->session->hasFlash('success')): ?>
-<?php if (Yii::$app->session->getFlash('success') === 'ORDER_STATUS_CANCELLED_BY_SUPPLIER'): ?>
-<div class="modal modal--full-screen" id="cancel_order_by_customer" style="display:block;">
-            <div class="modal__wrapper">
-                <div class="modal__container container">
-                    <div class="modal__close"></div>
-                    <div class="modal__header">
-                        <br>
-                        <p class="text text--blue">
-                            Please call the customer to cancel the order.
-                        </p>
-                        <br>
-                        <p class="text text--blue">
-                            Tell them to go back to the homepage & start a new order
-                        </p>
-                        <br>
-                        <a href="tel:<?=preg_replace( '/[^0-9]/', '', $finished[0]['customer']['phone_number'] );?>">
-                            <?= $finished[0]['customer']['phone_number'] ;?>
-                        </a>
-                    </div>
-                </div>
-            </div>
-</div>
-<?php endif;?>
-<?php endif;?>
+
 <div class="modal modal--full-screen modal--order" id="take_order">
     <div class="modal__wrapper">
         <div class="modal__container container">
