@@ -12,6 +12,7 @@ use Yii;
  * @property string $image
  * @property int $order
  * @property string $display_price
+ * @property string $note
  * @property int $is_active
  * @property array $productOptions
  */
@@ -36,6 +37,7 @@ class Product extends \yii\db\ActiveRecord
             [['display_price'], 'number'],
             [['name'], 'string', 'max' => 80],
             [['image'], 'string', 'max' => 256],
+            [['note'], 'string', 'max' => 512],
             [['productOptions'], 'safe'],
             [['productImage'], 'file', 'extensions' => 'png, jpg, svg'],
         ];
@@ -51,6 +53,7 @@ class Product extends \yii\db\ActiveRecord
             'name' => 'Name',
             'image' => 'Image',
             'order' => 'Order',
+            'note' => 'Note',
             'display_price' => 'Display Price',
             'is_active' => 'Is Active',
             'productOptions' => 'Options',

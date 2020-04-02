@@ -41,7 +41,7 @@ $this->title = 'Order Form';
                                data-order="<?= $option['order']; ?>"
                                data-is_active="<?= $option['is_active']; ?>">
                     <?php endforeach; ?>
-                    <a href="#" class="main-btn main-btn--black main-btn--sm w-100 item__button">
+                    <a href="#" class="main-btn main-btn--black main-btn--sm w-100 item__button" data-note="<?=$item['note'];?>">
                         Select
                     </a>
                 </div>
@@ -218,7 +218,7 @@ $this->title = 'Order Form';
                 </div>
                 <blockquotes class="blockquotes text-left">
                     <p class="text--small">
-                        <strong>Note:</strong> Product types may vary slightly between delvery services
+                        <strong>Note:</strong> <span id="item_note">Product types may vary slightly between delvery services</span>
                     </p>
                 </blockquotes>
                 <button id="add_to_card_btn" class="main-btn main-btn--black w100">Add to cart.</button>

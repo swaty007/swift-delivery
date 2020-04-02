@@ -223,10 +223,21 @@ class SiteController extends Controller
         return $this->render('/customer/order', ['model' => $model, 'gifts' => Product::getActiveList(), 'cart' => $this->getCart()]);
     }
 
-    public function actionOrderStatus($l)
+    public function actionOrderStatus($l, $cancelCustomer = 0)
     {
         if (!($order = Order::find()->where(['weblink' => $l])->with('orderItems')->with('supplier')->one())) {
             return $this->redirect('/site/index');
+        }
+        if ($cancelCustomer) {
+            Log::orderLog($order->id, Yii::$app->user->getId() , "Order canceled by customer");
+
+            $order->status = Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER;
+            if ($order->supplier) {
+                $order->save();
+            } else {
+                $order->save();
+                $this->redirect('/site/index');
+            }
         }
         if ($order->status == Order::ORDER_STATUS_COMPLETE) {
             return $this->redirect(Url::toRoute(['site/order-rating','l' => $order->weblink]));
@@ -256,19 +267,6 @@ class SiteController extends Controller
             return $this->redirect('/');
         }
         return $this->render('/customer/rating', ['order' => $order, 'model' => $model]);
-    }
-
-    public function actionCancelOrder($l)
-    {
-        if (!($order = Order::find()->where(['weblink' => $l])->with('orderItems')->with('supplier')->one())) {
-            return $this->redirect('/site/index');
-        }
-
-        Log::orderLog($order->id, Yii::$app->user->getId() , "Order canceled by customer");
-
-        $order->status = Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER;
-        $order->save();
-        $this->redirect('/');
     }
 
     /**

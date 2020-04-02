@@ -508,7 +508,8 @@ $this->title = 'Supplier cabinet';
 
 
     <?php if (Yii::$app->session->hasFlash('success')): ?>
-        <?php if (Yii::$app->session->getFlash('success') === 'ORDER_STATUS_CANCELLED_BY_SUPPLIER'): ?>
+        <?php if (Yii::$app->session->getFlash('success') === 'ORDER_STATUS_CANCELLED_BY_SUPPLIER' ||
+            Yii::$app->session->getFlash('success') === 'ORDER_STATUS_CANCELLED_BY_DELIVER'): ?>
             <div class="modal modal--full-screen" id="cancel_order_by_customer" style="display:block;">
                 <div class="modal__wrapper">
                     <div class="modal__container container">

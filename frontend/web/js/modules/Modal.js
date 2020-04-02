@@ -89,6 +89,7 @@ class Modal {
             $("#item_quanitity").val(1);
             $("#item_quanitity").attr("data-price", data[0].price);
             $('label[for=item_quanitity]').text("$" + Number(data[0].price).toFixed(2));
+            $("#item_note").text($this.attr('data-note'))
 
             $("#modal_card_select").find("option").remove();
             data.forEach((val, index) => {

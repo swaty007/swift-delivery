@@ -89,7 +89,7 @@ use yii\helpers\Url;
                     $order->status == \common\models\Order::ORDER_STATUS_DELIVER_NEAR_PLACE ||
                     $order->status == \common\models\Order::ORDER_STATUS_DELIVER_AT_PLACE):?>
                 <div class="card__item card__item--cancel">
-                    <a href="<?=Url::toRoute(['site/cancel-order','l' => $order->weblink]);?>" class="card__text text--blue">
+                    <a href="<?=Url::toRoute(['site/order-status','cancelCustomer' => $order->weblink]);?>" class="card__text text--blue">
                         <strong>
                             Cancel Order
                         </strong>

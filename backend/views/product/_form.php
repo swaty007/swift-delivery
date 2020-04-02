@@ -18,7 +18,17 @@ use unclead\multipleinput\MultipleInput;
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-xs-6">
+            <?= $form->field($model, 'note')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-xs-6">
             <?= $form->field($model, 'order')->textInput() ?>
+        </div>
+
+        <div class="col-xs-6">
+            <?= $form->field($model, 'is_active')->dropDownList([
+                '0' => 'No',
+                '1' => 'Yes'
+            ]) ?>
         </div>
     </div>
     <div class="row">
@@ -27,12 +37,6 @@ use unclead\multipleinput\MultipleInput;
                 <img src="<?=Yii::$app->params['webProjectUrl'] . '/img/uploads/' . $model->image?>" style="height:100px;widht:auto;">
             <?php endif;?>
             <?= $form->field($model, 'image')->fileInput() ?>
-        </div>
-        <div class="col-xs-6">
-            <?= $form->field($model, 'is_active')->dropDownList([
-                '0' => 'No',
-                '1' => 'Yes'
-            ]) ?>
         </div>
     </div>
 

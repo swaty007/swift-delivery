@@ -65,7 +65,7 @@ class CrudController extends Controller
                         $products[] = $count . ' ' . $name;
                     }
 
-                    $messageSupplier = "New order available for $$order->total to delivery: " . implode(' & ', $products);
+                    $messageSupplier = "New order available for $$order->total to delivery: " . implode(' & ', $products) . " | " . \Yii::$app->params['webProjectUrl'] . '/supplier/show-order?l=' . $order->weblink;
 
                     $supplier = Supplier::find()->where(['id' => $supplierId])->one();
                     $supplierUser = User::find()->where(['id' => $supplier->supplier_id])->one();
