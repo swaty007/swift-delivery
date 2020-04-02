@@ -27,5 +27,19 @@ switch ($module):
                 </div>
             </div>
         </div>
-        <?php break; ?>
+        <?php break;
+        case "canceled":?>
+            <div class="alert alert--black">
+                <div class="container flex-center">
+                    <div>
+                        <p class="text text--small text--white">
+                           Sorry, no one of the suppliers accepted your order
+                        </p>
+                        <p class="text text--small text--white">
+                            Please, try to place an order a little later
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <?php break;?>
     <?php endswitch; ?>

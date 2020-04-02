@@ -87,6 +87,7 @@ class SupplierController extends BaseAuthorizedController
     public function actionIndex($cancelSupplier = 0, $cancelDeliver = 0, $complete = 0)
     {
         if ($cancelSupplier) {
+            Yii::$app->session->setFlash('success', 'ORDER_STATUS_CANCELLED_BY_SUPPLIER');
             $this->cancelOrder($cancelSupplier, Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER);
         }
 

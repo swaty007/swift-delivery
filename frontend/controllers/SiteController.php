@@ -229,7 +229,11 @@ class SiteController extends Controller
             return $this->redirect('/site/index');
         }
         if ($order->status == Order::ORDER_STATUS_COMPLETE) {
-            $this->redirect(Url::toRoute(['site/order-rating','l' => $order->weblink]));
+            return $this->redirect(Url::toRoute(['site/order-rating','l' => $order->weblink]));
+        }
+        if ($order->status == Order::ORDER_STATUS_CANCELLED) {
+            Yii::$app->session->setFlash('success', 'Order canceled');
+            return $this->redirect('/site/order');
         }
         return $this->render('/customer/order-status', ['order' => $order]);
     }

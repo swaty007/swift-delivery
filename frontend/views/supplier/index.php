@@ -509,17 +509,39 @@ $this->title = 'Supplier cabinet';
         clearInterval(intervarPjax)
         var intervarPjax = setInterval(function () {
             if (typeof $.pjax !== 'undefined') {
-                if ($('.supplier-cab__table-content').is(':visible')) {
-
-                } else {
-                    $.pjax.reload({container: "#supplier_tables"});
+                if (!$('.supplier-cab__table-content').is(':visible') && !$('.modal').is(':visible')) {
+                  $.pjax.reload({container: "#supplier_tables"});
                 }
             }
         }, 5000)
     </script>
     <?php \yii\widgets\Pjax::end(); ?>
 </section>
-
+<?php if (Yii::$app->session->hasFlash('success')): ?>
+<?php if (Yii::$app->session->getFlash('success') === 'ORDER_STATUS_CANCELLED_BY_SUPPLIER'): ?>
+<div class="modal modal--full-screen" id="cancel_order_by_customer" style="display:block;">
+            <div class="modal__wrapper">
+                <div class="modal__container container">
+                    <div class="modal__close"></div>
+                    <div class="modal__header">
+                        <br>
+                        <p class="text text--blue">
+                            Please call the customer to cancel the order.
+                        </p>
+                        <br>
+                        <p class="text text--blue">
+                            Tell them to go back to the homepage & start a new order
+                        </p>
+                        <br>
+                        <a href="tel:<?=preg_replace( '/[^0-9]/', '', $finished[0]['customer']['phone_number'] );?>">
+                            <?= $finished[0]['customer']['phone_number'] ;?>
+                        </a>
+                    </div>
+                </div>
+            </div>
+</div>
+<?php endif;?>
+<?php endif;?>
 <div class="modal modal--full-screen modal--order" id="take_order">
     <div class="modal__wrapper">
         <div class="modal__container container">
@@ -531,16 +553,16 @@ $this->title = 'Supplier cabinet';
                 </h3>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-4 col-md-offset-4">
+                        <div class="col-md-4 col-md-offset-2">
                             <input id="modal_take_order_time_val" type="text" class="form-control">
                         </div>
-<!--                        <div class="col-xs-8 col-md-4">-->
+                        <div class="col-xs-8 col-md-4">
 <!--                            <p class="modal__select--text text text--blue">minutes</p>-->
-<!--                            <select class="default-select" name="" id="modal_take_order_time">-->
-<!--                                <option value="min">minutes</option>-->
-<!--                                <option value="hours">hours</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
+                            <select class="default-select" name="" id="modal_take_order_time">
+                                <option value="min">minutes</option>
+                                <option value="hours">hours</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>

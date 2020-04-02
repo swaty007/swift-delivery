@@ -168,8 +168,16 @@ AppAsset::register($this);
 <!--    --><?//= Alert::widget() ?>
 </div>
 <?php if( Yii::$app->session->hasFlash('success') ): ?>
-    <!--    --><?//= Yii::$app->session->getFlash('success'); ?>
-    <?= $this->render('../components/_alert', ['module' => 'thank']); ?>
+<!--        --><?//= Yii::$app->session->getFlash('success'); ?>
+<?php switch (Yii::$app->session->getFlash('success')) {
+        case 'Order completed':
+            echo $this->render('../components/_alert', ['module' => 'thank']);
+            break;
+        case 'Order canceled':
+            echo $this->render('../components/_alert', ['module' => 'canceled']);
+            break;
+    }
+    ; ?>
 <?php endif;?>
 <header class="header">
     <div class="container">

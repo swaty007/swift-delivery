@@ -10,7 +10,7 @@ use yii\helpers\Html;
         'tag' => 'section'
     ]]); ?>
 
-<?php if ($order->status == \common\models\Order::ORDER_STATUS_NEW || $order->status == \common\models\Order::ORDER_STATUS_CANCELLED) {
+<?php if ($order->status == \common\models\Order::ORDER_STATUS_NEW) {
     echo $this->render('../customer/_searching', ['order' => $order]);
 } else {
     echo $this->render('../customer/_onWay', ['order' => $order]);
@@ -18,7 +18,9 @@ use yii\helpers\Html;
     <script>
         setTimeout(function () {
             if (typeof $.pjax !== 'undefined') {
+              if (!$('.modal').is(':visible')) {
                 $.pjax.reload({container: "#order_status"});
+              }
             }
         }, 5500)
     </script>
