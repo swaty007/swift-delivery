@@ -22,6 +22,7 @@ use yii\bootstrap\ActiveForm;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\UploadedFile;
 
 class SupplierController extends BaseAuthorizedController
@@ -102,7 +103,7 @@ class SupplierController extends BaseAuthorizedController
 
         $alreadyTakenInThisMonth = Order::find()->where(['supplier_id' => $this->supplierModel->id])->andWhere(['>', 'created_at', date('Y-m-d H:i:s', strtotime("-30 days"))])->count();
 
-        if ($alreadyTakenInThisMonth > Yii::$app->params['subscribePlans'][$this->supplierModel->status]['dealsPerMonth']) {
+        if ($alreadyTakenInThisMonth < Yii::$app->params['subscribePlans'][$this->supplierModel->status]['dealsPerMonth']) {
             $queryData = OrderQuery::find()
                 ->select('order_id')
                 ->where(['and',
@@ -274,16 +275,16 @@ class SupplierController extends BaseAuthorizedController
 
     public function actionShowOrder($l) {
         $order = Order::find()
-            ->where(['AND',
-                ['weblink' => $l],
-                ['OR',[
-                    ['supplier_id' => null],
-                    ['supplier_id' => $this->supplierModel->id],
-                ]]])
             ->with('orderItems')
             ->with('customer')
             ->with('supplier')
             ->with('rating')
+            ->where(['AND',
+                ['order.weblink' => $l],
+                ['OR',
+                    ['order.supplier_id' => null],
+                    ['order.supplier_id' => $this->supplierModel->id],
+                ]])
             ->one();
 
         if ($order) {
@@ -347,7 +348,8 @@ class SupplierController extends BaseAuthorizedController
         Twilio::sendSms($number, $messageCustomer);
 
         OrderQuery::deleteAll(['order_id' => $order->id]);
-        return $order->save();
+        $order->save();
+        return $order;
     }
 
     public function actionCalculateDelivery($id)
@@ -382,9 +384,9 @@ class SupplierController extends BaseAuthorizedController
     {
         $post = Yii::$app->request->post();
 
-        $this->takeOrder($post);
+        $order = $this->takeOrder($post);
 
-        return true;
+        return $this->redirect(Url::toRoute('/supplier/show-order?l=') . $order->weblink);
     }
 
     private function complete($id)

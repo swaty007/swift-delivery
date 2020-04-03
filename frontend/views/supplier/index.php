@@ -84,9 +84,14 @@ $this->title = 'Supplier cabinet';
                         <?= $item['total']; ?>
                     </td>
                     <td>
-                        <button class="btn-sm main-btn main-btn--black main-btn--xs" data-direction="show-more-orders">
+<!--                        <button class="btn-sm main-btn main-btn--black main-btn--xs" data-direction="show-more-orders">-->
+<!--                            Show More-->
+<!--                        </button>-->
+                        <a href="<?= Url::toRoute('/supplier/show-order?l=') . $item['weblink'] ?>">
+                        <button class="btn-sm main-btn main-btn--black main-btn--xs">
                             Show More
                         </button>
+                        </a>
                     </td>
                 </tr>
                 <tr class="supplier-cab__table--content">
