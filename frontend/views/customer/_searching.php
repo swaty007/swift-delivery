@@ -55,7 +55,7 @@ use yii\helpers\Url;
                         <div class="card__item--left">
                             <p class="text--small text--blue-opacity">
                                 <strong>
-                                    Flower<?= $item->item_price; ?> | <span
+                                    <?= \common\models\Product::findOne(['id' => $item->product_item_id])->name ?> | <span
                                             class="text--blue">$<?= $item->item_price; ?></span>
                                 </strong>
                             </p>

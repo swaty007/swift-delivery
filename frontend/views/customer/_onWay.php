@@ -48,7 +48,7 @@ use yii\helpers\Url;
                         <div class="card__item--left">
                             <p class="text--small text--blue-opacity">
                                 <strong>
-                                   Flower <?=$item->item_price;?> | <span class="text--blue">$<?= $item->item_price; ?></span>
+                                    <?= \common\models\Product::findOne(['id' => $item->product_item_id])->name ?> | <span class="text--blue">$<?= $item->item_price; ?></span>
                                 </strong>
                             </p>
                             <p class="card__text text--blue-opacity">
@@ -178,7 +178,7 @@ use yii\helpers\Url;
                     <br>
                     <p class="text text--blue">Or make an other order</p>
                     <br>
-                    <a href="<?=Url::toRoute(['site/order']);?>" class="main-btn">
+                    <a href="<?=Url::toRoute(['site/order']);?>" class="main-btn main-btn--blue w100">
                         Catalog
                     </a>
                 </div>
