@@ -53,7 +53,7 @@ use yii\helpers\Url;
                 <div class="card__item--right">
                     <p class="text--small text--red">
                         <strong>
-                            $<?= number_format($order-total, 2); ?>
+                            $<?= number_format($order->total, 2); ?>
                         </strong>
                     </p>
                 </div>
@@ -72,7 +72,12 @@ use yii\helpers\Url;
                 <strong>Delivery Notes: </strong>Please dont ring the doorbell... Woofuss 🐶 hates it!
             </p>
         </blockquotes>
-
+        <a href="<?=Url::toRoute(['supplier/index','complete' => $order->id]);?>" class="main-btn main-btn--blue">
+            Complete order
+        </a>
+        <br>
+        <br>
+        <br>
 
     </div>
 </section>
@@ -146,7 +151,7 @@ use yii\helpers\Url;
   var intervarPjax = setInterval(function () {
     if (typeof $.pjax !== 'undefined') {
       if (!$('.modal').is(':visible')) {
-        $.pjax.reload({container: "#supplier_order"});
+        // $.pjax.reload({container: "#supplier_order"});
       }
     }
   }, 5000)
