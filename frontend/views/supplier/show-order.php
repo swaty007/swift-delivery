@@ -64,7 +64,9 @@ use yii\helpers\Url;
             <p class="text--xs text--blue-opacity">
                 Gift Product: <?=$order->supplier->product_name?>
             </p>
-            <?= Html::img(Yii::$app->params['webUploadsDir'].$order->supplier->product_image, ['class' => 'on-way__img']); ?>
+            <div class="text-center">
+                <?= Html::img(Yii::$app->params['webUploadsDir'].$order->supplier->product_image, ['class' => 'on-way__img']); ?>
+            </div>
         </div>
 
         <blockquotes class="blockquotes text-left">
