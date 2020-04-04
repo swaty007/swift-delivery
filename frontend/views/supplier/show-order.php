@@ -80,26 +80,27 @@ use yii\helpers\Url;
         <br>
 
     </div>
-</section>
-<div class="deliver__info">
-    <div class="container">
-        <div class="flex-center flex-center--between">
-            <div class="deliver__info--content">
-                <p class="text text--white text--small"><strong><?=$order->customer->username;?></strong> is your customer!</p>
-                <p class="text">
-                    <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $order->id]);?>" class="text text--red text--xs">
-                        <?= Html::img('@web/img/icon_cancel.svg', ['class' => '']) ?>
-                        Cancel Order
-                    </a>
-                </p>
-            </div>
-            <div class="deliver__info--icons flex-center">
-                <a href="tel:<?=preg_replace( '/[^0-9]/', '', $order->customer->phone_number );?>" class="deliver__call"></a>
-                <a href="sms:<?=preg_replace( '/[^0-9]/', '', $order->customer->phone_number );?>" class="deliver__sms"></a>
+    <div class="deliver__info">
+        <div class="container">
+            <div class="flex-center flex-center--between">
+                <div class="deliver__info--content">
+                    <p class="text text--white text--small"><strong><?=$order->customer->username;?></strong> is your customer!</p>
+                    <p class="text">
+                        <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $order->id]);?>" class="text text--red text--xs">
+                            <?= Html::img('@web/img/icon_cancel.svg', ['class' => '']) ?>
+                            Cancel Order
+                        </a>
+                    </p>
+                </div>
+                <div class="deliver__info--icons flex-center">
+                    <a href="tel:<?=preg_replace( '/[^0-9]/', '', $order->customer->phone_number );?>" class="deliver__call"></a>
+                    <a href="sms:<?=preg_replace( '/[^0-9]/', '', $order->customer->phone_number );?>" class="deliver__sms"></a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
 
 
 <?php if ($order->status == \common\models\Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER):?>
