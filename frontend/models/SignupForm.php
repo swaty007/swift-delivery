@@ -22,7 +22,7 @@ class SignupForm extends Model
     {
         return [
             ['phone_number', 'trim'],
-            ['phone_number', 'match', 'pattern' => '/^\+1\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{4}$/', 'message' => 'Incorrect phone number'],
+            ['phone_number', 'match', 'pattern' => '/^\+1\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{4}$/', 'message' => 'Sorry, this number cannot be registered'],
             ['phone_number', 'required'],
             [['phone_number', 'role'] , 'unique', 'targetClass' => '\common\models\User', 'targetAttribute' => ['phone_number', 'role'],'message' => 'This phone number is already registered.'],
             ['phone_number', 'string', 'min' => 2, 'max' => 255],

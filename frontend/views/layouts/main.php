@@ -253,7 +253,7 @@ AppAsset::register($this);
                     <hr>
                 </li>
                 <li class="navbar__item  navbar__item--btn">
-                    <a href="<?=Url::toRoute(['site/order']);?>" class="main-btn">
+                    <a href="<?=Url::toRoute(['site/order']);?>" class="main-btn main-btn--blue">
                         Start Delivery!
                     </a>
                 </li>
@@ -267,8 +267,8 @@ AppAsset::register($this);
                     </li>
                 <?php else:?>
                     <li class="navbar__item  navbar__item--btn">
-                        <a href="<?=Url::toRoute(['supplier/index']);?>" class="main-btn main-btn--blue">
-                            Supplier dashboard
+                        <a href="<?=Url::toRoute(['supplier/index']);?>" class="main-btn main-btn--black">
+                            Delivery Dashboard
                         </a>
                     </li>
                     <li class="navbar__item">
