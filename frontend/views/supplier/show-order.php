@@ -102,8 +102,13 @@ use yii\helpers\Url;
                 Take
             </a>
         <?php else: ?>
-            <a href="<?=Url::toRoute(['supplier/index','complete' => $order->id]);?>" class="main-btn main-btn--blue">
+            <a href="<?=Url::toRoute(['supplier/index','complete' => $order->id]);?>" class="main-btn">
                 Complete order
+            </a>
+            <br>
+            <br>
+            <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $order->id]);?>" class="main-btn main-btn--red">
+                Cancel order
             </a>
         <?php endif;?>
 

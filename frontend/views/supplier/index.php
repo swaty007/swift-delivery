@@ -229,7 +229,7 @@ $this->title = 'Supplier cabinet';
                             Company: <span class="text--regular"><?=$item['supplier']['name']?></span>
                         </h4>
                         <h4 class="supplier-cab__table-content--title text--xs">
-                            Order #: <span class="text--regular"><?= $item['id'] ?></span>
+                            Order #: <a href="<?= Url::toRoute('/supplier/show-order?l=') . $item['weblink'] ?>" class="text--regular"><?= $item['weblink'] ?></a>
                         </h4>
                         <h4 class="supplier-cab__table-content--title text--xs">
                             Delivering to:

@@ -59,7 +59,7 @@ class Supplier {
             modalEl.addClass("modal--success");
             setTimeout(() => {
                 modalEl.hide('fade', 400, () => {
-                    $("body").removeClass("modal__open");
+                    // $("body").removeClass("modal__open");
                     modalEl.removeClass("modal--success");
                 });
             }, 600);

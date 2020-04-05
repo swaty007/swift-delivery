@@ -47,11 +47,11 @@ switch ($module):
             <div class="container flex-center">
                 <div>
                     <p class="text text--small text--white">
-                        Sorry, you don't have access to see this order
+                        Sorry, the order has expired.
                     </p>
-<!--                    <p class="text text--small text--white">-->
-<!--                        Please, try to place an order a little later-->
-<!--                    </p>-->
+                    <p class="text text--small text--white">
+                        This order is no longer available to you.
+                    </p>
                 </div>
             </div>
         </div>

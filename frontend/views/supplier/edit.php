@@ -103,7 +103,7 @@ $this->title = 'Edit supplier';
                         <p class="item__desc text--blue-opacity"></p>
                     </div>
                     <?= $form->field($model, 'items', [
-                            'selectors' => ['input' => "input[name='SupplierForm[items][]']"],
+                            'selectors' => ['input' => "input[name='SupplierEditForm[items][]']"],
                         'options' => ['class' => 'default-checkbox__container']])
                         ->checkbox(['name'=>'SupplierEditForm[items][]',
                             'value' => $item['id'],

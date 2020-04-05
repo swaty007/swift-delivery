@@ -26,7 +26,7 @@ switch ($module):
                     Still Have Questions?
                 </h3>
                 <p class="text text--small">Visit our help center to learn about the full process and high quality of our service.</p>
-                <a href="#" class="main-btn main-btn--transparent">
+                <a href="<?=Url::toRoute('/info/help-center')?>" class="main-btn main-btn--transparent">
                 <span class="text--red">
                     Help Center
                 </span>
@@ -42,9 +42,9 @@ switch ($module):
                     In the meantime
                 </h3>
                 <p class="text text--small">Visit our
-                    <a href="<?=Url::toRoute(['site/index']);?>" class="text--white">help center</a> to learn about the full process and high quality of our service.
+                    <a href="<?=Url::toRoute(['info/help-center']);?>" class="text--white">help center</a> to learn about the full process and high quality of our service.
                 </p>
-                <a href="#" class="main-btn main-btn--transparent">
+                <a href="<?=Url::toRoute('/info/help-center')?>" class="main-btn main-btn--transparent">
                 <span class="text--blue">
                     Help Center
                 </span>
