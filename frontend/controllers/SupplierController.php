@@ -28,6 +28,10 @@ use yii\web\UploadedFile;
 class SupplierController extends BaseAuthorizedController
 {
     public $allowedRole = User::USER_ROLE_SUPPLIER;
+
+    /**
+     * @var Supplier|null
+     */
     public $supplierModel;
 
     public function behaviors()
@@ -101,9 +105,7 @@ class SupplierController extends BaseAuthorizedController
             $this->complete($complete);
         }
 
-        $alreadyTakenInThisMonth = Order::find()->where(['supplier_id' => $this->supplierModel->id])->andWhere(['>', 'created_at', date('Y-m-d H:i:s', strtotime("-30 days"))])->count();
-
-        if ($alreadyTakenInThisMonth < Yii::$app->params['subscribePlans'][$this->supplierModel->status]['dealsPerMonth']) {
+        if ($this->supplierModel->isAllowedToTakeOrder()) {
             $queryData = OrderQuery::find()
                 ->select('order_id')
                 ->where(['and',
@@ -287,10 +289,23 @@ class SupplierController extends BaseAuthorizedController
                 ]])
             ->one();
 
+        $timeToTake = 0;
+        if(is_null($order->supplier_id)) {
+            $oq = OrderQuery::findOne(['order_id' => $order->id, 'supplier_id' => $this->supplierModel->id, 'order' => 0]);
+
+            if(!($oq)) {
+                Yii::$app->session->setFlash('success', 'Order access');
+                return $this->redirect('/supplier/index');
+            }
+
+            $timeToTake = $oq->time_start_query - time();
+        }
+
         if ($order) {
-            return $this->render('show-order', ['order' => $order]);
+            return $this->render('show-order', ['order' => $order, 'timeToTake' => ($timeToTake >= 0) ? $timeToTake : 0]);
         } else {
-            return $this->render('order-not-allowed');
+            Yii::$app->session->setFlash('success', 'Order access');
+            return $this->redirect('/supplier/index');
         }
     }
 

@@ -44,7 +44,7 @@ class Supplier extends \yii\db\ActiveRecord
     {
         if (isset(Yii::$app->user) && !Yii::$app->user->isGuest && $this->supplier_id == Yii::$app->user->getId()) {
             $this->user = Yii::$app->user->identity;
-        } else if(!empty($this->supplier_id)) {
+        } else if (!empty($this->supplier_id)) {
             $this->user = User::findOne($this->supplier_id);
         }
 
@@ -96,10 +96,17 @@ class Supplier extends \yii\db\ActiveRecord
         ];
     }
 
+    public function isAllowedToTakeOrder()
+    {
+        $alreadyTakenInThisMonth = Order::find()->where(['supplier_id' => $this->id])->andWhere(['>', 'created_at', date('Y-m-d H:i:s', strtotime("-30 days"))])->count();
+        return ($alreadyTakenInThisMonth < Yii::$app->params['subscribePlans'][$this->status]['dealsPerMonth']);
+    }
+
     /**
      * @return string|null
      */
-    public function getImageUrl() {
+    public function getImageUrl()
+    {
         if (empty($this->product_image)) {
             return null;
         }

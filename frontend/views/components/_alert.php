@@ -41,5 +41,19 @@ switch ($module):
                     </div>
                 </div>
             </div>
-            <?php break;?>
+            <?php break;
+    case "order_access":?>
+        <div class="alert alert--black">
+            <div class="container flex-center">
+                <div>
+                    <p class="text text--small text--white">
+                        Sorry, you don't have access to see this order
+                    </p>
+<!--                    <p class="text text--small text--white">-->
+<!--                        Please, try to place an order a little later-->
+<!--                    </p>-->
+                </div>
+            </div>
+        </div>
+        <?php break;?>
     <?php endswitch; ?>

@@ -61,6 +61,10 @@ class OrderQuery extends \yii\db\ActiveRecord
         $gm = new GoogleMaps();
 
         foreach (Supplier::find()->where(['is_active' => 1])->all() as $supplier) {
+            if (!$supplier->isAllowedToTakeOrder()) {
+                continue ;
+            }
+
             $supplierAddressData = AddressLatlng::tryGetAddressData($supplier->address . ' ' . $supplier->address_2);
 
             if (is_null($supplierAddressData)) {

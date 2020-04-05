@@ -1,4 +1,6 @@
-<?php use yii\helpers\Html;
+<?php
+
+use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
 <?php \yii\widgets\Pjax::begin(['id' => 'supplier_order',
@@ -6,8 +8,20 @@ use yii\helpers\Url;
         'class' => '',
         'tag' => 'div'
     ]]); ?>
+<?php if($order->status === common\models\Order::ORDER_STATUS_NEW):?>
+    <div class="alert alert--black">
+        <div class="container flex-center">
+            <p class="text text--small">
+                New delivery request!  Order expires in  <strong class="text--white"><?=$timeToTake;?>s</strong>
+            </p>
+        </div>
+    </div>
+<?php endif;?>
+
 <section class="supplier-order">
     <div class="container">
+        <br>
+        <br>
         <?php if(\common\models\AddressLatlng::tryGetAddressData($order->address . ' ' . $order->address_2) !== null):?>
             <img class="supplier-cab__map" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=$order->address?>&zoom=13&size=300x300&maptype=roadmap
 &markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($order->address . ' ' . $order->address_2)->latlng?>
@@ -58,25 +72,41 @@ use yii\helpers\Url;
                     </p>
                 </div>
             </div>
+            <?php if (!empty($order->supplier)):?>
+                <p class="text--xs text--blue-opacity">
+                    <strong>&nbsp;</strong>
+                </p>
+                <p class="text--xs text--blue-opacity">
+                    Gift Product: <?=$order->supplier->product_name?>
+                </p>
+                <div class="text-center">
+                    <?= Html::img(Yii::$app->params['webUploadsDir'].$order->supplier->product_image, ['class' => 'on-way__img']); ?>
+                </div>
+            <?php endif;?>
+
+        </div>
+        <?php if (!empty($order->description)):?>
+            <blockquotes class="blockquotes text-left">
+                <p class="text--small">
+                    <strong>Delivery Notes: </strong><?=$order->description?>
+                </p>
+            </blockquotes>
+        <?php else:;?>
             <p class="text--xs text--blue-opacity">
                 <strong>&nbsp;</strong>
             </p>
-            <p class="text--xs text--blue-opacity">
-                Gift Product: <?=$order->supplier->product_name?>
-            </p>
-            <div class="text-center">
-                <?= Html::img(Yii::$app->params['webUploadsDir'].$order->supplier->product_image, ['class' => 'on-way__img']); ?>
-            </div>
-        </div>
+        <?php endif;?>
 
-        <blockquotes class="blockquotes text-left">
-            <p class="text--small">
-                <strong>Delivery Notes: </strong>Please dont ring the doorbell... Woofuss 🐶 hates it!
-            </p>
-        </blockquotes>
-        <a href="<?=Url::toRoute(['supplier/index','complete' => $order->id]);?>" class="main-btn main-btn--blue">
-            Complete order
-        </a>
+        <?php if($order->status === common\models\Order::ORDER_STATUS_NEW):?>
+            <a href="#" class="btn-sm main-btn" data-direction="take-order" data-order-id="<?= $order->id ?>">
+                Take
+            </a>
+        <?php else: ?>
+            <a href="<?=Url::toRoute(['supplier/index','complete' => $order->id]);?>" class="main-btn main-btn--blue">
+                Complete order
+            </a>
+        <?php endif;?>
+
         <br>
         <br>
         <br>
@@ -87,12 +117,14 @@ use yii\helpers\Url;
             <div class="flex-center flex-center--between">
                 <div class="deliver__info--content">
                     <p class="text text--white text--small"><strong><?=$order->customer->username;?></strong> is your customer!</p>
-                    <p class="text">
-                        <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $order->id]);?>" class="text text--red text--xs">
-                            <?= Html::img('@web/img/icon_cancel.svg', ['class' => '']) ?>
-                            Cancel Order
-                        </a>
-                    </p>
+                    <?php if($order->status !== common\models\Order::ORDER_STATUS_NEW):?>
+                        <p class="text">
+                            <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $order->id]);?>" class="text text--red text--xs">
+                                <?= Html::img('@web/img/icon_cancel.svg', ['class' => '']) ?>
+                                Cancel Order
+                            </a>
+                        </p>
+                    <?php endif;?>
                 </div>
                 <div class="deliver__info--icons flex-center">
                     <a href="tel:<?=preg_replace( '/[^0-9]/', '', $order->customer->phone_number );?>" class="deliver__call"></a>
@@ -154,10 +186,65 @@ use yii\helpers\Url;
   var intervarPjax = setInterval(function () {
     if (typeof $.pjax !== 'undefined') {
       if (!$('.modal').is(':visible')) {
-        // $.pjax.reload({container: "#supplier_order"});
+        $.pjax.reload({container: "#supplier_order"});
       }
     }
   }, 5000)
 </script>
 
 <?php \yii\widgets\Pjax::end(); ?>
+<div class="modal modal--full-screen modal--order" id="take_order">
+    <div class="modal__wrapper">
+        <div class="modal__container container">
+            <div class="modal__close"></div>
+            <div class="modal__header">
+                <input type="hidden" id="modal_take_order_id">
+                <h3 class="modal__title text--small text--blue">
+                    What’s your ETA? (minutes)
+                </h3>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-2">
+                            <input id="modal_take_order_time_val" type="text" class="form-control">
+                        </div>
+                        <div class="col-xs-8 col-md-4">
+                            <!--                            <p class="modal__select--text text text--blue">minutes</p>-->
+                            <select class="default-select" name="" id="modal_take_order_time">
+                                <option value="min">minutes</option>
+                                <option value="hours">hours</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal__body">
+                <h3 class="modal__title text--small text--blue">
+                    Who’s delivering?
+                </h3>
+                <div class="row">
+                    <div class="form-group col-md-8 col-md-offset-2">
+                        <input id="modal_take_order_name" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p class="text--small text--blue-opacity">
+                        ETA: (by google maps from your office)
+                    </p>
+                    <p id="modal_take_order_duration" class="text--large text--bold text--red">
+
+                    </p>
+                </div>
+
+                <button id="take_order_btn" class="main-btn main-btn--black w100">Accept Delivery!</button>
+            </div>
+            <div class="modal__success">
+                <?= Html::img('@web/img/icon_accept_delivery.svg', ['class' => 'modal__success--img']); ?>
+                <p class="sub-text text--white">
+                    Delivery Accepted!
+                    <br>
+                    <span class="text--small text--white-opacity">Away you go!</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

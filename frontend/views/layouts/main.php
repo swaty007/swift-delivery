@@ -176,6 +176,9 @@ AppAsset::register($this);
         case 'Order canceled':
             echo $this->render('../components/_alert', ['module' => 'canceled']);
             break;
+        case 'Order access':
+            echo $this->render('../components/_alert', ['module' => 'order_access']);
+            break;
     }
     ; ?>
 <?php endif;?>
