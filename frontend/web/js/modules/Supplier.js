@@ -30,10 +30,11 @@ class Supplier {
                 inputTimeVal.closest('.form-group').removeClass('has-error')
             }
             if (data.deliverName === "") {
-                orderName.closest('.form-group').addClass('has-error')
-                return
+                // orderName.closest('.form-group').addClass('has-error')
+                // return
+                data.deliverName = 'David'
             } else {
-                orderName.closest('.form-group').removeClass('has-error')
+                // orderName.closest('.form-group').removeClass('has-error')
             }
             console.log(data);
             $.ajax({

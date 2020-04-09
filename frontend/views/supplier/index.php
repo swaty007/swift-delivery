@@ -212,6 +212,9 @@ $this->title = 'Supplier cabinet';
                         <?= $item['total']; ?>
                     </td>
                     <td>
+<!--                        <a href="--><?//= Url::toRoute('/supplier/show-order?l=') . $item['weblink'] ?><!--" class="btn-sm main-btn main-btn--black main-btn--xs">-->
+<!--                            Show More-->
+<!--                        </a>-->
                         <button class="btn-sm main-btn main-btn--black main-btn--xs" data-direction="show-more-orders">
                             Show More
                         </button>
@@ -237,6 +240,9 @@ $this->title = 'Supplier cabinet';
                                 <?php endif; ?>
                                 / <?= $item['zip'] ?>
                             </span>
+                        </h4>
+                        <h4 class="supplier-cab__table-content--title text--xs">
+                            Zip Code: <span class="text--regular"><?= $item['zip'] ?></span>
                         </h4>
 
                         <?php if(\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'] . ' ' . $item['zip']) !== null):?>
@@ -301,12 +307,15 @@ $this->title = 'Supplier cabinet';
 <!--                        <h4 class="supplier-cab__table-content--title text--xs">-->
 <!--                            Delivery Status: <span class="text--regular">--><?//= \common\models\Order::getStatusTextFromStatus($item['status']) ?><!--</span>-->
 <!--                        </h4>-->
-                        <h4 class="supplier-cab__table-content--title text--xs">
-                            Zip Code: <span class="text--regular"><?= $item['zip'] ?></span>
-                        </h4>
-                        <a href="#" class="btn-sm main-btn main-btn--xs main-btn--black" data-direction="take-order" data-order-id="<?= $item['id'] ?>">
-                            Take
-                        </a>
+
+                       <div class="flex-center">
+                           <a href="#" class="btn-sm main-btn main-btn--xs main-btn--black" data-direction="take-order" data-order-id="<?= $item['id'] ?>">
+                               Take
+                           </a>
+                           <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $item['id']]);?>" class="btn-sm main-btn main-btn--xs main-btn--red">
+                               Cancel order
+                           </a>
+                       </div>
                     </div>
                 </td>
             </tr>
@@ -356,6 +365,9 @@ $this->title = 'Supplier cabinet';
                                     <?php endif; ?>
                                 / <?= $item['zip'] ?>
                             </span>
+                            </h4>
+                            <h4 class="supplier-cab__table-content--title text--xs">
+                                Zip Code: <span class="text--regular"><?= $item['zip'] ?></span>
                             </h4>
 
                             <?php if(\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'] . ' ' . $item['zip']) !== null):?>
@@ -419,9 +431,6 @@ $this->title = 'Supplier cabinet';
 <!--                            <h4 class="supplier-cab__table-content--title text--xs">-->
 <!--                                Delivery Status: <span class="text--regular">--><?//= \common\models\Order::getStatusTextFromStatus($item['status']) ?><!--</span>-->
 <!--                            </h4>-->
-                            <h4 class="supplier-cab__table-content--title text--xs">
-                                Zip Code: <span class="text--regular"><?= $item['zip'] ?></span>
-                            </h4>
                             <?php if ($item['rating']):?>
                                 <h4 class="supplier-cab__table-content--title text--xs">
                                     Delivery Review:
@@ -555,22 +564,39 @@ $this->title = 'Supplier cabinet';
     <div class="modal__wrapper">
         <div class="modal__container container">
             <div class="modal__close"></div>
+            <div class="modal__time">
+                Order expires in  <strong id="modal__time">50</strong>s
+            </div>
             <div class="modal__header">
                 <input type="hidden" id="modal_take_order_id">
                 <h3 class="modal__title text--small text--blue">
-                    What’s your ETA? (minutes)
+                    What’s your ETA?
                 </h3>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-4 col-md-offset-2">
-                            <input id="modal_take_order_time_val" type="text" class="form-control">
-                        </div>
-                        <div class="col-xs-8 col-md-4">
-<!--                            <p class="modal__select--text text text--blue">minutes</p>-->
-                            <select class="default-select" name="" id="modal_take_order_time">
-                                <option value="min">minutes</option>
-                                <option value="hours">hours</option>
+                        <div class="col-xs-6 col-sm-4 col-md-4 col-md-offset-2">
+                            <select class="default-select" name="" id="modal_take_order_time_val">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="35">35</option>
+                                <option value="40">40</option>
+                                <option value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                                <option value="60">60</option>
                             </select>
+<!--                            <input id="modal_take_order_time_val" type="text" class="form-control">-->
+                        </div>
+                        <div class="col-xs-6 col-sm-8 col-md-4">
+                            <p class="default-select default-select--empty modal__select--text text text--blue">minutes</p>
+<!--                            <select class="default-select" name="" id="modal_take_order_time">-->
+<!--                                <option value="min">minutes</option>-->
+<!--                                <option value="hours">hours</option>-->
+<!--                            </select>-->
                         </div>
                     </div>
                 </div>
@@ -581,7 +607,7 @@ $this->title = 'Supplier cabinet';
                 </h3>
                 <div class="row">
                     <div class="form-group col-md-8 col-md-offset-2">
-                        <input id="modal_take_order_name" type="text" class="form-control">
+                        <input id="modal_take_order_name" type="text" class="form-control" placeholder="Enter first name here">
                     </div>
                 </div>
                 <div class="form-group">
@@ -606,3 +632,22 @@ $this->title = 'Supplier cabinet';
         </div>
     </div>
 </div>
+
+<?php if (Yii::$app->session->hasFlash('success')): ?>
+<?php if (Yii::$app->session->getFlash('success') === 'Delivery Completed'): ?>
+<div class="modal modal--full-screen modal--order" data-autoremove="3000" id="modal_complete_order" style="display: block">
+    <div class="modal--success modal__wrapper">
+        <div class="modal__container container">
+            <div class="modal__success modal__success--black">
+                <?= Html::img('@web/img/icon_accept_delivery.svg', ['class' => 'modal__success--img']); ?>
+                <p class="sub-text text--white">
+                    Delivery Completed!
+                    <br>
+                    <span class="text--small text--white-opacity">Who’s awesome? You are!</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif;?>
+<?php endif;?>

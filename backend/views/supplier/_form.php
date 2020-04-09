@@ -6,7 +6,11 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Supplier */
 /* @var $form yii\widgets\ActiveForm */
-$subscribes = \yii\helpers\ArrayHelper::getColumn(Yii::$app->params['subscribePlans'], 'name');
+$subscribes = [];
+
+foreach (Yii::$app->params['subscribePlans'] as $subscribePlan) {
+    $subscribes[$subscribePlan['id']] = $subscribePlan['name'];
+}
 ?>
 
 <div class="supplier-form">
@@ -65,7 +69,7 @@ $subscribes = \yii\helpers\ArrayHelper::getColumn(Yii::$app->params['subscribePl
                 '1' => 'Yes'
             ]) ?>
             <?php if (!empty($model->logo)): ?>
-                <h3>Company Logo</h3>
+                <h3>Company Logoыс</h3>
                 <img src="<?= Yii::$app->params['webProjectUrl'] . '/img/uploads/' . $model->logo ?>"
                      style="height:100px;widht:auto;">
             <?php endif; ?>

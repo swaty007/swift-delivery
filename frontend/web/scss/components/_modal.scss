@@ -36,6 +36,14 @@
       transition: .3s opacity;
     }
   }
+  &__time {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    color: $brand-yellow;
+    font-size: 16px;
+    line-height: 19px;
+  }
   &__success {
     display: flex;
     align-items: center;
@@ -52,6 +60,9 @@
     height: 0%;
     &--img {
       margin-bottom: 25px;
+    }
+    &--black {
+      background-color: $brand-black;
     }
   }
   &__open {

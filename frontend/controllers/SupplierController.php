@@ -111,6 +111,7 @@ class SupplierController extends BaseAuthorizedController
         }
 
         if ($complete) {
+            Yii::$app->session->setFlash('success', 'Delivery Completed');
             $this->complete($complete);
         }
 
@@ -307,7 +308,7 @@ class SupplierController extends BaseAuthorizedController
                 return $this->redirect('/supplier/index');
             }
 
-            $timeToTake = $oq->time_start_query - time();
+            $timeToTake = $oq->time_start_query + Yii::$app->params['timeToTakeOrder'] - time();
         }
 
         if ($order) {
@@ -397,11 +398,23 @@ class SupplierController extends BaseAuthorizedController
 
         $duration = '30 mins';
 
+        $timeToTake = 0;
+
+        if(is_null($order->supplier_id)) {
+            $oq = OrderQuery::findOne(['order_id' => $order->id, 'supplier_id' => $this->supplierModel->id, 'order' => 0]);
+
+            if(!($oq)) {
+                Yii::$app->session->setFlash('success', 'Order access');
+            } else {
+                $timeToTake = $oq->time_start_query + Yii::$app->params['timeToTakeOrder'] - time();
+            }
+        }
+
         if ($distance['success'] == true) {
             $duration = $distance['duration'];
         }
 
-        return ['duration' => $duration, 'estimation' => date('H:i', strtotime($duration))];
+        return ['duration' => $duration, 'estimation' => date('H:i', strtotime($duration)), 'timeToTake' => $timeToTake];
     }
 
     public function actionTakeOrder()

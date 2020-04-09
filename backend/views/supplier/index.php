@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = 'Suppliers';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="supplier-index">
 
@@ -45,7 +46,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'status' => [
                             'label' => 'Subscribe Plan',
                         'value' => function($data) {
-                            $subscribes = \yii\helpers\ArrayHelper::getColumn(Yii::$app->params['subscribePlans'], 'name');
+                            $subscribes = [];
+
+                            foreach (Yii::$app->params['subscribePlans'] as $subscribePlan) {
+                                $subscribes[$subscribePlan['id']] = $subscribePlan['name'];
+                            }
+
                             return $subscribes[$data->status];
                         }
                     ],

@@ -62,5 +62,6 @@ return [
             'value' => 5,
             'price' => 90
         ]
-    ]
+    ],
+    'timeToTakeOrder' => 120 // seconds
 ];

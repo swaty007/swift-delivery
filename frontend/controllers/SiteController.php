@@ -7,6 +7,7 @@ use common\models\GoogleMaps;
 use common\models\InfoPage;
 use common\models\Log;
 use common\models\Order;
+use common\models\OrderQuery;
 use common\models\Product;
 use common\models\ProductOption;
 use common\models\Twilio;
@@ -240,6 +241,7 @@ class SiteController extends Controller
             if ($order->supplier) {
                 $order->save();
             } else {
+                OrderQuery::deleteAll(['order_id' => $order->id]);
                 $order->save();
                 $this->redirect('/site/index');
             }

@@ -63,7 +63,7 @@ class GoogleMaps {
     private function checkIsAddressAllowed($address_components) {
         if(is_array($address_components)) {
             foreach ($address_components as $component) {
-                if (in_array('locality', $component['types']) && in_array('political', $component['types'])) {
+                if (in_array('political', $component['types'])) {
                     if (($allowed = AllowedStates::findOne(['state_name' => $component['long_name'], 'is_active' => 1]))) {
                         return true;
                     }

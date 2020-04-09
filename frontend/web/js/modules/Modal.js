@@ -10,6 +10,8 @@ class Modal {
         this.spinnerInit();
         this.ordersInit();
         this.takeOrder();
+        this.timer();
+        this.autoremove();
 
         //close modal
         $(document).on('click', '.modal__close', e => {
@@ -18,6 +20,31 @@ class Modal {
             // $("body").removeClass("modal__open");
         });
 
+
+    }
+    timer () {
+        setInterval(() => {
+            let modal = $('#modal__time'),
+              timer = Number(modal.text());
+            if (!Number.isNaN(timer)) {
+                if (--timer >= 0) {
+                    modal.text(timer)
+                } else {
+                    modal.text(0)
+                }
+
+            }
+        }, 1000)
+    }
+    autoremove () {
+        // Dom ready
+        $(() => {
+            $('[data-autoremove]').each(function() {
+                setTimeout(() => {
+                    $(this).hide()
+                }, $(this).attr('data-autoremove'))
+            })
+        })
     }
     takeOrder () {
         $(document).on('click', '[data-direction=take-order]', e => {
@@ -26,6 +53,7 @@ class Modal {
                 modalEl = $("#take_order"),
                 order_id = $this.attr('data-order-id'),
                 modalDuration = $('#modal_take_order_duration'),
+                modalTime = $('#modal__time'),
                 inputId = $('#modal_take_order_id');
 
             $.ajax({
@@ -38,6 +66,7 @@ class Modal {
                 success: function (msg) {
                     console.log(msg);
                     modalDuration.text(msg.duration)
+                    modalTime.text(msg.timeToTake)
                     if (msg.result) {
                         // $("#zip_validate").closest('.form-group').removeClass('has-error').addClass('has-success');
                         // $("#zip_validate_status").text('You write available zip code');
