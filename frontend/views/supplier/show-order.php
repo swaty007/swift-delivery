@@ -22,15 +22,27 @@ use yii\helpers\Url;
     <div class="container">
         <br>
         <br>
-        <?php if(\common\models\AddressLatlng::tryGetAddressData($order->address . ' ' . $order->address_2) !== null):?>
+        <?php if(\common\models\AddressLatlng::tryGetAddressData($order->address . ' ' . $order->address_2 . ' ' . $order->zip) !== null):?>
             <img class="supplier-cab__map" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=$order->address?>&zoom=13&size=300x300&maptype=roadmap
-&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($order->address . ' ' . $order->address_2)->latlng?>
+&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($order->address . ' ' . $order->address_2 . ' ' . $order->zip)->latlng?>
 &key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
         <?php endif;?>
 
         <h4 class="text--xs">
             Order:
         </h4>
+<!--        <h4 class="supplier-cab__table-content--title text--xs">-->
+<!--            Customer name: <span class="text--regular">--><?//=$order->customer->username?><!--</span>-->
+<!--        </h4>-->
+<!--        <h4 class="supplier-cab__table-content--title text--xs">-->
+<!--            Customer phone:-->
+<!--            <a href="tel:--><?//=preg_replace( '/[^0-9]/', '', $order->customer->phone_number );?><!--" class="text--regular">-->
+<!--                --><?//= $order->customer->phone_number;?>
+<!--            </a>-->
+<!--        </h4>-->
+<!--        <h4 class="supplier-cab__table-content--title text--xs">-->
+<!--            Customer name: <span class="text--regular">--><?//=$order->customer->username?><!--</span>-->
+<!--        </h4>-->
         <div class="card__wrap">
             <?php foreach ($order->orderItems as $key => $gift): ?>
                 <div class="card__item">

@@ -108,7 +108,7 @@ $this->title = 'Create supplier';
         <?php foreach (Yii::$app->params['subscribePlans'] as $key => $plan):?>
                 <?= $form->field($model, 'plan', ['selectors' => ['input' => "input[name='SupplierForm[plan][]']"],'options' => ['class' => 'plan']])
                     ->radio(['name'=>'SupplierForm[plan]',
-                        'value' => $key,
+                        'value' => $plan['id'],
                         'uncheck' => null,
                         'class' => 'plan__input',
                         'template' => '{input}<div class="plan__container"><div class="plan__header"><h3 class="plan__title sub-text">'

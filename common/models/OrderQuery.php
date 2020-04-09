@@ -52,7 +52,7 @@ class OrderQuery extends \yii\db\ActiveRecord
         self::deleteAll(['order_id' => $order->id]);
 
         $query = [];
-        $orderAddressData = AddressLatlng::tryGetAddressData($order->address . ' ' . $order->address_2);
+        $orderAddressData = AddressLatlng::tryGetAddressData($order->address . ' ' . $order->address_2 . ' ' . $order->zip);
 
         if (is_null($orderAddressData)) {
             return false;
@@ -62,12 +62,16 @@ class OrderQuery extends \yii\db\ActiveRecord
 
         foreach (Supplier::find()->where(['is_active' => 1])->all() as $supplier) {
             if (!$supplier->isAllowedToTakeOrder()) {
+                var_dump("123");
+                exit;
                 continue ;
             }
 
-            $supplierAddressData = AddressLatlng::tryGetAddressData($supplier->address . ' ' . $supplier->address_2);
+            $supplierAddressData = AddressLatlng::tryGetAddressData($supplier->address . ' ' . $supplier->address_2 . ' ' . $supplier->zip);
 
             if (is_null($supplierAddressData)) {
+                var_dump("321");
+                exit;
                 continue ;
             }
 
@@ -87,7 +91,7 @@ class OrderQuery extends \yii\db\ActiveRecord
             return false;
         }
 
-        usort($query, ['common\models\OrderQuery', 'sortByDistance']);
+        usort(shuffle($query), ['common\models\OrderQuery', 'sortByDistance']);
 
         foreach ($query AS $key => $item) {
             $entity = new self;
@@ -104,7 +108,8 @@ class OrderQuery extends \yii\db\ActiveRecord
     function sortByDistance($a, $b)
     {
         $ad = $a['distance'];
-        $bd = $a['distance'];
+        $bd = $b['distance'];
+
         if ($ad == $bd) {
             return 0;
         }

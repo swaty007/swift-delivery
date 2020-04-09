@@ -95,6 +95,7 @@ $this->title = 'Edit supplier';
         </h3>
         <br>
         <div class="item__wrap">
+<!--            --><?php //var_dump($selectedGifts);?>
             <?php foreach ($gifts as $item):?>
                 <div class="item">
                     <?= Html::img($item['image'], ['class' => 'item__img']); ?>

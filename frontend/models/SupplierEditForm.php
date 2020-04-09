@@ -43,7 +43,7 @@ class SupplierEditForm extends Model
             [['name', 'product_name'], 'string', 'max' => 50, 'min' => 2],
             [['address', 'address_2'], 'string', 'max' => 60],
             [['items'], 'safe'],
-            [['web_url'], 'url'],
+            [['web_url'], 'string', 'max' => 256, 'message' => 'Incorrect site url'],
             ['terms', 'compare', 'compareValue' => 1, 'type' => 'number', 'operator' => '==', 'message' => 'Please, accept terms of use.'],
             [['logo', 'product_image'], 'file', 'extensions' => 'png, jpg'],
         ];
@@ -62,7 +62,7 @@ class SupplierEditForm extends Model
 
         $gm = new GoogleMaps();
 
-        $apiResult = $gm->getLatLng($this->address . ' ' . $this->address_2);
+        $apiResult = $gm->getLatLng($this->address . ' ' . $this->address_2 . ' ' . $this->zip);
 
         if ($apiResult['success'] == false) {
             $this->addError('address', $apiResult['message']);
@@ -100,7 +100,7 @@ class SupplierEditForm extends Model
 
     private function processGiftItems(Supplier $supplier)
     {
-        $allowedGiftItemsIds = array_keys(ArrayHelper::index(Product::getActiveList(), 'value'));
+        $allowedGiftItemsIds = array_keys(ArrayHelper::index(Product::getActiveList(), 'id'));
         SupplierItemRelation::deleteAll(['supplier_id' => $this->supplier_id]);
 
         foreach ($this->items as $giftItem) {

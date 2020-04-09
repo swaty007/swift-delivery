@@ -36,7 +36,7 @@ class Twilio {
                     ->setFrom('info@swift-delivery.com')
                     ->setTo($receiver)
                     ->setSubject($title)
-                    ->setTextBody($text)
+                    ->setHtmlBody($text)
                     ->send();
                 Log::emailLog($receiver, $title . '|' . $text);
             } catch (Exception $e) {

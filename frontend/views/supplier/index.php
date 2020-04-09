@@ -84,14 +84,9 @@ $this->title = 'Supplier cabinet';
                         <?= $item['total']; ?>
                     </td>
                     <td>
-<!--                        <button class="btn-sm main-btn main-btn--black main-btn--xs" data-direction="show-more-orders">-->
-<!--                            Show More-->
-<!--                        </button>-->
-                        <a href="<?= Url::toRoute('/supplier/show-order?l=') . $item['weblink'] ?>">
-                        <button class="btn-sm main-btn main-btn--black main-btn--xs">
+                        <button class="btn-sm main-btn main-btn--black main-btn--xs" data-direction="show-more-orders">
                             Show More
                         </button>
-                        </a>
                     </td>
                 </tr>
                 <tr class="supplier-cab__table--content">
@@ -102,7 +97,9 @@ $this->title = 'Supplier cabinet';
                                 Company: <span class="text--regular"><?=$item['supplier']['name']?></span>
                             </h4>
                             <h4 class="supplier-cab__table-content--title text--xs">
-                                Order #: <span class="text--regular"><?= $item['id'] ?></span>
+                                Order #: <a href="<?= Url::toRoute('/supplier/show-order?l=') . $item['weblink'] ?>">
+                                    <span class="text--regular"><?= $item['id'] ?></span>
+                                </a>
                             </h4>
                             <h4 class="supplier-cab__table-content--title text--xs">
                                 Delivering to:
@@ -116,9 +113,9 @@ $this->title = 'Supplier cabinet';
                             </span>
                             </h4>
 
-                            <?php if(\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2']) !== null):?>
+                            <?php if(\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'] . ' ' . $item['zip']) !== null):?>
                                 <img class="supplier-cab__map" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=$item['address']?>&zoom=13&size=300x300&maptype=roadmap
-&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'])->latlng?>
+&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'] . ' ' . $item['zip'])->latlng?>
 &key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
                             <?php endif;?>
                             <h4 class="text--xs">
@@ -242,9 +239,9 @@ $this->title = 'Supplier cabinet';
                             </span>
                         </h4>
 
-                        <?php if(\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2']) !== null):?>
+                        <?php if(\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'] . ' ' . $item['zip']) !== null):?>
                             <img class="supplier-cab__map" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=$item['address']?>&zoom=13&size=300x300&maptype=roadmap
-&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'])->latlng?>
+&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'] . ' ' . $item['zip'])->latlng?>
 &key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
                         <?php endif;?>
                         <h4 class="text--xs">
@@ -348,7 +345,7 @@ $this->title = 'Supplier cabinet';
                                 Company: <span class="text--regular"><?=$item['supplier']['name']?></span>
                             </h4>
                             <h4 class="supplier-cab__table-content--title text--xs">
-                                Order #: <span class="text--regular"><?= $item['id'] ?></span>
+                                Order #: <a href="<?= Url::toRoute('/supplier/show-order?l=') . $item['weblink'] ?>" class="text--regular"><?= $item['weblink'] ?></a>
                             </h4>
                             <h4 class="supplier-cab__table-content--title text--xs">
                                 Delivering to:
@@ -361,9 +358,9 @@ $this->title = 'Supplier cabinet';
                             </span>
                             </h4>
 
-                            <?php if(\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2']) !== null):?>
+                            <?php if(\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'] . ' ' . $item['zip']) !== null):?>
                                 <img class="supplier-cab__map" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=$item['address']?>&zoom=13&size=300x300&maptype=roadmap
-&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'])->latlng?>
+&markers=color:green%7Clabel:D%7C<?=\common\models\AddressLatlng::tryGetAddressData($item['address'] . ' ' . $item['address_2'] . ' ' . $item['zip'])->latlng?>
 &key=<?=Yii::$app->params['googleMapsApiKey']?>" alt="Map">
                             <?php endif;?>
                             <h4 class="text--xs">

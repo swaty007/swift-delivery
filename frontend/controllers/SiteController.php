@@ -139,7 +139,12 @@ class SiteController extends Controller
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect('/site/redirect-after-login');
+            $orderLink = Yii::$app->session->get('orderLink', null);
+            if($orderLink != NULL){
+                return $this->redirect(Url::toRoute('/supplier/show-order?l=') . $orderLink);
+            } else{
+                return $this->goBack();
+            }
         } else {
             $model->password = '';
             return $this->render('login', [
@@ -150,7 +155,7 @@ class SiteController extends Controller
 
     public function actionRedirectAfterLogin()
     {
-        return $this->redirect('/');
+        return $this->goBack();
     }
 
     /**
@@ -244,6 +249,9 @@ class SiteController extends Controller
         }
         if ($order->status == Order::ORDER_STATUS_CANCELLED) {
             Yii::$app->session->setFlash('success', 'Order canceled');
+            return $this->redirect('/site/order');
+        }
+        if ($order->status == Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER || $order->status == Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER) {
             return $this->redirect('/site/order');
         }
         return $this->render('/customer/order-status', ['order' => $order]);

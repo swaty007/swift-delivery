@@ -66,7 +66,7 @@ class OrderForm extends Model
 
         $gm = new GoogleMaps();
 
-        $apiResult = $gm->getLatLng($this->address . ' ' . $this->address_2);
+        $apiResult = $gm->getLatLng($this->address . ' ' . $this->address_2 . ' ' . $this->zip);
 
         if ($apiResult['success'] == false) {
             $this->addError('address', $apiResult['message']);

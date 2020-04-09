@@ -61,12 +61,21 @@ class SupplierController extends BaseAuthorizedController
 
     public function beforeAction($action)
     {
+        if ($action->id == 'show-order' && Yii::$app->user->isGuest) {
+            $link = Yii::$app->request->get('l');
+            $session = Yii::$app->session;
+
+            if (!$session->isActive) {
+                $session->open();
+            }
+
+            $session->set('orderLink', $link);
+        }
+
         parent::beforeAction($action);
         $actionId = Yii::$app->controller->action->id;
 
         if ($this->isSupplierDataFilled() == false && $actionId != 'confirm') {
-            var_dump($this->isSupplierDataFilled());
-            exit;
             return $this->redirect('confirm')->send();
         } elseif ($actionId != 'confirm') {
             $this->supplierModel = $this->getSupplierModel();
@@ -270,7 +279,7 @@ class SupplierController extends BaseAuthorizedController
             'model' => $model,
             'gifts' => Product::getActiveList(),
             'supplier' => $this->supplierModel,
-            'selectedGifts' => ArrayHelper::index(SupplierItemRelation::find()->where(['supplier_id' => $this->supplierModel->id])->asArray()->all(), 'item_id'),
+            'selectedGifts' => ArrayHelper::index(SupplierItemRelation::find()->where(['supplier_id' => $this->supplierModel->supplier_id])->asArray()->all(), 'item_id'),
             'rating' => $rating,
         ]);
     }
@@ -382,8 +391,8 @@ class SupplierController extends BaseAuthorizedController
         $gm = new GoogleMaps();
 
         $supplier = $this->getSupplierModel();
-        $supplierLatlng = $gm->getLatLng($supplier->address . ' ' . $supplier->address_2);
-        $customerLatlng = $gm->getLatLng($order->address . ' ' . $order->address_2);
+        $supplierLatlng = $gm->getLatLng($supplier->address . ' ' . $supplier->address_2. ' ' . $supplier->zip);
+        $customerLatlng = $gm->getLatLng($order->address . ' ' . $order->address_2. ' ' . $supplier->zip);
         $distance = $gm->getDistanceMatrix($supplierLatlng, $customerLatlng);
 
         $duration = '30 mins';

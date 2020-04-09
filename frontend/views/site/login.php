@@ -49,7 +49,7 @@ $this->title = 'Login';
 
                     <?php ActiveForm::end(); ?>
                     <div class="access__footer flex-center flex-center--between">
-                        <?= Html::a('reset it', ['site/request-password-reset'],['class' => 'text text--small text--white']) ?>
+                        <?= Html::a('Forgot password', ['site/request-password-reset'],['class' => 'text text--small text--white']) ?>
                         <?= Html::a('Sign up', ['site/signup'],['class' => 'text text--small text--white']) ?>
                     </div>
                 </div>

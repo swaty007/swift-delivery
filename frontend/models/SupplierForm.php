@@ -49,7 +49,7 @@ class SupplierForm extends Model
             ['plan', 'integer', 'min' => 1, 'max' => 3],
             [['items'], 'safe'],
             [['items', 'plan'], 'required'],
-            [['web_url'], 'url'],
+            [['web_url'], 'string', 'max' => 256, 'message' => 'Incorrect site url'],
             ['terms', 'compare', 'compareValue' => 1, 'type' => 'number', 'operator' => '==', 'message' => 'Please, accept terms of use.'],
             [['logo', 'product_image'], 'file', 'extensions' => 'png, jpg'],
         ];
@@ -68,7 +68,7 @@ class SupplierForm extends Model
 
         $gm = new GoogleMaps();
 
-        $apiResult = $gm->getLatLng($this->address . ' ' . $this->address_2);
+        $apiResult = $gm->getLatLng($this->address . ' ' . $this->address_2 . ' ' . $this->zip);
 
         if ($apiResult['success'] == false) {
             $this->addError('address', $apiResult['message']);
@@ -102,7 +102,7 @@ class SupplierForm extends Model
             $supplier->product_image = $this->product_image;
             $supplier->save();
             Twilio::sendSms(Yii::$app->user->identity->phone_number, Message::getText('supplier_registeration_sms'));
-            Twilio::sendEmailToAdmins("Supplier need activation", Message::getText('new_supplier_admin_email'));
+            Twilio::sendEmailToAdmins("Supplier need activation", "a new Delivery Application has been submitted by $supplier->name. Click this <a href='" . Yii::$app->params['webProjectUrl'] . "/backend/web/supplier/update?id=$supplier->id'>link</a> to review the application.");
             return true;
         } catch (\Exception $e) {
             Supplier::deleteAll(['supplier_id' => $this->supplier_id]);
