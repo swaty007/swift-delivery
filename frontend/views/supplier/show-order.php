@@ -107,8 +107,8 @@ use yii\helpers\Url;
                 <p class="text--xs text--blue-opacity">
                     <strong>&nbsp;</strong>
                 </p>
-                <p class="text--xs text--blue-opacity">
-                    Gift Product: <?=$order->supplier->product_name?>
+                <p class="text--xs">
+                    <strong>Gift Product:</strong> <?=$order->supplier->product_name?>
                 </p>
                 <div class="text-center">
                     <?= Html::img(Yii::$app->params['webUploadsDir'].$order->supplier->product_image, ['class' => 'on-way__img']); ?>
@@ -123,32 +123,28 @@ use yii\helpers\Url;
                 </p>
             </blockquotes>
         <?php else:;?>
-            <p class="text--xs text--blue-opacity">
-                <strong>&nbsp;</strong>
-            </p>
+            <br>
         <?php endif;?>
 
+        <div class="row">
+            <div class="col-sm-6">
         <?php if($order->status === common\models\Order::ORDER_STATUS_NEW):?>
-            <a href="#" class="btn-sm main-btn main-btn--black" data-direction="take-order" data-order-id="<?= $order->id ?>">
-                Take
-            </a>
-            <br>
-            <br>
-            <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $order->id]);?>" class="main-btn main-btn--red">
-                Cancel order
+            <a href="#" class="btn-sm main-btn main-btn--black main-btn--succes" data-direction="take-order" data-order-id="<?= $order->id ?>">
+                Set ETA
             </a>
         <?php else: ?>
-            <a href="<?=Url::toRoute(['supplier/index','complete' => $order->id]);?>" class="main-btn main-btn--black">
+            <a href="<?=Url::toRoute(['supplier/index','complete' => $order->id]);?>" class="main-btn main-btn--black main-btn--succes">
                 Complete order
             </a>
-            <br>
-            <br>
-            <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $order->id]);?>" class="main-btn main-btn--red">
-                Cancel order
-            </a>
         <?php endif;?>
-
-        <br>
+                <br>
+            </div>
+            <div class="col-sm-6">
+                <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $order->id]);?>" class="main-btn main-btn--red main-btn--decline">
+                    Decline
+                </a>
+            </div>
+        </div>
         <br>
         <br>
 
@@ -157,7 +153,9 @@ use yii\helpers\Url;
         <div class="container">
             <div class="flex-center flex-center--between">
                 <div class="deliver__info--content">
+                    <br>
                     <p class="text text--white text--small"><strong><?=$order->customer->username;?></strong> is your customer!</p>
+                    <br>
 <!--                    --><?php //if($order->status !== common\models\Order::ORDER_STATUS_NEW):?>
 <!--                        <p class="text">-->
 <!--                            <a href="--><?//=Url::toRoute(['supplier/index','cancelSupplier' => $order->id]);?><!--" class="text text--red text--xs">-->
@@ -227,7 +225,7 @@ use yii\helpers\Url;
   var intervarPjax = setInterval(function () {
     if (typeof $.pjax !== 'undefined') {
       if (!$('.modal').is(':visible')) {
-        $.pjax.reload({container: "#supplier_order"});
+        // $.pjax.reload({container: "#supplier_order"});
       }
     }
   }, 1000)

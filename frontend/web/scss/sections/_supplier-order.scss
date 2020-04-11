@@ -5,6 +5,7 @@
       border-radius: 10px;
       margin: 8px 0px 15px;
       padding: 0 20px;
+      border: 1px solid fade-out($brand-black, 0.9);
     }
     &__item {
       min-height: 50px;

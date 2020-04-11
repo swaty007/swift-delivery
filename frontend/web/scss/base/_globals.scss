@@ -158,6 +158,16 @@ body {
     background-position: 20px 50%;
     background-repeat: no-repeat;
   }
+  &--succes {
+    background-image: url(../../img/icon_check.svg);
+    background-position: 20px 50%;
+    background-repeat: no-repeat;
+  }
+  &--decline {
+    background-image: url(../../img/icon_decline.svg);
+    background-position: 20px 50%;
+    background-repeat: no-repeat;
+  }
   &:hover {
     opacity: 0.75;
   }

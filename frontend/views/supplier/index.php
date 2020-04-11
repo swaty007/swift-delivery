@@ -71,14 +71,14 @@ $this->title = 'Supplier cabinet';
         </h2>
         <table class="supplier-cab__table">
             <tr>
-                <th class="hidden-sm hidden-xs">Order #</th>
+                <th class="hidden-xs">Order #</th>
                 <th>Date:</th>
                 <th>Total:</th>
                 <th></th>
             </tr>
             <?php foreach ($inProgress as $item): ?>
                 <tr>
-                    <td class="hidden-sm hidden-xs">
+                    <td class="hidden-xs">
                         <?= $item['id']; ?>
                     </td>
                     <td>
@@ -201,7 +201,7 @@ $this->title = 'Supplier cabinet';
         <table class="supplier-cab__table">
             <thead>
             <tr>
-                <th class="hidden-sm hidden-xs">Order #</th>
+                <th class="hidden-xs">Order #</th>
                 <th>Date:</th>
                 <th>Total:</th>
                 <th></th>
@@ -210,7 +210,7 @@ $this->title = 'Supplier cabinet';
             <tbody>
             <?php foreach ($allowed as $item): ?>
                 <tr>
-                    <td class="hidden-sm hidden-xs">
+                    <td class="hidden-xs">
                         <?= $item['id']; ?>
                     </td>
                     <td>
@@ -337,14 +337,14 @@ $this->title = 'Supplier cabinet';
         </h2>
         <table class="supplier-cab__table">
             <tr>
-                <th class="hidden-xs hidden-sm">Order #</th>
+                <th class="hidden-xs">Order #</th>
                 <th>Date:</th>
                 <th>Total:</th>
                 <th></th>
             </tr>
             <?php foreach ($finished as $item): ?>
                 <tr>
-                    <td class="hidden-xs hidden-sm">
+                    <td class="hidden-xs">
                         <?= $item['id']; ?>
                     </td>
                     <td>
