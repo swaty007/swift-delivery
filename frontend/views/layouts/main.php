@@ -240,6 +240,7 @@ AppAsset::register($this);
 <!--            </a>-->
         </div>
         <div id="navbar_collapse" class="navbar__collapse">
+            <?= Html::img('@web/img/logo-full.svg', ['class' => 'navbar__logo']); ?>
             <ul class="navbar__menu">
                 <li class="navbar__item">
                     <a href="<?=Url::toRoute('/info/help-center')?>" class="sub-title text--blue">Help Center</a>

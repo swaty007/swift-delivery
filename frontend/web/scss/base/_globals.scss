@@ -85,6 +85,20 @@ body {
   &--start {
     justify-content: start;
   }
+  &--sm {
+    @media(min-width:768px) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  &--md {
+    @media(min-width:992px) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 }
 
 .main-btn {

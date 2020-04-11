@@ -94,7 +94,7 @@ $this->title = 'Supplier cabinet';
                     </td>
                 </tr>
                 <tr class="supplier-cab__table--content">
-                    <td colspan="3">
+                    <td colspan="4">
                         <div class="supplier-cab__table-content">
 
                             <h4 class="supplier-cab__table-content--title text--xs">
@@ -181,10 +181,11 @@ $this->title = 'Supplier cabinet';
                             <h4 class="supplier-cab__table-content--title text--xs">
                                 Zip Code: <span class="text--regular"><?= $item['zip'] ?></span>
                             </h4>
-                            <div class="flex-center">
+                            <div class="flex-center--md">
                                 <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $item['id']]);?>" class="btn-sm main-btn main-btn--xs main-btn--red">
                                     Cancel order
                                 </a>
+                                <br>
                                 <a href="<?=Url::toRoute(['supplier/index','complete' => $item['id']]);?>" class="btn-sm main-btn main-btn--xs main-btn--black">
                                     Complete order
                                 </a>
@@ -229,7 +230,7 @@ $this->title = 'Supplier cabinet';
                     </td>
                 </tr>
             <tr class="supplier-cab__table--content">
-                <td colspan="3">
+                <td colspan="4">
                     <div class="supplier-cab__table-content">
 
 
@@ -316,10 +317,11 @@ $this->title = 'Supplier cabinet';
 <!--                            Delivery Status: <span class="text--regular">--><?//= \common\models\Order::getStatusTextFromStatus($item['status']) ?><!--</span>-->
 <!--                        </h4>-->
 
-                       <div class="flex-center">
+                       <div class="flex-center--md">
                            <a href="#" class="btn-sm main-btn main-btn--xs main-btn--black" data-direction="take-order" data-order-id="<?= $item['id'] ?>">
                                Take
                            </a>
+                           <br>
                            <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $item['id']]);?>" class="btn-sm main-btn main-btn--xs main-btn--red">
                                Cancel order
                            </a>
@@ -360,7 +362,7 @@ $this->title = 'Supplier cabinet';
                     </td>
                 </tr>
                 <tr class="supplier-cab__table--content">
-                    <td colspan="3">
+                    <td colspan="4">
                         <div class="supplier-cab__table-content">
                             <h4 class="supplier-cab__table-content--title text--xs">
                                 Company: <span class="text--regular"><?=$item['supplier']['name']?></span>

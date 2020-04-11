@@ -13,10 +13,23 @@
   .container {
     width: 970px;
   }
+  .hidden-md {
+    display: none!important;
+  }
 }
 @media (min-width: 1200px) {
   .container {
     //width: 1170px;
+  }
+}
+@media(max-width:767px) {
+  .hidden-xs {
+    display: none!important;
+  }
+}
+@media(max-width:991px) {
+  .hidden-sm {
+    display: none!important;
   }
 }
 .container-fluid {
