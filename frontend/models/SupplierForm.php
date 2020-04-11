@@ -113,7 +113,7 @@ class SupplierForm extends Model
 
     private function processGiftItems(Supplier $supplier)
     {
-        $allowedGiftItemsIds = array_keys(ArrayHelper::index(Product::getActiveList(), 'value'));
+        $allowedGiftItemsIds = array_keys(ArrayHelper::index(Product::getActiveList(), 'id'));
 
         foreach ($this->items as $giftItem) {
             if (!in_array($giftItem, $allowedGiftItemsIds)) {

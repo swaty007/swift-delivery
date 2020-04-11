@@ -89,7 +89,7 @@ use yii\helpers\Url;
                     $order->status == \common\models\Order::ORDER_STATUS_DELIVER_NEAR_PLACE ||
                     $order->status == \common\models\Order::ORDER_STATUS_DELIVER_AT_PLACE):?>
                 <div class="card__item card__item--cancel">
-                    <a href="<?=Url::toRoute(['site/order-status','cancelCustomer' => $order->weblink]);?>" class="card__text text--blue">
+                    <a href="<?=Url::toRoute(['site/order-status','l'=>$order->weblink,'cancelCustomer' => $order->weblink]);?>" class="card__text text--blue">
                         <strong>
                             Cancel Order
                         </strong>
@@ -117,7 +117,7 @@ use yii\helpers\Url;
             <p class="on-way__text--small text--blue-opacity text-left">
                 <strong>Why am I receiving this:</strong>
                  DC Cannabis Law: Possession, purchase, and transportation of up to two ounces of marijuana for personal use by adults 21 and older. Transfer of up to one ounce of marijuana by adults 21 or older to another adult 21 or older. All transfers are to be free from remuneration; sales are still prohibited.
-                <a href="https://www.mpp.org/states/district-of-columbia/summary-of-d-c-s-initiative-71">Learn more about the DC law, Initiative 71</a>
+                <a href="https://www.mpp.org/states/district-of-columbia/summary-of-d-c-s-initiative-71" target="_blank">Learn more about the DC law, Initiative 71</a>
             </p>
 
         </div>
@@ -144,7 +144,8 @@ use yii\helpers\Url;
 </div>
 
 <?php if ($order->status == \common\models\Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER):?>
-<div class="modal modal--full-screen" id="cancel_order_by_customer" style="display: block;">
+<div class="modal modal--full-screen" id="cancel_order_by_customer" style="display: block;"
+     onclick="window.history.pushState({}, document.title, window.location.pathname )">
     <div class="modal__wrapper">
         <div class="modal__container container">
             <div class="modal__close"></div>
@@ -162,7 +163,8 @@ use yii\helpers\Url;
 <?php endif;?>
 
 <?php if ($order->status == \common\models\Order::ORDER_STATUS_CANCELLED_BY_DELIVER || $order->status == \common\models\Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER):?>
-    <div class="modal modal--full-screen" id="cancel_order_by_supplier" style="display:block;">
+    <div class="modal modal--full-screen" id="cancel_order_by_supplier" style="display:block;"
+         onclick="window.history.pushState({}, document.title, window.location.pathname )">
         <div class="modal__wrapper">
             <div class="modal__container container">
                 <div class="modal__close"></div>

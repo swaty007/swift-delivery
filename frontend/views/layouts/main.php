@@ -126,8 +126,6 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-
-
 <?php
 //NavBar::begin([
 //    'brandLabel' => Yii::$app->name,

@@ -238,7 +238,7 @@ class SiteController extends Controller
             Log::orderLog($order->id, Yii::$app->user->getId() , "Order canceled by customer");
 
             $order->status = Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER;
-            if ($order->supplier) {
+            if (!empty($order->supplier)) {
                 $order->save();
             } else {
                 OrderQuery::deleteAll(['order_id' => $order->id]);
@@ -253,7 +253,7 @@ class SiteController extends Controller
             Yii::$app->session->setFlash('success', 'Order canceled');
             return $this->redirect('/site/order');
         }
-        if ($order->status == Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER || $order->status == Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER) {
+        if ($order->status == Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER || $order->status == Order::ORDER_STATUS_CANCELLED_BY_DELIVER) {
             return $this->redirect('/site/order');
         }
         return $this->render('/customer/order-status', ['order' => $order]);

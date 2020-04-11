@@ -71,21 +71,25 @@ $this->title = 'Supplier cabinet';
         </h2>
         <table class="supplier-cab__table">
             <tr>
+                <th class="hidden-sm hidden-xs">Order #</th>
                 <th>Date:</th>
                 <th>Total:</th>
                 <th></th>
             </tr>
             <?php foreach ($inProgress as $item): ?>
                 <tr>
-                    <td>
-                        <?= $item['created_at']; ?>
+                    <td class="hidden-sm hidden-xs">
+                        <?= $item['id']; ?>
                     </td>
                     <td>
-                        <?= $item['total']; ?>
+                        <?= date("M j", strtotime($item['created_at'])); ?>
+                    </td>
+                    <td>
+                        $<?= $item['total']; ?>
                     </td>
                     <td>
                         <button class="btn-sm main-btn main-btn--black main-btn--xs" data-direction="show-more-orders">
-                            Show More
+                            View Order
                         </button>
                     </td>
                 </tr>
@@ -197,6 +201,7 @@ $this->title = 'Supplier cabinet';
         <table class="supplier-cab__table">
             <thead>
             <tr>
+                <th class="hidden-sm hidden-xs">Order #</th>
                 <th>Date:</th>
                 <th>Total:</th>
                 <th></th>
@@ -205,18 +210,21 @@ $this->title = 'Supplier cabinet';
             <tbody>
             <?php foreach ($allowed as $item): ?>
                 <tr>
-                    <td>
-                        <?= $item['created_at']; ?>
+                    <td class="hidden-sm hidden-xs">
+                        <?= $item['id']; ?>
                     </td>
                     <td>
-                        <?= $item['total']; ?>
+                        <?= date("M j", strtotime($item['created_at'])); ?>
+                    </td>
+                    <td>
+                        $<?= $item['total']; ?>
                     </td>
                     <td>
 <!--                        <a href="--><?//= Url::toRoute('/supplier/show-order?l=') . $item['weblink'] ?><!--" class="btn-sm main-btn main-btn--black main-btn--xs">-->
-<!--                            Show More-->
+<!--                            View Order-->
 <!--                        </a>-->
                         <button class="btn-sm main-btn main-btn--black main-btn--xs" data-direction="show-more-orders">
-                            Show More
+                            View Order
                         </button>
                     </td>
                 </tr>
@@ -329,21 +337,25 @@ $this->title = 'Supplier cabinet';
         </h2>
         <table class="supplier-cab__table">
             <tr>
+                <th class="hidden-xs hidden-sm">Order #</th>
                 <th>Date:</th>
                 <th>Total:</th>
                 <th></th>
             </tr>
             <?php foreach ($finished as $item): ?>
                 <tr>
-                    <td>
-                        <?= $item['created_at']; ?>
+                    <td class="hidden-xs hidden-sm">
+                        <?= $item['id']; ?>
                     </td>
                     <td>
-                        <?= $item['total']; ?>
+                        <?= date("M j", strtotime($item['created_at'])); ?>
+                    </td>
+                    <td>
+                        $<?= $item['total']; ?>
                     </td>
                     <td>
                         <button class="btn-sm main-btn main-btn--black main-btn--xs" data-direction="show-more-orders">
-                            Show more
+                            View Order
                         </button>
                     </td>
                 </tr>

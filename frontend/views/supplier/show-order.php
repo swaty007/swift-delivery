@@ -21,6 +21,25 @@ use yii\helpers\Url;
 <section class="supplier-order">
     <div class="container">
         <br>
+        <h4 class="supplier-cab__table-content--title text--xs">
+            Company: <span class="text--regular"><?=$order->supplier->name ?></span>
+        </h4>
+        <h4 class="supplier-cab__table-content--title text--xs">
+            Order #: <a href="<?= Url::toRoute('/supplier/show-order?l=') . $order->weblink ?>" class="text--regular"><?= $order->weblink ?></a>
+        </h4>
+        <h4 class="supplier-cab__table-content--title text--xs">
+            Delivering to:
+            <span class="text--regular">
+                                <?= $order->address ?>
+                <?php if ($order->address_2): ?>
+                    <?= $order->address_2 ?>
+                <?php endif; ?>
+                                / <?= $order->zip ?>
+                            </span>
+        </h4>
+        <h4 class="supplier-cab__table-content--title text--xs">
+            Zip Code: <span class="text--regular"><?= $order->zip ?></span>
+        </h4>
         <br>
         <?php if(\common\models\AddressLatlng::tryGetAddressData($order->address . ' ' . $order->address_2 . ' ' . $order->zip) !== null):?>
             <img class="supplier-cab__map" src="https://maps.googleapis.com/maps/api/staticmap?center=<?=$order->address?>&zoom=13&size=300x300&maptype=roadmap
@@ -113,6 +132,11 @@ use yii\helpers\Url;
             <a href="#" class="btn-sm main-btn main-btn--black" data-direction="take-order" data-order-id="<?= $order->id ?>">
                 Take
             </a>
+            <br>
+            <br>
+            <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $order->id]);?>" class="main-btn main-btn--red">
+                Cancel order
+            </a>
         <?php else: ?>
             <a href="<?=Url::toRoute(['supplier/index','complete' => $order->id]);?>" class="main-btn main-btn--black">
                 Complete order
@@ -134,14 +158,14 @@ use yii\helpers\Url;
             <div class="flex-center flex-center--between">
                 <div class="deliver__info--content">
                     <p class="text text--white text--small"><strong><?=$order->customer->username;?></strong> is your customer!</p>
-                    <?php if($order->status !== common\models\Order::ORDER_STATUS_NEW):?>
-                        <p class="text">
-                            <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $order->id]);?>" class="text text--red text--xs">
-                                <?= Html::img('@web/img/icon_cancel.svg', ['class' => '']) ?>
-                                Cancel Order
-                            </a>
-                        </p>
-                    <?php endif;?>
+<!--                    --><?php //if($order->status !== common\models\Order::ORDER_STATUS_NEW):?>
+<!--                        <p class="text">-->
+<!--                            <a href="--><?//=Url::toRoute(['supplier/index','cancelSupplier' => $order->id]);?><!--" class="text text--red text--xs">-->
+<!--                                --><?//= Html::img('@web/img/icon_cancel.svg', ['class' => '']) ?>
+<!--                                Cancel Order-->
+<!--                            </a>-->
+<!--                        </p>-->
+<!--                    --><?php //endif;?>
                 </div>
                 <div class="deliver__info--icons flex-center">
                     <a href="tel:<?=preg_replace( '/[^0-9]/', '', $order->customer->phone_number );?>" class="deliver__call"></a>
@@ -165,8 +189,8 @@ use yii\helpers\Url;
                     <br>
                     <p class="text text--blue">You can call to the customer</p>
                     <br>
-                    <a href="tel:<?=preg_replace( '/[^0-9]/', '', \common\models\User::findById($order->customer->supplier_id)->phone_number );?>">
-                        <?= \common\models\User::findById($order->customer->supplier_id)->phone_number ;?>
+                    <a href="tel:<?=preg_replace( '/[^0-9]/', '', $order->customer->phone_number );?>">
+                        <?= $order->customer->phone_number ;?>
                     </a>
                 </div>
             </div>
@@ -189,8 +213,8 @@ use yii\helpers\Url;
                     Tell them to go back to the homepage & start a new order
                 </p>
                 <br>
-                <a href="tel:<?=preg_replace( '/[^0-9]/', '', \common\models\User::findById($order->customer->supplier_id)->phone_number );?>">
-                    <?= \common\models\User::findById($order->customer->supplier_id)->phone_number ;?>
+                <a href="tel:<?=preg_replace( '/[^0-9]/', '', $order->customer->phone_number );?>">
+                    <?= $order->customer->phone_number ;?>
                 </a>
             </div>
         </div>
