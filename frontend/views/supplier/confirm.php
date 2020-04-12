@@ -117,8 +117,7 @@ $this->title = 'Create supplier';
                     $template .= 'Up to <strong>' . $plan['dealsPerMonth'].
                     ' deliveries</strong> a month</p></div>';
                 } else {
-                    $template .= $plan['dealsPerMonth'].
-                        '<strong>Unlimited deliveries</strong></p></div>';
+                    $template .= '<strong>Unlimited deliveries</strong></p></div>';
                 }
             ?>
                 <?= $form->field($model, 'plan', ['selectors' => ['input' => "input[name='SupplierForm[plan][]']"],'options' => ['class' => 'plan']])
