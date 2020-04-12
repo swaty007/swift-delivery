@@ -101,12 +101,10 @@ class SupplierController extends BaseAuthorizedController
     public function actionIndex($cancelSupplier = 0, $cancelDeliver = 0, $complete = 0)
     {
         if ($cancelSupplier) {
-            Yii::$app->session->setFlash('success', 'ORDER_STATUS_CANCELLED_BY_SUPPLIER');
             $this->cancelOrder($cancelSupplier, Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER);
         }
 
         if ($cancelDeliver) {
-            Yii::$app->session->setFlash('success', 'ORDER_STATUS_CANCELLED_BY_DELIVER');
             $this->cancelOrder($cancelDeliver, Order::ORDER_STATUS_CANCELLED_BY_DELIVER);
         }
 
@@ -450,6 +448,7 @@ class SupplierController extends BaseAuthorizedController
     private function cancelOrder($id, $status)
     {
         $orderAllowedStatuses = [
+            Order::ORDER_STATUS_NEW,
             Order::ORDER_STATUS_IN_PROGRESS,
             Order::ORDER_STATUS_DELIVER_AT_PLACE,
             Order::ORDER_STATUS_DELIVER_NEAR_PLACE,
@@ -472,12 +471,31 @@ class SupplierController extends BaseAuthorizedController
         if (!$order->count()) {
             return false;
         }
+
         $order = $order->one();
+
+        if ($order->status == Order::ORDER_STATUS_NEW) {
+            $oq = OrderQuery::findOne(['supplier_id' => $this->supplierModel->id, 'order_id' => $order->id]);
+
+            if ($oq) {
+                $oq->delete();
+            }
+
+            OrderQuery::updateAllCounters(['order' => -1], ['order_id' => $order->id]);
+            return true;
+        }
+
+        if ($status == Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER) {
+            Yii::$app->session->setFlash('success', 'ORDER_STATUS_CANCELLED_BY_SUPPLIER');
+        } elseif ($status == Order::ORDER_STATUS_CANCELLED_BY_DELIVER) {
+            Yii::$app->session->setFlash('success', 'ORDER_STATUS_CANCELLED_BY_DELIVER');
+        }
 
         $number = User::find()->where(['id' => $order->customer_id])->one()->phone_number;
         Twilio::sendSms($number, Message::getText('delivery_failed_sms'));
         Log::orderLog($order->id, Yii::$app->user->getId(), 'Order canceled by supplier');
         $order->status = $status;
         $order->save();
+        return true;
     }
 }

@@ -90,6 +90,9 @@ class OrderForm extends Model
                 if (!$customer->save()) {
                     $this->printAndExit($customer->errors);
                 }
+            } else {
+                $customer->username = $this->name . time();
+                $customer->save();
             }
 
             $order = new Order();

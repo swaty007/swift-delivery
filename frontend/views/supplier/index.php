@@ -568,7 +568,7 @@ $this->title = 'Supplier cabinet';
                   $.pjax.reload({container: "#supplier_tables"});
                 }
             }
-        }, 5000)
+        }, 3000)
     </script>
 
     <?php \yii\widgets\Pjax::end(); ?>

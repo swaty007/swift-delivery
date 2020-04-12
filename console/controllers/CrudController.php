@@ -49,22 +49,6 @@ class CrudController extends Controller
 
                     $order = Order::findOne($orderId);
 
-                    $products = [];
-                    $rawProducts = [];
-
-                    foreach (OrderItem::findAll(['order_id' => $order->id]) as $orderItem) {
-                        $productName = Product::find()->where(['id' => $orderItem->product_item_id])->one()->name;
-                        if (!isset($rawProducts[$productName])) {
-                            $rawProducts[$productName] = $orderItem->count;
-                        } else {
-                            $rawProducts[$productName] += $orderItem->count;
-                        }
-                    }
-
-                    foreach ($rawProducts as $name => $count) {
-                        $products[] = $count . ' ' . $name;
-                    }
-
                     $messageSupplier = "You have a new order available for the next 2 minutes until " . date ('g:i:s A', time() + 120) ." Click to View/Accept/Decline this order " . \Yii::$app->params['webProjectUrl'] . '/supplier/show-order?l=' . $order->weblink;
 
                     $supplier = Supplier::find()->where(['id' => $supplierId])->one();

@@ -89,7 +89,7 @@ use yii\helpers\Url;
                     $order->status == \common\models\Order::ORDER_STATUS_DELIVER_NEAR_PLACE ||
                     $order->status == \common\models\Order::ORDER_STATUS_DELIVER_AT_PLACE):?>
                 <div class="card__item card__item--cancel">
-                    <a href="<?=Url::toRoute(['site/order-status','l'=>$order->weblink,'cancelCustomer' => $order->weblink]);?>" class="card__text text--blue">
+                    <a href="<?=Url::toRoute(['site/order-status','l'=>$order->weblink,'cancelCustomer' => 1]);?>" class="card__text text--blue">
                         <strong>
                             Cancel Order
                         </strong>
@@ -145,7 +145,7 @@ use yii\helpers\Url;
 
 <?php if ($order->status == \common\models\Order::ORDER_STATUS_CANCELLED_BY_CUSTOMER):?>
 <div class="modal modal--full-screen" id="cancel_order_by_customer" style="display: block;"
-     onclick="window.history.pushState({}, document.title, window.location.pathname )">
+     onclick="window.history.pushState({}, document.title, window.location.pathname + '?l=<?=$order->weblink;?>' )">
     <div class="modal__wrapper">
         <div class="modal__container container">
             <div class="modal__close"></div>
@@ -164,7 +164,7 @@ use yii\helpers\Url;
 
 <?php if ($order->status == \common\models\Order::ORDER_STATUS_CANCELLED_BY_DELIVER || $order->status == \common\models\Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER):?>
     <div class="modal modal--full-screen" id="cancel_order_by_supplier" style="display:block;"
-         onclick="window.history.pushState({}, document.title, window.location.pathname )">
+         onclick="window.history.pushState({}, document.title, window.location.pathname + '?l=<?=$order->weblink;?>' )">
         <div class="modal__wrapper">
             <div class="modal__container container">
                 <div class="modal__close"></div>
