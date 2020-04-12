@@ -33,6 +33,10 @@ use yii\helpers\Url; ?>
                             </div>
                             <p class="how-it-works__item-text text--blue">
                                 Enter your first name, location, and select your cannabis gift.
+                                <br>
+                                <span class="text--small">
+                                    (Does not need to be your residence)
+                                </span>
                             </p>
                             <div class="how-it-works__item-img">
                                 <?= Html::img('', ['class' => 'lazy', 'data-src' => Yii::getAlias('@web/img/hww_icon_2.svg')]); ?>

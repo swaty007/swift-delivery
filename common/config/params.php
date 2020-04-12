@@ -14,20 +14,20 @@ return [
     'subscribePlans' => [
         [
             'name' => 'Basic',
-            'pricePerMonth' => 100,
-            'dealsPerMonth' => 250,
+            'pricePerMonth' => 1000,
+            'dealsPerMonth' => 150,
             'id' => 1
         ],
         [
             'name' => 'Advanced',
-            'pricePerMonth' => 200,
-            'dealsPerMonth' => 700,
+            'pricePerMonth' => 2000,
+            'dealsPerMonth' => 250,
             'id' => 2
         ],
         [
             'name' => 'Gold',
-            'pricePerMonth' => 399,
-            'dealsPerMonth' => 3000,
+            'pricePerMonth' => 2500,
+            'dealsPerMonth' => 9999,
             'id' => 3
         ],
     ],

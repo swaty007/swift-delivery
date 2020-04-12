@@ -65,7 +65,7 @@ class CrudController extends Controller
                         $products[] = $count . ' ' . $name;
                     }
 
-                    $messageSupplier = "You have a new available order. Order available for you 2 minutes till " . date ('g:i:s A', time() + 120) ." Link " . \Yii::$app->params['webProjectUrl'] . '/supplier/show-order?l=' . $order->weblink;
+                    $messageSupplier = "You have a new order available for the next 2 minutes until " . date ('g:i:s A', time() + 120) ." Click to View/Accept/Decline this order " . \Yii::$app->params['webProjectUrl'] . '/supplier/show-order?l=' . $order->weblink;
 
                     $supplier = Supplier::find()->where(['id' => $supplierId])->one();
                     $supplierUser = User::find()->where(['id' => $supplier->supplier_id])->one();

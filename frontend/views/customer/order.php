@@ -47,13 +47,13 @@ $this->title = 'Order Form';
                 </div>
             <?php endforeach; ?>
 
-            <div class="item item--black item--center">
-                <p class="text text--white">
-                    <strong>
-                        Coming Soon
-                    </strong>
-                </p>
-            </div>
+<!--            <div class="item item--black item--center">-->
+<!--                <p class="text text--white">-->
+<!--                    <strong>-->
+<!--                        Coming Soon-->
+<!--                    </strong>-->
+<!--                </p>-->
+<!--            </div>-->
 
         </div>
 
@@ -69,6 +69,9 @@ $this->title = 'Order Form';
 
         <p class="sub-text text--blue text--small text-center">
             What’s your location:
+        </p>
+        <p class="text--blue text--small text-center">
+            Swift Delivery is only available for Washington D.C. addresses
         </p>
         <hr>
         <div class="row flex-center">

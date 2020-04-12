@@ -106,18 +106,27 @@ $this->title = 'Create supplier';
         <div class="plan__wrap">
 
         <?php foreach (Yii::$app->params['subscribePlans'] as $key => $plan):?>
+            <?php
+                $template = '{input}<div class="plan__container"><div class="plan__header"><h3 class="plan__title sub-text">'
+                    .$plan["name"].
+                    '</h3><p class="text--green text--small"><strong>$'
+                    .$plan['pricePerMonth'].
+                    '</strong><span class="plan__desc text--blue-opacity">/mo</span></p></div><p class="plan__desc text--blue-opacity">- ';
+
+                if ($plan['dealsPerMonth'] != 9999) {
+                    $template .= 'Up to <strong>' . $plan['dealsPerMonth'].
+                    ' deliveries</strong> a month</p></div>';
+                } else {
+                    $template .= $plan['dealsPerMonth'].
+                        '<strong>Unlimited deliveries</strong></p></div>';
+                }
+            ?>
                 <?= $form->field($model, 'plan', ['selectors' => ['input' => "input[name='SupplierForm[plan][]']"],'options' => ['class' => 'plan']])
                     ->radio(['name'=>'SupplierForm[plan]',
                         'value' => $plan['id'],
                         'uncheck' => null,
                         'class' => 'plan__input',
-                        'template' => '{input}<div class="plan__container"><div class="plan__header"><h3 class="plan__title sub-text">'
-                            .$plan["name"].
-                            '</h3><p class="text--green text--small"><strong>$'
-                            .$plan['pricePerMonth'].
-                            '</strong><span class="plan__desc text--blue-opacity">/mo</span></p></div><p class="plan__desc text--blue-opacity">- Up to <strong>'
-                            .$plan['dealsPerMonth'].
-                            ' deliveries</strong> a month</p></div>',
+                        'template' => $template,
                     ])
                     ->label(false)->error(false); ?>
         <?php endforeach;?>

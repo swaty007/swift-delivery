@@ -319,11 +319,11 @@ $this->title = 'Supplier cabinet';
 
                        <div class="flex-center--md">
                            <a href="#" class="btn-sm main-btn main-btn--xs main-btn--black" data-direction="take-order" data-order-id="<?= $item['id'] ?>">
-                               Take
+                               Set ETA
                            </a>
                            <br>
                            <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $item['id']]);?>" class="btn-sm main-btn main-btn--xs main-btn--red">
-                               Cancel order
+                               Decline
                            </a>
                        </div>
                     </div>

@@ -230,7 +230,7 @@ AppAsset::register($this);
 <!--                   --><?php //var_dump(Yii::$app->user->identity);?>
                </div>
            </div>
-            <?php else:?>
+            <?php elseif(Yii::$app->controller->id === 'site'):?>
                <a href="<?=Url::toRoute(['site/order']);?>" class="navbar__btn navbar__btn--red">
                    Start Delivery
                </a>

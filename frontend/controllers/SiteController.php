@@ -144,7 +144,7 @@ class SiteController extends Controller
             if($orderLink != NULL){
                 return $this->redirect(Url::toRoute('/supplier/show-order?l=') . $orderLink);
             } else{
-                return $this->goBack();
+                return $this->redirect(Url::toRoute('/supplier/index'));
             }
         } else {
             $model->password = '';

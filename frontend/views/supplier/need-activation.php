@@ -12,10 +12,10 @@ $this->title = 'Account Disabled';
     <div class="confirm-supplier__container text-center">
         <div class="container">
             <h1 class="title text--white confirm-supplier__title">
-                Your account need to be activated
+                Thank you for applying to deliver for Swift!
             </h1>
             <p class="text confirm-supplier__text">
-                Wait until your account verified
+                Our team will review your account and may call with any questions. You will receive a text notification if Swift approves your application.
             </p>
         </div>
     </div>

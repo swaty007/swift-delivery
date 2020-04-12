@@ -90,9 +90,8 @@ class OrderQuery extends \yii\db\ActiveRecord
         if (!count($query)) {
             return false;
         }
-
-        usort(shuffle($query), ['common\models\OrderQuery', 'sortByDistance']);
-
+        shuffle($query);
+        usort($query, ['common\models\OrderQuery', 'sortByDistance']);
         foreach ($query AS $key => $item) {
             $entity = new self;
             $entity->order_id = $order->id;

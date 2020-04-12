@@ -127,21 +127,31 @@ use yii\helpers\Url;
         <?php endif;?>
 
         <div class="row">
-            <div class="col-sm-6">
-        <?php if($order->status === common\models\Order::ORDER_STATUS_NEW):?>
-            <a href="#" class="btn-sm main-btn main-btn--black main-btn--succes" data-direction="take-order" data-order-id="<?= $order->id ?>">
-                Set ETA
-            </a>
-        <?php else: ?>
-            <a href="<?=Url::toRoute(['supplier/index','complete' => $order->id]);?>" class="main-btn main-btn--black main-btn--succes">
-                Complete order
-            </a>
-        <?php endif;?>
+            <div class="col-sm-5">
+                <?php if($order->status === common\models\Order::ORDER_STATUS_NEW):?>
+                    <a href="#" class="btn-sm main-btn main-btn--succes" data-direction="take-order" data-order-id="<?= $order->id ?>">
+                        Set ETA
+                    </a>
+                <?php else: ?>
+                    <a href="<?=Url::toRoute(['supplier/index','complete' => $order->id]);?>" class="main-btn main-btn--black main-btn--succes">
+                        Complete order
+                    </a>
+                <?php endif;?>
                 <br>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-2 text-center">
+                <?php if($order->status === common\models\Order::ORDER_STATUS_NEW):?>
+                    <p class="text text--blue text--bold" style="line-height: 50px;"><?=$timeToTake;?>s</p>
+                    <br>
+                <?php endif;?>
+            </div>
+            <div class="col-sm-5">
                 <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $order->id]);?>" class="main-btn main-btn--red main-btn--decline">
-                    Decline
+                    <?php if($order->status === common\models\Order::ORDER_STATUS_NEW):?>
+                        Decline
+                    <?php else: ?>
+                        Cancel order
+                    <?php endif;?>
                 </a>
             </div>
         </div>
