@@ -83,7 +83,7 @@ class OrderForm extends Model
                 $customer = new User();
                 $customer->phone_number = $this->phone_number;
                 $customer->status = 0;
-                $customer->username = $this->name . ' customer' . time();
+                $customer->username = $this->name . time();
                 $customer->role = User::USER_ROLE_CUSTOMER;
                 $customer->setPassword('');
 

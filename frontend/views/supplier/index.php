@@ -514,7 +514,7 @@ $this->title = 'Supplier cabinet';
             <div class="container">
                 <div class="flex-center flex-center--between">
                     <div class="deliver__info--content">
-                        <p class="text text--white text--small"><strong><?=$inProgress[0]['customer']['username'];?></strong> is your customer!</p>
+                        <p class="text text--white text--small"><strong><?=preg_replace("/[^a-zA-Z\s]/", "", $inProgress[0]['customer']['username']);?></strong> is your customer!</p>
                         <p class="text">
                             <a href="<?=Url::toRoute(['supplier/index','cancelSupplier' => $inProgress[0]['id']]);?>" class="text text--red text--xs">
                                 <?= Html::img('@web/img/icon_cancel.svg', ['class' => '']) ?>
