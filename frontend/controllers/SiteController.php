@@ -254,7 +254,7 @@ class SiteController extends Controller
             return $this->redirect('/site/order');
         }
         if ($order->status == Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER || $order->status == Order::ORDER_STATUS_CANCELLED_BY_DELIVER) {
-            return $this->redirect('/site/order');
+//            return $this->redirect('/site/order');
         }
         return $this->render('/customer/order-status', ['order' => $order]);
     }

@@ -102,10 +102,12 @@ class SupplierController extends BaseAuthorizedController
     {
         if ($cancelSupplier) {
             $this->cancelOrder($cancelSupplier, Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER);
+            return $this->redirect('/supplier/index');
         }
 
         if ($cancelDeliver) {
             $this->cancelOrder($cancelDeliver, Order::ORDER_STATUS_CANCELLED_BY_DELIVER);
+            return $this->redirect('/supplier/index');
         }
 
         if ($complete) {
@@ -459,14 +461,14 @@ class SupplierController extends BaseAuthorizedController
             Order::ORDER_STATUS_CANCELLED_BY_DELIVER,
         ];
 
+        ;
         if (!in_array($status, $changeToAllowedStatuses)) {
             return false;
         }
 
         $order = Order::find()
             ->where(['id' => $id])
-            ->andWhere(['IN', 'status', $orderAllowedStatuses])
-            ->andWhere(['supplier_id' => $this->supplierModel->id]);
+            ->andWhere(['IN', 'status', $orderAllowedStatuses]);
 
         if (!$order->count()) {
             return false;
@@ -479,10 +481,14 @@ class SupplierController extends BaseAuthorizedController
 
             if ($oq) {
                 $oq->delete();
-            }
 
-            OrderQuery::updateAllCounters(['order' => -1], ['order_id' => $order->id]);
-            return true;
+                OrderQuery::updateAllCounters(['order' => -1], ['order_id' => $order->id]);
+                return true;
+            }
+        } else {
+            if ($order->supplier_id !== $this->supplierModel->id) {
+                return false;
+            }
         }
 
         if ($status == Order::ORDER_STATUS_CANCELLED_BY_SUPPLIER) {
