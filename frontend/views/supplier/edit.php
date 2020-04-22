@@ -65,7 +65,7 @@ $this->title = 'Edit supplier';
         </div>
         <?= $form->field($model, 'address')->textInput()->label('Address:'); ?>
         <?= $form->field($model, 'address_2')->textInput(['placeholder' => 'Addres Line 2 (optional)'])->label(false); ?>
-        <?= $form->field($model, 'web_url')->textInput()->label('Website URL:'); ?>
+        <?= $form->field($model, 'web_url')->textInput(['placeholder' => 'include http:// with website'])->label('Website URL:'); ?>
 
 
         <?php if($supplier->logo):?>

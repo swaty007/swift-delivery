@@ -38,7 +38,7 @@ $this->title = 'Create supplier';
         </div>
         <?= $form->field($model, 'address')->textInput()->label('Address:'); ?>
         <?= $form->field($model, 'address_2')->textInput(['placeholder' => 'Addres Line 2 (optional)'])->label(false); ?>
-        <?= $form->field($model, 'web_url')->textInput()->label('Website URL:'); ?>
+        <?= $form->field($model, 'web_url')->textInput(['placeholder' => 'include http:// with website'])->label('Website URL:'); ?>
 
         <div class="form-group supplier__logo">
             <label class="control-label">Upload company logo:</label>
