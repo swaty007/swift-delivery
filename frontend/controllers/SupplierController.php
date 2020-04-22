@@ -113,6 +113,7 @@ class SupplierController extends BaseAuthorizedController
         if ($complete) {
             Yii::$app->session->setFlash('success', 'Delivery Completed');
             $this->complete($complete);
+            return $this->redirect('/supplier/index');
         }
 
         if ($this->supplierModel->isAllowedToTakeOrder()) {

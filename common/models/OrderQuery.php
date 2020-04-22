@@ -62,16 +62,12 @@ class OrderQuery extends \yii\db\ActiveRecord
 
         foreach (Supplier::find()->where(['is_active' => 1])->all() as $supplier) {
             if (!$supplier->isAllowedToTakeOrder()) {
-                var_dump("123");
-                exit;
                 continue ;
             }
 
             $supplierAddressData = AddressLatlng::tryGetAddressData($supplier->address . ' ' . $supplier->address_2 . ' ' . $supplier->zip);
 
             if (is_null($supplierAddressData)) {
-                var_dump("321");
-                exit;
                 continue ;
             }
 

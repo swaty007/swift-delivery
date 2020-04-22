@@ -9,9 +9,14 @@ class Card {
     events() {
         $("#form-create-order").on('submit', e => {
             let emptyCardBlock = $("#order_card");
+            let cardTotalBlock = $("#order_card_total");
+            let cardLowerModal = $("#card_lower_100");
             if (emptyCardBlock.length !== 0) {
                 e.preventDefault();
                 emptyCardBlock.addClass('card__item--error');
+            } else if (cardTotalBlock.attr('data-total') < 100) {
+                e.preventDefault();
+                cardLowerModal.show('fade', 300);
             }
         });
         //add to card click

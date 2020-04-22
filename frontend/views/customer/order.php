@@ -18,6 +18,16 @@ $this->title = 'Order Form';
         <h2 class="sub-title text--blue text-center">
             Let’s Roll!
         </h2>
+        <p class="text--blue text--small text-center">
+            $100 Purchase Minimum
+        </p>
+        <p class="text--blue text--small text-center">
+            Hours of Operation: 10AM to 10PM
+        </p>
+        <p class="text--blue text--small text-center">
+            Swift DC cannot control how many providers are on the site at any given time
+        </p>
+        <br>
         <p class="sub-text text--blue text-center m35">
             Select your cannabis gift:
         </p>
@@ -74,21 +84,21 @@ $this->title = 'Order Form';
             Swift Delivery is only available for Washington D.C. addresses
         </p>
         <hr>
-        <div class="row flex-center">
+        <div class="row">
             <div class="col-xs-8">
                 <?= $form->field($model, 'zip', ['enableAjaxValidation' => true])->textInput(['id' => 'zip_validate'])->label('Zip Code:'); ?>
             </div>
-            <div class="col-xs-4">
-                <p id="zip_validate_status" class="supplier__text">
-                    Enter zip code to
-                    check availability
-                </p>
-            </div>
+<!--            <div class="col-xs-4">-->
+<!--                <p id="zip_validate_status" class="supplier__text">-->
+<!--                    Enter zip code to-->
+<!--                    check availability-->
+<!--                </p>-->
+<!--            </div>-->
         </div>
 
         <?= $form->field($model, 'address')->textInput()->label('Address:'); ?>
         <?= $form->field($model, 'address_2')->textInput(['placeholder' => 'Addres Line 2 (optional)'])->label(false); ?>
-        <?= $form->field($model, 'description')->textarea(['placeholder' => 'Dont ring door bell, etc.'])->label("Any additional information about your location:"); ?>
+        <?= $form->field($model, 'description')->textarea(['placeholder' => 'Dont ring doorbell, meet me outside, color of vehicle, etc'])->label("Any additional information about your location:"); ?>
 
 
         <p class="sub-text text--blue text-center">
@@ -150,7 +160,7 @@ $this->title = 'Order Form';
                 </div>
                 <div class="card__item--right">
                     <p class="text text--red">
-                        <strong>
+                        <strong id="order_card_total" data-total="<?=$totalOrder;?>">
                             $<?=number_format($totalOrder,2)?>
                         </strong>
                     </p>
@@ -236,6 +246,25 @@ $this->title = 'Order Form';
     </div>
 </div>
 
+
+
+
+<div class="modal modal--full-screen" id="card_lower_100">
+    <div class="modal__wrapper">
+        <div class="modal__container container">
+            <div class="modal__close"></div>
+            <div class="modal__header">
+                <br>
+                <br>
+                <br>
+                <br>
+                <p class="text text--blue text--large">Your order must be at least $100</p>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

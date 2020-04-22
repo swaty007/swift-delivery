@@ -21,9 +21,11 @@ use yii\helpers\Url;
 <section class="supplier-order">
     <div class="container">
         <br>
+        <?php if (!empty($order->supplier)):?>
         <h4 class="supplier-cab__table-content--title text--xs">
             Company: <span class="text--regular"><?=$order->supplier->name ?></span>
         </h4>
+        <?php endif;?>
         <h4 class="supplier-cab__table-content--title text--xs">
             Order #: <a href="<?= Url::toRoute('/supplier/show-order?l=') . $order->weblink ?>" class="text--regular"><?= $order->weblink ?></a>
         </h4>

@@ -101,9 +101,7 @@ class SupplierController extends BaseAdminController
      */
     public function actionDelete($id)
     {
-        $number = User::find()->where(['id' => $id])->one()->phone_number;
         $this->findModel($id)->delete();
-        Twilio::sendSms($number, Message::getText('supplier_order_declined_sms'));
         return $this->redirect(['index']);
     }
 

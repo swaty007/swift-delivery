@@ -33,7 +33,7 @@ class Twilio {
         foreach ($receivers as $receiver) {
             try {
                 Yii::$app->mailer->compose()
-                    ->setFrom('info@swift-delivery.com')
+                    ->setFrom('info@swiftdeliverydc.com')
                     ->setTo($receiver)
                     ->setSubject($title)
                     ->setHtmlBody($text)

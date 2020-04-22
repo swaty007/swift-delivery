@@ -113,10 +113,7 @@ class OrderForm extends Model
                 $this->printAndExit($order->errors);
             }
 
-            if (!OrderQuery::createOrderQuery($order)) {
-                echo 'Error while making query';
-                exit;
-            }
+            OrderQuery::createOrderQuery($order);
 
             $this->processOrderItems($order);
 
@@ -161,6 +158,7 @@ class OrderForm extends Model
     {
         $cart = SiteController::getCart();
         $orderTotal = 0;
+
         foreach ($cart as $item) {
             $option = new OrderItem();
             $option->order_id = $order->id;

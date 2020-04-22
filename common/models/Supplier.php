@@ -99,7 +99,7 @@ class Supplier extends \yii\db\ActiveRecord
     public function isAllowedToTakeOrder()
     {
         $alreadyTakenInThisMonth = Order::find()->where(['supplier_id' => $this->id])->andWhere(['>', 'created_at', date('Y-m-d H:i:s', strtotime("-30 days"))])->count();
-        return ($alreadyTakenInThisMonth < Yii::$app->params['subscribePlans'][$this->status]['dealsPerMonth']);
+        return ($alreadyTakenInThisMonth < Yii::$app->params['subscribePlans'][$this->status - 1]['dealsPerMonth']);
     }
 
     /**
@@ -114,7 +114,7 @@ class Supplier extends \yii\db\ActiveRecord
         return Yii::$app->params['webUploadsDir'] . $this->product_image;
     }
 
-    public function beforeDelete()
+    public function befelete()
     {
         if (!empty($this->supplier_id)) {
             User::deleteAll(['id' =>$this->supplier_id]);

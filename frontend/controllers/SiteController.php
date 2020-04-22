@@ -226,6 +226,7 @@ class SiteController extends Controller
                 return $this->redirect('/site/order-status/?l=' . $model->instance->weblink);
             }
         }
+
         return $this->render('/customer/order', ['model' => $model, 'gifts' => Product::getActiveList(), 'cart' => $this->getCart()]);
     }
 

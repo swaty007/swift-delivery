@@ -25,16 +25,16 @@ $this->title = 'Create supplier';
 
         <?= $form->field($model, 'name')->textInput()->label('Company Name:'); ?>
 
-        <div class="row flex-center">
+        <div class="row">
             <div class="col-xs-8">
                 <?= $form->field($model, 'zip',['enableAjaxValidation' => true])->textInput(['id' => 'zip_validate'])->label('Zip Code:'); ?>
             </div>
-            <div class="col-xs-4">
-                <p id="zip_validate_status" class="supplier__text">
-                    Enter zip code to
-                    check availability
-                </p>
-            </div>
+<!--            <div class="col-xs-4">-->
+<!--                <p id="zip_validate_status" class="supplier__text">-->
+<!--                    Enter zip code to-->
+<!--                    check availability-->
+<!--                </p>-->
+<!--            </div>-->
         </div>
         <?= $form->field($model, 'address')->textInput()->label('Address:'); ?>
         <?= $form->field($model, 'address_2')->textInput(['placeholder' => 'Addres Line 2 (optional)'])->label(false); ?>
@@ -77,10 +77,10 @@ $this->title = 'Create supplier';
             <?php endforeach;?>
         </div>
 
-        <p class="text text--small text--blue-opacity">
+        <h2 class="text text--small text--bold text--blue-opacity">
             Because cannabis has to be gifted, please upload an image of and provide a name for the product customers
             are paying for.
-        </p>
+        </h2>
         <br>
         <?= $form->field($model, 'product_name')->textInput()->label('Product Name:'); ?>
         <div class="form-group supplier__product">

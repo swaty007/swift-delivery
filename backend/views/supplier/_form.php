@@ -69,7 +69,7 @@ foreach (Yii::$app->params['subscribePlans'] as $subscribePlan) {
                 '1' => 'Yes'
             ]) ?>
             <?php if (!empty($model->logo)): ?>
-                <h3>Company Logoыс</h3>
+                <h3>Company Logo</h3>
                 <img src="<?= Yii::$app->params['webProjectUrl'] . '/img/uploads/' . $model->logo ?>"
                      style="height:100px;widht:auto;">
             <?php endif; ?>
