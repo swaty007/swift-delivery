@@ -14,8 +14,12 @@ $this->title = 'Create supplier';
 <?= $this->render('../components/_alert', ['module' => 'available']); ?>
 <section class="supplier">
     <div class="container">
-        <h1 class="sub-title text--blue text-center supplier__h1">Delivery Service<br>
+        <h1 class="sub-title text-center supplier__h1">Delivery Service<br>
             Application</h1>
+        <p class="text text--small text--blue text-center text--bold">
+            Companies must have logo/branding on delivery product-bags to be listed on Swift DC
+        </p>
+        <br>
         <p class="text text--small text-center text--green text--bold">Name & Location</p>
         <hr class="line">
 
