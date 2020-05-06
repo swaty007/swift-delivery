@@ -114,7 +114,7 @@ class Supplier extends \yii\db\ActiveRecord
         return Yii::$app->params['webUploadsDir'] . $this->product_image;
     }
 
-    public function befelete()
+    public function beforeDelete()
     {
         if (!empty($this->supplier_id)) {
             User::deleteAll(['id' =>$this->supplier_id]);

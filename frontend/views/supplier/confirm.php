@@ -20,6 +20,12 @@ $this->title = 'Create supplier';
             Companies must have logo/branding on delivery product-bags to be listed on Swift DC
         </p>
         <br>
+        <p class="text text--small text--blue text-center text--bold">
+            All transactions are <strong>cash only</strong> with Swift Delivery DC.
+            <br>
+            You will need to establish your DC Delivery Headquarters address - once approved, you will receive new order requests from the customers closest to your HQ address. In your Dashboard, you can update your HQ address anytime you need from the Settings area.
+        </p>
+        <br>
         <p class="text text--small text-center text--green text--bold">Name & Location</p>
         <hr class="line">
 
@@ -27,11 +33,11 @@ $this->title = 'Create supplier';
         <!--        --><? //= $form->field($model, 'password')->label(false)->passwordInput() ?>
         <!--        --><? //= $form->field($model, 'password_repeat')->label(false)->passwordInput() ?>
 
-        <?= $form->field($model, 'name')->textInput()->label('Company Name:'); ?>
+        <?= $form->field($model, 'name')->textInput()->label('Company Name: *(required)'); ?>
 
         <div class="row">
             <div class="col-xs-8">
-                <?= $form->field($model, 'zip',['enableAjaxValidation' => true])->textInput(['id' => 'zip_validate'])->label('Zip Code:'); ?>
+                <?= $form->field($model, 'zip',['enableAjaxValidation' => true])->textInput(['id' => 'zip_validate'])->label('Zip Code: *(required)'); ?>
             </div>
 <!--            <div class="col-xs-4">-->
 <!--                <p id="zip_validate_status" class="supplier__text">-->
@@ -40,9 +46,9 @@ $this->title = 'Create supplier';
 <!--                </p>-->
 <!--            </div>-->
         </div>
-        <?= $form->field($model, 'address')->textInput()->label('Address:'); ?>
+        <?= $form->field($model, 'address')->textInput()->label('Address: *(required)'); ?>
         <?= $form->field($model, 'address_2')->textInput(['placeholder' => 'Addres Line 2 (optional)'])->label(false); ?>
-        <?= $form->field($model, 'web_url')->textInput(['placeholder' => 'include http:// with website'])->label('Website URL:'); ?>
+        <?= $form->field($model, 'web_url')->textInput(['placeholder' => 'include http:// with website'])->label('Website URL: *(required)'); ?>
 
         <div class="form-group supplier__logo">
             <label class="control-label">Upload company logo:</label>
@@ -140,10 +146,11 @@ $this->title = 'Create supplier';
                 ->label(false)->error(false); ?>
             <p class="text text--small text--blue-opacity supplier__terms--text">
                 My company will follw Swift Delivery’s
-                <a href="<?=Url::toRoute(['/info/supplier-code-of-ethics']);?>" target="_blank" class="text--bold text--blue-opacity">
+                <a href="<?=Url::toRoute(['/info/supplier-code-of-ethics']);?>" target="_blank" class="text--bold text--blue-opacity supplier__terms--link">
                     Code of Ethics
                     <?= Html::img('@web/img/icon_share_link.svg', ['class' => 'supplier__terms--img']); ?>
                 </a>
+                *(required)
             </p>
         </div>
         <!--

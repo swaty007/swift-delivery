@@ -54,7 +54,7 @@ class GoogleMaps {
         }
 
         if (!$this->checkIsAddressAllowed($response['results'][0]['address_components'])) {
-            return ['success' => false, 'message' => 'Address not supported', 'response' => $response];
+            return ['success' => false, 'message' => 'This address is not supported', 'response' => $response];
         }
 
         return ['success' => true, 'latlng' => $response['results'][0]['geometry']['location']['lat'] . ',' . $response['results'][0]['geometry']['location']['lng']];
@@ -62,8 +62,9 @@ class GoogleMaps {
 
     private function checkIsAddressAllowed($address_components) {
         if(is_array($address_components)) {
+
             foreach ($address_components as $component) {
-                if (in_array('political', $component['types'])) {
+                if (in_array('locality', $component['types'])) {
                     if (($allowed = AllowedStates::findOne(['state_name' => $component['long_name'], 'is_active' => 1]))) {
                         return true;
                     }

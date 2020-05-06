@@ -19,7 +19,7 @@ $this->title = 'Order Form';
             Let’s Roll!
         </h2>
         <p class="text--blue text--small text-center">
-            $100 Purchase Minimum
+            $100 Purchase Minimum - Cash Only
         </p>
         <p class="text--blue text--small text-center">
             Hours of Operation: 10AM to 10PM

@@ -45,6 +45,11 @@
       right: 0;
       width: 12px;
     }
+    &--link {
+      position: relative;
+      padding-right: 15px;
+      margin-right: 5px;
+    }
   }
   &__core {
     margin-bottom: 20px;

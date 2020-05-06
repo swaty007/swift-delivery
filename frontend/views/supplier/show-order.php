@@ -166,7 +166,12 @@ use yii\helpers\Url;
             <div class="flex-center flex-center--between">
                 <div class="deliver__info--content">
                     <br>
-                    <p class="text text--white text--small"><strong><?=preg_replace("/[^a-zA-Z\s]/", "", $order->customer->username);?></strong> is your customer!</p>
+                    <p class="text text--white text--small">
+                        <strong><?=preg_replace("/[^a-zA-Z\s]/", "", $order->customer->username);?></strong> is your customer!
+                        <?php if($order->status === common\models\Order::ORDER_STATUS_NEW):?>
+                        Please confirm your ETA and that you have the requested gift.
+                        <?php endif;?>
+                    </p>
                     <br>
 <!--                    --><?php //if($order->status !== common\models\Order::ORDER_STATUS_NEW):?>
 <!--                        <p class="text">-->

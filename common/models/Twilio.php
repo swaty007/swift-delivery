@@ -34,7 +34,7 @@ class Twilio {
             try {
                 Yii::$app->mailer->compose()
                     ->setFrom('info@swiftdeliverydc.com')
-                    ->setTo($receiver)
+                    ->setTo(trim($receiver))
                     ->setSubject($title)
                     ->setHtmlBody($text)
                     ->send();

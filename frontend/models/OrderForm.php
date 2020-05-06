@@ -69,12 +69,16 @@ class OrderForm extends Model
         $apiResult = $gm->getLatLng($this->address . ' ' . $this->address_2 . ' ' . $this->zip);
 
         if ($apiResult['success'] == false) {
+            if ($apiResult['message'] == 'This address is not supported') {
+                $this->addError('zip', 'This zip code is not supported');
+            }
+
             $this->addError('address', $apiResult['message']);
             return null;
         }
 
         if (Zipcode::isBlocked($this->zip)) {
-            $this->addError('zip', 'Zipcode is not allowed');
+            $this->addError('zip', 'This zip code is not supported');
             return null;
         }
 

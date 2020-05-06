@@ -107,6 +107,7 @@ class SupplierForm extends Model
         } catch (\Exception $e) {
             Supplier::deleteAll(['supplier_id' => $this->supplier_id]);
             SupplierItemRelation::deleteAll(['supplier_id' => $this->supplier_id]);
+
             return false;
         }
     }
