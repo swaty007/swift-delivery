@@ -116,6 +116,10 @@ $this->title = 'Edit supplier';
             <?php endforeach;?>
         </div>
 
+        <p class="text text--small text--blue">
+            Swift Delivery DC has a standardized payment structure, and all transactions are cash only. Once you’re approved & in your Dashboard, Swift will help you track your monthly deliveries, earnings & customer ratings.
+        </p>
+
         <h2 class="text text--small text--bold text--blue-opacity">
             Because cannabis has to be gifted, please upload an image of and provide a name for the product customers
             are paying for.
@@ -195,7 +199,25 @@ $this->title = 'Edit supplier';
         <div class="form-group">
             <?= Html::submitButton('Submit Application', ['class' => 'main-btn main-btn--blue']) ?>
         </div>
+
+        <p class="text text--small text--blue text-center text--bold">
+            If you are having any difficulty submitting this form, please double-check:
+        </p>
+        <br>
+        <p class="text text--small text--blue text-center">
+            1. The images uploaded are below 2MB
+        </p>
+        <p class="text text--small text--blue text-center">
+            2. https:// is in front of your website URL
+        </p>
+        <br>
+        <p class="text text--small text--blue text-center">
+            If you’re still experiencing issues, please <a href="mailto:swiftdelivery.dev@gmail.com" class="text--red">send the application details in an email</a> and we’ll follow-up with you.
+        </p>
         <?php ActiveForm::end(); ?>
+        <br>
+        <br>
+        <br>
 
     </div>
 </section>

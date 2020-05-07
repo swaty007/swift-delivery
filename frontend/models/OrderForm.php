@@ -31,6 +31,7 @@ class OrderForm extends Model
     public $address;
     public $address_2;
     public $description;
+    public $old18;
 
     private $total;
 
@@ -45,12 +46,13 @@ class OrderForm extends Model
     public function rules()
     {
         return [
-            [['phone_number', 'name', 'zip', 'address'], 'required'],
+            [['phone_number', 'name', 'zip', 'address', 'old18'], 'required'],
             ['phone_number', 'trim'],
             ['phone_number', 'match', 'pattern' => '/^\+1\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{4}$/', 'message' => 'Incorrect phone number'],
             [['name'], 'string', 'max' => 50, 'min' => 2],
             [['address', 'address_2'], 'string', 'max' => 80],
             [['description'], 'string', 'max' => 200],
+            ['old18', 'compare', 'compareValue' => 1, 'type' => 'number', 'operator' => '=='],//, 'message' => 'Please, accept terms of use.'
             ['zip', 'string'],
         ];
     }

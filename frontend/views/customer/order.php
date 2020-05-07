@@ -167,6 +167,16 @@ $this->title = 'Order Form';
                 </div>
             </div>
         <?endif;?>
+        <br>
+        <div class="form-group flex-center flex-center--start">
+            <?= $form->field($model, 'old18', ['options' => ['class' => 'default-checkbox__container']])
+                ->checkbox(['value' => 1, 'uncheck' => null, 'class' => 'default-checkbox'])
+                ->label(false)->error(false); ?>
+            <p class="text text--small text--blue-opacity supplier__terms--text">
+                I am older than 21 years of age
+            </p>
+        </div>
+
 
             <?php \yii\widgets\Pjax::end(); ?>
 
