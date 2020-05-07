@@ -17,4 +17,3 @@ $this->title = 'Account Disabled';
         </div>
     </div>
 </section>
-

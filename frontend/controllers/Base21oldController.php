@@ -16,8 +16,8 @@ abstract class Base21OldController extends Controller
 //            'name' => '18old',
 //            'value' => 'yes',
 //        ]));
-        if (!empty($cookie->get('21old') && $cookie->get('18old')->value === 'no' && Yii::$app->controller->action->id !== 'has21-fail')) {
-            return $this->redirect(Url::toRoute('/site/has18-fail'))->send();
+        if (!empty($cookie->get('21old') && $cookie->get('21old')->value === 'no' && Yii::$app->controller->action->id !== 'has21-fail')) {
+            return $this->redirect(Url::toRoute('/site/has21-fail'))->send();
         }
         if (empty($cookie->get('21old')) &&
             Yii::$app->controller->action->id !== 'has21' &&

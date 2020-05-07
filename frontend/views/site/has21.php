@@ -18,14 +18,13 @@ $this->title = 'Are you over 21 years of age?';
             <br>
             <br>
             <div class="flex-center">
-                <a href="<?=Url::toRoute(['site/has18','l'=> 'yes']);?>" class="main-btn">
+                <a href="<?=Url::toRoute(['site/has21','l'=> 'yes']);?>" class="main-btn">
                     Yes
                 </a>
-                <a href="<?=Url::toRoute(['site/has18','l'=> 'no']);?>" class="main-btn main-btn--blue">
+                <a href="<?=Url::toRoute(['site/has21','l'=> 'no']);?>" class="main-btn main-btn--blue">
                     No
                 </a>
             </div>
         </div>
     </div>
 </section>
-
