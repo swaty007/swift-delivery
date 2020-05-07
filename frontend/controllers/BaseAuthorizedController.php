@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
 
-abstract class BaseAuthorizedController extends Base18oldController
+abstract class BaseAuthorizedController extends Base21OldController
 {
     public $allowedRole;
 

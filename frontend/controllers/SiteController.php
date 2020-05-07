@@ -37,7 +37,7 @@ use Minishlink\WebPush\Subscription;
 /**
  * Site controller
  */
-class SiteController extends Base18oldController
+class SiteController extends Base21OldController
 {
     /**
      * {@inheritdoc}
@@ -89,7 +89,7 @@ class SiteController extends Base18oldController
     public function beforeAction($action)
     {
         $allowedPages = [
-            'index', 'logout', 'order', 'order-status', 'order-rating', 'cancel-order', 'error', 'show-info-page', 'has18', 'has18-fail'
+            'index', 'logout', 'order', 'order-status', 'order-rating', 'cancel-order', 'error', 'show-info-page', 'has21', 'has21-fail'
         ];
 
 
@@ -123,11 +123,11 @@ class SiteController extends Base18oldController
     {
         return $this->render('index');
     }
-    public function actionHas18($l = null)
+    public function actionHas21($l = null)
     {
         if ($l) {
             Yii::$app->response->cookies->add(new \yii\web\Cookie([
-            'name' => '18old',
+            'name' => '21old',
             'value' => $l,
             'expire' => time()+60*60*24*30,
             ]));
@@ -135,9 +135,9 @@ class SiteController extends Base18oldController
         }
         return $this->render('has18');
     }
-    public function actionHas18Fail()
+    public function actionHas21Fail()
     {
-        return $this->render('has18-fail');
+        return $this->render('has21-fail');
     }
 
     /**
