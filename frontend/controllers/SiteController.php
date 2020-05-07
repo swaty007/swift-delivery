@@ -133,7 +133,7 @@ class SiteController extends Base21OldController
             ]));
             return $this->redirect(Url::toRoute('/'))->send();
         }
-        return $this->render('has18');
+        return $this->render('has21');
     }
     public function actionHas21Fail()
     {
