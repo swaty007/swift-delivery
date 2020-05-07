@@ -10,6 +10,7 @@ import Modal from "./modules/Modal";
 import Card from "./modules/Card";
 import Supplier from "./modules/Supplier";
 import Stars from "./modules/Stars";
+import Cookie18 from "./modules/Cookie18";
 
 // Instantiate a new object using our modules/classes
 const main = new Main();
@@ -18,6 +19,7 @@ const modal = new Modal();
 const card = new Card();
 const supplier = new Supplier();
 const stars = new Stars();
+const cookie18 = new Cookie18();
 
 
 
