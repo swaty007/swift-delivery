@@ -92,6 +92,8 @@ $this->title = 'Create supplier';
             Swift Delivery DC has a standardized payment structure, and all transactions are cash only. Once you’re approved & in your Dashboard, Swift will help you track your monthly deliveries, earnings & customer ratings.
         </p>
 
+        <?=$this->render('../components/_product-table', ['gifts' => $gifts]);?>
+
         <h2 class="text text--small text--bold text--blue-opacity">
             Because cannabis has to be gifted, please upload an image of and provide a name for the product customers
             are paying for.
@@ -173,7 +175,7 @@ $this->title = 'Create supplier';
         <div class="form-group">
             <?= Html::submitButton('Submit Application', ['class' => 'main-btn main-btn--blue']) ?>
         </div>
-        
+
         <p class="text text--small text--blue text-center text--bold">
             If you are having any difficulty submitting this form, please double-check:
         </p>

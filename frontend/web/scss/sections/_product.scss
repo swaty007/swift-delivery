@@ -1,0 +1,23 @@
+.product {
+  &__wrap {
+    margin: 20px 0 5px;
+  }
+  &__item {
+    float: left;
+    width: 50%;
+    margin-bottom: 15px;
+    &--title {
+      margin-bottom: 5px;
+    }
+    &--desc {
+      max-width: 100%;
+      width: 260px;
+      display: flex;
+      justify-content: space-between;
+      padding: 3px 0;
+      &:not(:last-child) {
+        border-bottom: 1px solid #d4d5dd;
+      }
+    }
+  }
+}

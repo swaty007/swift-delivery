@@ -190,6 +190,7 @@ class SupplierController extends BaseAuthorizedController
             'inProgress' => $inProgress,
             'finished' => $finished,
             'rating' => $rating,
+            'gifts' => Product::getActiveList(),
             'ratingArray' => Rating::find()->where(['supplier_id' => $this->supplierModel->id])->all(),
             'earnings' => Order::find()->where(['supplier_id' => $this->supplierModel->id])->andWhere(['status' => Order::ORDER_STATUS_COMPLETE])->count(),
             'accepted' => Order::find()->where(['supplier_id' => $this->supplierModel->id])->count(),

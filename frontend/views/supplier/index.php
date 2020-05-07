@@ -574,6 +574,20 @@ $this->title = 'Supplier cabinet';
     </script>
 
     <?php \yii\widgets\Pjax::end(); ?>
+    <div class="container">
+        <br>
+        <p class="text text--small text--blue text-center text--bold">
+            Swift Delivery DC’s standardized payment structure, and all transactions are cash only
+        </p>
+        <?=$this->render('../components/_product-table', ['gifts' => $gifts]);?>
+        <p class="text text--small text--blue text-center">
+            Thanks for your patience while SwiftDelivery is in Beta.
+            <a href="mailto:swiftdelivery.dev@gmail.com" class="text--red">If you are experiencing any issues, please Send a Message.</a>
+        </p>
+        <br>
+        <br>
+        <br>
+    </div>
 </section>
 
 <div class="modal modal--full-screen modal--order" id="take_order">
