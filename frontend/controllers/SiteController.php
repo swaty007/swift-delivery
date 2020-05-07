@@ -129,6 +129,7 @@ class SiteController extends Base18oldController
             Yii::$app->response->cookies->add(new \yii\web\Cookie([
             'name' => '18old',
             'value' => $l,
+            'expire' => time()+60*60*24*30,
             ]));
             return $this->redirect(Url::toRoute('/'))->send();
         }
