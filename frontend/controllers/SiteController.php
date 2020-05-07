@@ -37,7 +37,7 @@ use Minishlink\WebPush\Subscription;
 /**
  * Site controller
  */
-class SiteController extends Base21OldController
+class SiteController extends Base21oldController
 {
     /**
      * {@inheritdoc}

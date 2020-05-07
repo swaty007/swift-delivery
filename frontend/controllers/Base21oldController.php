@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
 
-abstract class Base21OldController extends Controller
+abstract class Base21oldController extends Controller
 {
 
     public function beforeAction($action)
