@@ -1,10 +1,11 @@
-<p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
-    </a>
-    <h1 align="center">Yii 2 Advanced Project Template</h1>
-    <br>
-</p>
+1. run composer install
+2. run npm install (if need to rewrite css and js)
+3. run php init
+4. in common/config/main-local.php write credentials for Database
+5. write CRON to /usr/local/bin/php -c /home/swaty/infinitum.tech/swift-delivery/yii crud/process-order-query (every minute)
+6. write CRON to /usr/local/bin/php -c /home/swaty/infinitum.tech/swift-delivery/php yii cron/unsubsribe (every 15min)
+
+
 
 Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
 developing complex Web applications with multiple tiers.
