@@ -2,8 +2,9 @@
 2. run npm install (if need to rewrite css and js)
 3. run php init
 4. in common/config/main-local.php write credentials for Database
-5. write CRON to /usr/local/bin/php -c /home/swaty/infinitum.tech/swift-delivery/yii crud/process-order-query (every minute)
-6. write CRON to /usr/local/bin/php -c /home/swaty/infinitum.tech/swift-delivery/php yii cron/unsubsribe (every 15min)
+5. run php yii migrate (for create tables)
+6. write CRON to /usr/local/bin/php -c /home/swaty/infinitum.tech/swift-delivery/yii crud/process-order-query (every minute)
+7. write CRON to /usr/local/bin/php -c /home/swaty/infinitum.tech/swift-delivery/php yii cron/unsubsribe (every 15min)
 
 
 
